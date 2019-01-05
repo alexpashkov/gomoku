@@ -1,8 +1,8 @@
-// package main
+package board
 
-// import "fmt"
+import "fmt"
 
-func setChip(maps [19][19]int, coordinates[]int, status[]int) [19][19] int {
+func SetChip(maps [19][19]int, coordinates[]int, status[]int) [19][19] int {
 	i := 0
 	j := 0
 	amountChip := len(status)
@@ -14,8 +14,7 @@ func setChip(maps [19][19]int, coordinates[]int, status[]int) [19][19] int {
 	return maps
 }
 
-<<<<<<< HEAD
-func isTerminate(board [19][19]int) int {
+func IsTerminate(board [19][19]int) int {
 	y := 0
 	x := 0
 	i := 0
@@ -75,7 +74,7 @@ func isTerminate(board [19][19]int) int {
 //	fmt.Println(isTerminate(board))
 //	//fmt.Println(board)
 //}
-=======
+
 // func main() {
 // 	board := [19][19]int{}
 // 	coordinates := []int{0,0,0,1,0,2,0,3}
@@ -83,4 +82,3 @@ func isTerminate(board [19][19]int) int {
 // 	board = setChip(board, coordinates, status)
 // 	fmt.Println(board)
 // }
->>>>>>> 8ea60c45fb919acf90cbd662dfc487d4ccaa38c1
