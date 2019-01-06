@@ -2,6 +2,8 @@ package minimax
 
 import "gomoku/board"
 
+// isWithinNFrom checks whether any of the coords withing maximum n steps from coords c
+// satisfy predicate pred
 func isWithinNFrom(c board.Coords, n int, pred func(coords board.Coords) bool) bool {
 	for y := -n; y <= n; y++ {
 		for x := -n; x <= n; x++ {
