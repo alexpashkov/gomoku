@@ -45,6 +45,7 @@ func (b *Board) SetChips(coordinates []Coords, status[]int8) {
 	}
 }
 
+// IsTerminate a function that checks if there is a winner, and returns who won.
 func (b Board) IsTerminate() int8 {
 	for y, row := range b {
 		for x := range row {
