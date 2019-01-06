@@ -30,9 +30,8 @@ func (b Board) ForEach(f func(int8, Coords)) {
 	}
 }
 
-
 // SetChips takes an array of coordinates and values ​​and sets them on the board
-func (b *Board) SetChips(coordinates []Coords, status[]int8) {
+func (b *Board) SetChips(coordinates []Coords, status []int8) {
 	i := 0
 	amountChip := len(status)
 	for i < amountChip {
@@ -52,21 +51,21 @@ func (b Board) IsTerminate() int8 {
 				amountRightZ := 0
 				amountLeftZ := 0
 				for i <= 4 {
-					if (x + i < 19 && b.GetCell(Coords{x+i, y}) == b.GetCell(Coords{x, y})) {
+					if (x+i < 19 && b.GetCell(Coords{x + i, y}) == b.GetCell(Coords{x, y})) {
 						amountX++
 					}
-					if (y + i < 19 && b.GetCell(Coords{x, y + i}) == b.GetCell(Coords{x, y})) {
+					if (y+i < 19 && b.GetCell(Coords{x, y + i}) == b.GetCell(Coords{x, y})) {
 						amountY++
 					}
-					if (x + i < 19 && y + i < 19 && b.GetCell(Coords{x + i, y + i}) == b.GetCell(Coords{x, y})) {
+					if (x+i < 19 && y+i < 19 && b.GetCell(Coords{x + i, y + i}) == b.GetCell(Coords{x, y})) {
 						amountRightZ++
 					}
-					if (x - i > 1 && y + i < 19 && b.GetCell(Coords{x - i, y + i}) == b.GetCell(Coords{x, y})) {
+					if (x-i > 1 && y+i < 19 && b.GetCell(Coords{x - i, y + i}) == b.GetCell(Coords{x, y})) {
 						amountLeftZ++
 					}
 					i++
 				}
-				if (amountX == 4 || amountY == 4 || amountRightZ == 4 || amountLeftZ == 4) {
+				if amountX == 4 || amountY == 4 || amountRightZ == 4 || amountLeftZ == 4 {
 					return b.GetCell(Coords{x, y})
 				}
 			}

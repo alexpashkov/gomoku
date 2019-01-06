@@ -1,6 +1,6 @@
 package minimax
 
-import "board"
+import "gomoku/board"
 
 func isWithinTwoFromOccupiedCell(b board.Board, c board.Coords) bool {
 	for y := -2; y <= 2; y++ {
