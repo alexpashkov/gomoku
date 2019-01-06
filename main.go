@@ -1,11 +1,20 @@
 package main
 
 import (
-	"fmt"
 	"gomoku/board"
+	"gomoku/minimax"
 )
 
 func main() {
-	maps := board.Board{}
-	fmt.Println(maps.IsTerminate())
+	x := 0
+	for n := 0; n < 19*10; n++ {
+		for i := 0; i < 10; i++ {
+			b := board.Board{}
+			b.FillRandomly(n, 1)
+			posMovesLen := len(minimax.PossibleMoves(b))
+			println(posMovesLen)
+			x += posMovesLen
+		}
+	}
+	println(x / (10 * 10 * 10))
 }
