@@ -2,7 +2,7 @@ package board
 
 import "fmt"
 
-func SetChip(maps [19][19]int, coordinates[]int, status[]int) [19][19] int {
+func SetChip(maps [19][19]int, coordinates []int, status []int) [19][19]int {
 	i := 0
 	j := 0
 	amountChip := len(status)
@@ -20,31 +20,31 @@ func IsTerminate(board [19][19]int) int {
 	i := 0
 	for y < 19 {
 		x = 0
-		for x < 19  {
+		for x < 19 {
 			i = 1
 			amountX := 0
 			amountY := 0
 			amountRightZ := 0
 			amountLeftZ := 0
-			if (board[y][x] != 0) {
+			if board[y][x] != 0 {
 				fmt.Println("y = ", y, " x = ", x)
 				for i <= 4 {
-					if (x + i < 19 && board[y][x+i] == board[y][x]) {
+					if x+i < 19 && board[y][x+i] == board[y][x] {
 						amountX++
 					}
-					if (y + i < 19 && board[y+i][x] == board[y][x]) {
+					if y+i < 19 && board[y+i][x] == board[y][x] {
 						amountY++
 					}
-					if (x + i < 19 && y + i < 19 && board[y+i][x+i] == board[y][x]) {
+					if x+i < 19 && y+i < 19 && board[y+i][x+i] == board[y][x] {
 						amountRightZ++
 					}
-					if (x - i > 1 && y + i < 19 && board[y+i][x-i] == board[y][x]) {
+					if x-i > 1 && y+i < 19 && board[y+i][x-i] == board[y][x] {
 						amountLeftZ++
 					}
 					i++
 				}
 				//fmt.Println(amountLeftZ, " y = ", y, " x = ", x)
-				if (amountX == 4 || amountY == 4 || amountRightZ == 4 || amountLeftZ == 4) {
+				if amountX == 4 || amountY == 4 || amountRightZ == 4 || amountLeftZ == 4 {
 					return board[y][x]
 				}
 			}
