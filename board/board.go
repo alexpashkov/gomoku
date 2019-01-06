@@ -1,9 +1,5 @@
 package board
 
-type Coords struct {
-	X, Y int
-}
-
 type Row [19]int8
 type Board [19]Row
 
