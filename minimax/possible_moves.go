@@ -2,15 +2,14 @@ package minimax
 
 import "gomoku/board"
 
-func isWithinTwoFromOccupiedCell(b board.Board, c board.Coords) bool {
-	for y := -2; y <= 2; y++ {
-		for x := -2; x <= 2; x++ {
+func isWithinNFrom(c board.Coords, n int, pred func(coords board.Coords) bool) bool {
+	for y := -n; y <= n; y++ {
+		for x := -n; x <= n; x++ {
 			neighboringCoords := board.Coords{
 				X: c.X + x,
 				Y: c.Y + y,
 			}
-			if neighboringCoords.AreWithin(b) &&
-				!b.CellIsEmpty(neighboringCoords) {
+			if neighboringCoords.AreWithin() && pred(neighboringCoords) {
 				return true
 			}
 		}
@@ -28,7 +27,7 @@ func PossibleMoves(b board.Board) []board.Coords {
 		// from occupied to the set of possible moves
 		// In golang, set data structures are implemented as map[key]bool
 		b.ForEach(func(cell int8, coords board.Coords) {
-			if b.CellIsEmpty(coords) && isWithinTwoFromOccupiedCell(b, coords) {
+			if b.CellIsEmpty(coords) && isWithinNFrom(coords, 2, b.CellIsOccupied) {
 				moves = append(moves, coords)
 			}
 		})

@@ -35,6 +35,11 @@ func (b Board) CellIsEmpty(c Coords) bool {
 	return b.GetCell(c) == 0
 }
 
+// CellIsEmpty tells if a particular cell is not occupied
+func (b Board) CellIsOccupied(c Coords) bool {
+	return !b.CellIsEmpty(c)
+}
+
 // ForEach calls a provided function on every board cell with its values and coordinates
 func (b Board) ForEach(f func(int8, Coords)) {
 	for y, row := range b {
