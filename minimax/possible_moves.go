@@ -1,6 +1,6 @@
 package minimax
 
-import "gomoku/board"
+import "board"
 
 func PossibleMoves(b board.Board, _ int8) []board.Coords {
 	moves := make([]board.Coords, 0, len(b))

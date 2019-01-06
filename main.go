@@ -1,12 +1,11 @@
 package main
 
 import (
+	"board"
 	"fmt"
-	"gomoku/board"
-	"gomoku/minimax"
 )
 
 func main() {
-	board := board.Board{}
-	fmt.Printf("%v", minimax.PossibleMoves(board, 0))
+	maps := board.Board{}
+	fmt.Println(maps.IsTerminate())
 }
