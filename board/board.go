@@ -58,6 +58,7 @@ func (b Board) ForEach(f func(int8, Coords)) {
 }
 
 // IsTerminate a function that checks if there is a winner, and returns who won.
+// author asvirido
 func (b Board) IsTerminate() int8 {
 	for y, row := range b {
 		for x := range row {
@@ -94,6 +95,7 @@ func (b Board) IsTerminate() int8 {
 // GetCaptures a function returns structure Captures,
 // @position is the chips that were captured
 // @enemy is the one who captured
+// author asvirido
 func (b Board) GetCaptures() Captures {
 	for y, row := range b {
 		for x := range row {
