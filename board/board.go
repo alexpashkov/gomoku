@@ -7,7 +7,7 @@ import (
 
 type Captures struct {
 	positions [2]Coords
-	enemy int8
+	enemy     int8
 }
 
 type Row [19]int8
@@ -100,36 +100,36 @@ func (b Board) GetCaptures() Captures {
 	for y, row := range b {
 		for x := range row {
 			if (b.GetCell(Coords{x, y}) != 0) {
-				if (x + 3 < 19 && b.GetCell(Coords{x, y}) == b.GetCell(Coords{x + 3, y})) {
+				if (x+3 < 19 && b.GetCell(Coords{x, y}) == b.GetCell(Coords{x + 3, y})) {
 					if (b.GetCell(Coords{x + 1, y}) != 0 &&
 						b.GetCell(Coords{x + 1, y}) == b.GetCell(Coords{x + 2, y})) {
 						return Captures{
-							positions:[2]Coords{{x + 1, y}, {x + 2, y}},
-							enemy: b.GetCell(Coords{x, y})}
+							positions: [2]Coords{{x + 1, y}, {x + 2, y}},
+							enemy:     b.GetCell(Coords{x, y})}
 					}
 				}
-				if (y + 3 < 19 && b.GetCell(Coords{x, y}) == b.GetCell(Coords{x, y + 3})) {
+				if (y+3 < 19 && b.GetCell(Coords{x, y}) == b.GetCell(Coords{x, y + 3})) {
 					if (b.GetCell(Coords{x, y + 1}) != 0 &&
 						b.GetCell(Coords{x, y + 1}) == b.GetCell(Coords{x, y + 2})) {
 						return Captures{
-							positions:[2]Coords{{x, y + 1}, {x, y + 2}},
-							enemy: b.GetCell(Coords{x, y})}
+							positions: [2]Coords{{x, y + 1}, {x, y + 2}},
+							enemy:     b.GetCell(Coords{x, y})}
 					}
 				}
-				if (y + 3 < 19 && x + 3 < 19 && b.GetCell(Coords{x, y}) == b.GetCell(Coords{x + 3, y + 3})) {
+				if (y+3 < 19 && x+3 < 19 && b.GetCell(Coords{x, y}) == b.GetCell(Coords{x + 3, y + 3})) {
 					if (b.GetCell(Coords{x + 1, y + 1}) != 0 &&
 						b.GetCell(Coords{x + 1, y + 1}) == b.GetCell(Coords{x + 2, y + 2})) {
 						return Captures{
-							positions:[2]Coords{{x + 1, y + 1}, {x + 2, y + 2}},
-							enemy: b.GetCell(Coords{x, y})}
+							positions: [2]Coords{{x + 1, y + 1}, {x + 2, y + 2}},
+							enemy:     b.GetCell(Coords{x, y})}
 					}
 				}
-				if (y + 3 < 19 && x - 3 > 1 && b.GetCell(Coords{x, y}) == b.GetCell(Coords{x - 3, y + 3})) {
+				if (y+3 < 19 && x-3 > 1 && b.GetCell(Coords{x, y}) == b.GetCell(Coords{x - 3, y + 3})) {
 					if (b.GetCell(Coords{x - 1, y + 1}) != 0 &&
 						b.GetCell(Coords{x - 1, y + 1}) == b.GetCell(Coords{x - 2, y + 2})) {
 						return Captures{
-							positions:[2]Coords{{x - 1, y + 1}, {x - 2, y + 2}},
-							enemy: b.GetCell(Coords{x, y})}
+							positions: [2]Coords{{x - 1, y + 1}, {x - 2, y + 2}},
+							enemy:     b.GetCell(Coords{x, y})}
 					}
 				}
 			}
