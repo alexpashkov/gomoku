@@ -1,0 +1,56 @@
+.board {
+  background-color: #eee;
+}
+
+.board__row {
+  display: flex;
+}
+
+.board__cell {
+  width: 30px;
+  height: 30px;
+  position: relative;
+}
+
+.board__cell::before,
+.board__cell::after {
+  content: "";
+  width: 1px;
+  height: 1px;
+  background-color: black;
+  position: absolute;
+}
+
+.board__cell::before {
+  width: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.board__cell::after {
+  height: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.board__mark {
+  width: 70%;
+  height: 70%;
+  border-radius: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+.board__mark--empty {
+}
+
+.board__mark--white {
+  background-color: white;
+}
+
+.board__mark--black {
+  background-color: black;
+}
