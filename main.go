@@ -1,20 +1,30 @@
 package main
 
 import (
+	"encoding/json"
+	"fmt"
 	"gomoku/board"
-	"gomoku/minimax"
+	"io/ioutil"
+	"log"
+	"net/http"
 )
 
 func main() {
-	x := 0
-	for n := 0; n < 19*10; n++ {
-		for i := 0; i < 10; i++ {
-			b := board.Board{}
-			b.FillRandomly(n, 1)
-			posMovesLen := len(minimax.PossibleMoves(b))
-			println(posMovesLen)
-			x += posMovesLen
+	http.HandleFunc("/", func(res http.ResponseWriter, req *http.Request) {
+		if req.Method != "POST" {
+			return
 		}
-	}
-	println(x / (10 * 10 * 10))
+		body, err := ioutil.ReadAll(req.Body)
+		if err != nil {
+			log.Fatalln(err)
+		}
+		brd := board.Board{}
+		err = json.Unmarshal(body, &brd)
+		if err != nil {
+			fmt.Println("Invalid board sent")
+		} else {
+			fmt.Println(brd)
+		}
+	})
+	log.Fatalln(http.ListenAndServe(":4444", nil))
 }

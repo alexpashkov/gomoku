@@ -20,12 +20,21 @@ export default class Game extends Component {
     });
   };
 
+  sendToServer = () => {
+    fetch("http://localhost:4444", {
+      method: "POST",
+      body: JSON.stringify(this.state.board)
+    })
+  }
+
+
   render() {
     const { board, player } = this.state;
     return (
       <div className="game">
         <Board onClick={this.occupyCell}>{board}</Board>
         <CurrentPlayer player={player} onClick={this.setPlayer} />
+        <button onClick={this.sendToServer}>Send</button>
       </div>
     );
   }
