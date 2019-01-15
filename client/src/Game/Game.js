@@ -21,7 +21,7 @@ export default class Game extends Component {
   };
 
   sendToServer = () => {
-    fetch("http://localhost:4444", {
+    fetch("/board", {
       method: "POST",
       body: JSON.stringify(this.state.board)
     })

@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	http.HandleFunc("/", func(res http.ResponseWriter, req *http.Request) {
+	http.HandleFunc("/board", func(res http.ResponseWriter, req *http.Request) {
 		if req.Method != "POST" {
 			return
 		}
@@ -26,5 +26,6 @@ func main() {
 			fmt.Println(brd)
 		}
 	})
+	http.Handle("/", http.FileServer(http.Dir("client/build")))
 	log.Fatalln(http.ListenAndServe(":4444", nil))
 }
