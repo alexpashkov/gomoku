@@ -29,8 +29,9 @@ func main() {
 			fmt.Println(brd)
 			t0 := time.Now()
 			threat = minimax.SearchThreatStraightFour(brd, threat)
+			//threat = minimax.SearchThreatFourInRow(brd, threat)
 			t1 := time.Now()
-			fmt.Printf("Elapsed time: %v", t1.Sub(t0))
+			fmt.Printf("Elapsed time: %s", t1.Sub(t0).Seconds())
 			fmt.Println(threat)
 			threat = []minimax.Threat{}
 		}
