@@ -28,8 +28,15 @@ func main() {
 		} else {
 			fmt.Println(brd)
 			t0 := time.Now()
-			threat = minimax.SearchThreatStraightFour(brd, threat)
-			//threat = minimax.SearchThreatFourInRow(brd, threat)
+			i := 4
+			for i >= 2 {
+				threat = minimax.SearchThreatRowOpen(brd, threat, i)
+				threat = minimax.SearchThreatRowClose(brd, threat, i)
+				fmt.Println(threat)
+				i--
+			}
+			//threat = minimax.SearchThreatRowOpen(brd, threat, 4)
+			//threat = minimax.SearchThreatRowOpen(brd, threat, 2)
 			t1 := time.Now()
 			fmt.Printf("Elapsed time: %s", t1.Sub(t0).Seconds())
 			fmt.Println(threat)
