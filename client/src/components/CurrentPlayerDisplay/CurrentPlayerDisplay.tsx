@@ -1,7 +1,14 @@
-import React from "react";
-import "./CurrentPlayer.css";
+import * as React from "react";
+import { IPlayer } from "../../types";
 
-export default function CurrentPlayer({ player, onClick }) {
+interface ICurrentPlayerDisplayProps {
+  player: IPlayer;
+  onClick(p: IPlayer): any;
+}
+
+const CurrentPlayerDisplay: React.FunctionComponent<
+  ICurrentPlayerDisplayProps
+> = function CurrentPlayerDisplay({ player, onClick }) {
   return (
     <div className="current-player">
       <button
@@ -20,4 +27,6 @@ export default function CurrentPlayer({ player, onClick }) {
       />
     </div>
   );
-}
+};
+
+export default CurrentPlayerDisplay;

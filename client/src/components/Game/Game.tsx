@@ -1,17 +1,24 @@
-import React, { Component } from "react";
-import "./Game.css";
-import Board from "../Board/Board";
-import CurrentPlayer from "./CurrentPlayer";
+import * as React from "react";
+import Board from "../Board";
+import CurrentPlayer from "../CurrentPlayerDisplay";
+import { IBoard, ICoords, IPlayer } from "../../types";
 
-export default class Game extends Component {
+interface IGameState {
+  player: IPlayer;
+  board: IBoard;
+}
+
+export default class Game extends React.Component<{}, IGameState> {
   state = {
-    player: 1,
-    board: Array.from(Array(19)).map(() => Array.from(Array(19)).fill(0))
+    player: IPlayer.Black,
+    board: Array.from(Array(19)).map(() =>
+      Array.from(Array(19)).fill(0)
+    ) as IBoard
   };
 
-  setPlayer = player => this.setState({ player });
+  setPlayer = (player: IPlayer) => this.setState({ player });
 
-  occupyCell = ({ x, y }) => {
+  occupyCell = ({ x, y }: ICoords) => {
     const { player, board } = this.state;
     const cell = board[y][x];
     board[y][x] = cell === player ? 0 : player;
@@ -24,9 +31,8 @@ export default class Game extends Component {
     fetch("/board", {
       method: "POST",
       body: JSON.stringify(this.state.board)
-    })
-  }
-
+    });
+  };
 
   render() {
     const { board, player } = this.state;
