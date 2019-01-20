@@ -8,7 +8,7 @@ interface ICellProps {
   onClick: ICellClickHandler;
 }
 
-function stoneModifier(c: IBoardCell) {
+function stoneModifier(c: IBoardCell): string {
   switch (c) {
     case 0:
       return "none";
@@ -16,6 +16,8 @@ function stoneModifier(c: IBoardCell) {
       return "black";
     case IPlayer.White:
       return "white";
+    default:
+      throw new Error("Invalid board cell value " + c);
   }
 }
 
