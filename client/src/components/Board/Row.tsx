@@ -8,20 +8,19 @@ interface IRowProps {
   onClick: ICellClickHandler;
 }
 
-const Row: React.FunctionComponent<IRowProps> = function Row({
-  children: cells,
-  y,
-  onClick
-}) {
-  return (
-    <div className="board__row">
-      {cells.map((cell, x) => (
-        <Cell x={x} y={y} onClick={onClick} key={x}>
-          {cell}
-        </Cell>
-      ))}
-    </div>
-  );
-};
+class Row extends React.PureComponent<IRowProps> {
+  render(): React.ReactNode {
+    const { children: cells, y, onClick } = this.props;
+    return (
+      <div className="board__row">
+        {cells.map((cell, x) => (
+          <Cell x={x} y={y} onClick={onClick} key={x}>
+            {cell}
+          </Cell>
+        ))}
+      </div>
+    );
+  }
+}
 
 export default Row;

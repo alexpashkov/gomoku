@@ -21,17 +21,15 @@ function stoneModifier(c: IBoardCell): string {
   }
 }
 
-const Cell: React.FunctionComponent<ICellProps> = function Cell({
-  children: cell,
-  x,
-  y,
-  onClick
-}) {
-  return (
-    <div className="board__cell" onClick={() => onClick({ x, y })}>
-      <div className={`board__stone board__stone--${stoneModifier(cell)}`} />
-    </div>
-  );
-};
+class Cell extends React.PureComponent<ICellProps> {
+  render() {
+    const { children: cell, x, y, onClick } = this.props;
+    return (
+      <div className="board__cell" onClick={() => onClick({ x, y })}>
+        <div className={`board__stone board__stone--${stoneModifier(cell)}`} />
+      </div>
+    );
+  }
+}
 
 export default Cell;

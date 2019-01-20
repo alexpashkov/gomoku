@@ -2,6 +2,7 @@ import * as React from "react";
 import Board from "../Board";
 import CurrentPlayer from "../CurrentPlayerDisplay";
 import { IBoard, ICoords, IPlayer } from "../../types";
+import assocPath from "lodash/fp/assocPath";
 
 interface IGameState {
   player: IPlayer;
@@ -23,9 +24,8 @@ export default class Game extends React.Component<{}, IGameState> {
   occupyCell = ({ x, y }: ICoords) => {
     const { player, board } = this.state;
     const cell = board[y][x];
-    board[y][x] = cell === player ? 0 : player;
     this.setState({
-      board
+      board: assocPath([y, x], cell === player ? 0 : player, board)
     });
   };
 

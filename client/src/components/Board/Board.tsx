@@ -7,19 +7,19 @@ interface IBoardProps {
   onClick: ICellClickHandler;
 }
 
-const Board: React.FunctionComponent<IBoardProps> = function Board({
-  children: rows,
-  onClick
-}) {
-  return (
-    <div className="board">
-      {rows.map((row, y) => (
-        <Row y={y} onClick={onClick} key={y}>
-          {row}
-        </Row>
-      ))}
-    </div>
-  );
-};
+class Board extends React.PureComponent<IBoardProps> {
+  render() {
+    const { children: rows, onClick } = this.props;
+    return (
+      <div className="board">
+        {rows.map((row, y) => (
+          <Row y={y} onClick={onClick} key={y}>
+            {row}
+          </Row>
+        ))}
+      </div>
+    );
+  }
+}
 
 export default Board;
