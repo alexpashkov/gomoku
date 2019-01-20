@@ -3,7 +3,7 @@ import { IPlayer } from "../../types";
 
 interface ICurrentPlayerDisplayProps {
   player: IPlayer;
-  onClick(p: IPlayer): any;
+  onClick(p: IPlayer): void;
 }
 
 const CurrentPlayerDisplay: React.FunctionComponent<
@@ -12,17 +12,17 @@ const CurrentPlayerDisplay: React.FunctionComponent<
   return (
     <div className="current-player">
       <button
-        onClick={() => player !== 1 && onClick(1)}
+        onClick={() => player !== IPlayer.Black && onClick(IPlayer.Black)}
         className={
-          "current-player__btn current-player__btn--white" +
-          (player === 1 ? " current-player__btn--selected" : "")
+          "current-player__btn current-player__btn--black" +
+          (player === IPlayer.Black ? " current-player__btn--selected" : "")
         }
       />
       <button
-        onClick={() => player !== 2 && onClick(2)}
+        onClick={() => player !== IPlayer.White && onClick(IPlayer.White)}
         className={
-          "current-player__btn current-player__btn--black" +
-          (player === 2 ? " current-player__btn--selected" : "")
+          "current-player__btn current-player__btn--white" +
+          (player === IPlayer.White ? " current-player__btn--selected" : "")
         }
       />
     </div>

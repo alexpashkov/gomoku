@@ -16,7 +16,9 @@ export default class Game extends React.Component<{}, IGameState> {
     ) as IBoard
   };
 
-  setPlayer = (player: IPlayer) => this.setState({ player });
+  setPlayer = (player: IPlayer) => {
+    this.setState({ player });
+  };
 
   occupyCell = ({ x, y }: ICoords) => {
     const { player, board } = this.state;

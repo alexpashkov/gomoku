@@ -1,5 +1,6 @@
 export enum IPlayer {
-  Black, White
+  Black = 1,
+  White = 2
 }
 
 export type IBoardCell = 0 | IPlayer;

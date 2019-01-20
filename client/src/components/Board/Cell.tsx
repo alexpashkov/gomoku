@@ -1,5 +1,5 @@
 import * as React from "react";
-import { IBoardCell, ICellClickHandler, ICoords } from "../../types";
+import { IBoardCell, ICellClickHandler, IPlayer } from "../../types";
 
 interface ICellProps {
   children: IBoardCell;
@@ -12,10 +12,10 @@ function stoneModifier(c: IBoardCell) {
   switch (c) {
     case 0:
       return "none";
-    case 1:
-      return "white";
-    case 2:
+    case IPlayer.Black:
       return "black";
+    case IPlayer.White:
+      return "white";
   }
 }
 
