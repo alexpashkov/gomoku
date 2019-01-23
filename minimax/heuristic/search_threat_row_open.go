@@ -1,4 +1,4 @@
-package minimax
+package heuristic
 
 import "gomoku/board"
 

@@ -1,6 +1,8 @@
-package minimax
+package heuristic
 
-import "gomoku/board"
+import (
+	"gomoku/board"
+)
 
 func SearchThreatRowClose(b board.Board, threat []Threat, len int) []Threat{
 	for y, row := range b {
@@ -26,8 +28,8 @@ func SearchThreatRowClose(b board.Board, threat []Threat, len int) []Threat{
 						}
 
 						if y - 1 >= 0 && y + len < 19 {
-							if ((b.GetCell(board.Coords{x - 1, y - 1}) == 0 && b.GetCell(board.Coords{x + len, y + len}) != 0 && (b.GetCell(board.Coords{x + len, y + len}) != current)) ||
-								(b.GetCell(board.Coords{x - 1, y - 1}) != 0 && b.GetCell(board.Coords{x + len, y + len}) == 0 && b.GetCell(board.Coords{x - 1, y - 1}) != current) &&
+							if (((b.GetCell(board.Coords{x - 1, y - 1}) == 0 && b.GetCell(board.Coords{x + len, y + len}) != 0 && b.GetCell(board.Coords{x + len, y + len}) != current) ||
+								(b.GetCell(board.Coords{x - 1, y - 1}) != 0 && b.GetCell(board.Coords{x + len, y + len}) == 0 && b.GetCell(board.Coords{x - 1, y - 1}) != current)) &&
 								(b.GetCell(board.Coords{x + i, y + i}) == current)) {
 								amountRightZ++
 								positionsRightZ = append(positionsRightZ, board.Coords{x + i, y + i})
