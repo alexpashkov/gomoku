@@ -26,7 +26,9 @@ func main() {
 		if err != nil {
 			fmt.Println("Invalid board sent")
 		} else {
-			fmt.Println(heuristic.IsTerminate(brd, 0, 10))
+			//fmt.Println(brd)
+			fmt.Println(heuristic.Evaluation(brd, 6, 8))
+			//fmt.Println(heuristic.IsTerminate(brd, 0, 10))
 			//fmt.Println(brd)
 			//t0 := time.Now()
 			//i := 4

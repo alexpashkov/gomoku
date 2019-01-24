@@ -7,4 +7,5 @@ type Threat struct {
 	owner		int8
 	size 		int8
 	status		int8
+	rate		int
 }
