@@ -1,8 +1,12 @@
-import * as React from "react";
+import React from "react";
 import Board from "../Board";
 import CurrentPlayer from "../CurrentPlayerDisplay";
 import { IBoard, ICoords, IPlayer } from "../../types";
 import assocPath from "lodash/fp/assocPath";
+import GameStyles from "./Game.module.css";
+
+interface IGameProps {
+}
 
 interface IGameState {
   player: IPlayer;
@@ -37,9 +41,10 @@ export default class Game extends React.Component<{}, IGameState> {
   };
 
   render() {
+    console.log(this.props)
     const { board, player } = this.state;
     return (
-      <div className="game">
+      <div className={GameStyles.container}>
         <Board onClick={this.occupyCell}>{board}</Board>
         <CurrentPlayer player={player} onClick={this.setPlayer} />
         <button onClick={this.sendToServer}>Send</button>

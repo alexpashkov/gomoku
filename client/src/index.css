@@ -1,0 +1,17 @@
+*, *::before, *::after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+}
+
+#root {
+    min-width: 400px;
+    max-width: 1000px;
+    border: 1px dotted red;
+    margin: 0 auto;
+    height: 100%;
+}
