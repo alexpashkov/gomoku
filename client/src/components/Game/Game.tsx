@@ -4,6 +4,7 @@ import CurrentPlayer from "../CurrentPlayerDisplay";
 import { GameType, IBoard, ICoords, IPlayer } from "../../types";
 import assocPath from "lodash/fp/assocPath";
 import GameStyles from "./Game.module.css";
+import * as API from "../../API";
 
 export interface IGameProps {
   id: string;
@@ -29,25 +30,33 @@ export default class Game extends React.Component<IGameProps, IGameState> {
     this.setState({ player });
   };
 
-  occupyCell = ({ x, y }: ICoords) => {
+  occupyCell = (coords: ICoords) => {
     const { type } = this.props;
     const { player, board } = this.state;
-    const cell = board[y][x];
+    const cell = board[coords.y][coords.x];
 
     switch (type) {
       case GameType.vsFriend:
-        return (
-          !cell &&
-          this.setState({
-            board: assocPath([y, x], cell === player ? 0 : player, board),
-            player: getNextPlayer(player)
-          })
-        );
+        return API.validateMove(board, player, coords).then(valid => {
+          valid &&
+            this.setState({
+              board: assocPath(
+                [coords.y, coords.x],
+                cell === player ? 0 : player,
+                board
+              ),
+              player: getNextPlayer(player)
+            });
+        });
       case GameType.vsComputer:
         return console.warn("Not implemented");
       case GameType.debug:
         return this.setState({
-          board: assocPath([y, x], cell === player ? 0 : player, board)
+          board: assocPath(
+            [coords.y, coords.x],
+            cell === player ? 0 : player,
+            board
+          )
         });
     }
   };
