@@ -10,7 +10,7 @@ const GameCreator: React.FunctionComponent<{}> = function() {
       <br />
       <Link to={`/game/${gameId}/${GameType.vsComputer}`}>Play Computer</Link>
     </React.Fragment>
-  );
+  )
 };
 
 export default GameCreator;

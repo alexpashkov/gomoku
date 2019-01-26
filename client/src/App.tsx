@@ -5,8 +5,8 @@ import {
   Route,
   RouteComponentProps
 } from "react-router-dom";
-import GameCreator from "./components/GameCreator";
-import Game from "./components/Game";
+import GameCreator from "./components/GameCreator/GameCreator";
+import Game from "./components/Game/Game";
 import { IGameProps } from "./components/Game/Game";
 
 class App extends Component {
