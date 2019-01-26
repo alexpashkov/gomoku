@@ -5,7 +5,14 @@ import { IBoard, ICoords, IPlayer } from "../../types";
 import assocPath from "lodash/fp/assocPath";
 import GameStyles from "./Game.module.css";
 
-interface IGameProps {
+export enum GameType {
+  vsFriend = "vsFriend",
+  vsComputer = "vsComputer"
+}
+
+export interface IGameProps {
+  id: string;
+  type: GameType;
 }
 
 interface IGameState {
@@ -13,7 +20,7 @@ interface IGameState {
   board: IBoard;
 }
 
-export default class Game extends React.Component<{}, IGameState> {
+export default class Game extends React.Component<IGameProps, IGameState> {
   state = {
     player: IPlayer.Black,
     board: Array.from(Array(19)).map(() =>
@@ -41,7 +48,6 @@ export default class Game extends React.Component<{}, IGameState> {
   };
 
   render() {
-    console.log(this.props)
     const { board, player } = this.state;
     return (
       <div className={GameStyles.container}>

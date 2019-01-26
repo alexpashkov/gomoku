@@ -1,16 +1,30 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Link,
+  Route,
+  RouteComponentProps
+} from "react-router-dom";
 import GameCreator from "./components/GameCreator";
 import Game from "./components/Game";
+import { IGameProps } from "./components/Game/Game";
 
 class App extends Component {
+  renderGame = ({
+    match: {
+      params: { id, type }
+    }
+  }: RouteComponentProps<IGameProps>) => <Game id={id} type={type} />;
+
   render() {
     return (
       <Router>
         <React.Fragment>
-          <h1>Gomoku</h1>
-          <Route component={GameCreator} path="/" exact={true} />
-          <Route component={Game} path="/game/:id/:type" exact={true} />
+          <h1>
+            <Link to="/">Gomoku</Link>
+          </h1>
+          <Route path="/" exact={true} component={GameCreator} />
+          <Route path="/game/:id/:type" exact={true} render={this.renderGame} />
         </React.Fragment>
       </Router>
     );
