@@ -9,6 +9,12 @@ interface IBoardProps {
 }
 
 class Board extends React.PureComponent<IBoardProps> {
+  static init(): IBoard {
+    return Array.from(Array(19)).map(() =>
+      Array.from(Array(19)).fill(0)
+    ) as IBoard;
+  }
+
   render() {
     const { children: rows, onClick } = this.props;
     return (

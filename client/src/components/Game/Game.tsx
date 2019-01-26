@@ -15,16 +15,14 @@ interface IGameState {
   board: IBoard;
 }
 
-function initBoard(): IBoard {
-  return Array.from(Array(19)).map(() =>
-    Array.from(Array(19)).fill(0)
-  ) as IBoard;
+function getNextPlayer(p: IPlayer) {
+  return p == IPlayer.Black ? IPlayer.White : IPlayer.Black;
 }
 
 export default class Game extends React.Component<IGameProps, IGameState> {
   state = {
     player: IPlayer.Black,
-    board: initBoard()
+    board: Board.init()
   };
 
   setPlayer = (player: IPlayer) => {
@@ -32,11 +30,26 @@ export default class Game extends React.Component<IGameProps, IGameState> {
   };
 
   occupyCell = ({ x, y }: ICoords) => {
+    const { type } = this.props;
     const { player, board } = this.state;
     const cell = board[y][x];
-    this.setState({
-      board: assocPath([y, x], cell === player ? 0 : player, board)
-    });
+
+    switch (type) {
+      case GameType.vsFriend:
+        return (
+          !cell &&
+          this.setState({
+            board: assocPath([y, x], cell === player ? 0 : player, board),
+            player: getNextPlayer(player)
+          })
+        );
+      case GameType.vsComputer:
+        return console.warn("Not implemented");
+      case GameType.debug:
+        return this.setState({
+          board: assocPath([y, x], cell === player ? 0 : player, board)
+        });
+    }
   };
 
   sendBoardToServer = () => {
