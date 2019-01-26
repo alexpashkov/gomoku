@@ -52,12 +52,16 @@ export default class Game extends React.Component<IGameProps, IGameState> {
     return (
       <div className={GameStyles.container}>
         <Board onClick={this.occupyCell}>{board}</Board>
-        <CurrentPlayer
-          player={player}
-          onClick={this.setPlayer}
-          allowPlayerSelection={type == GameType.debugMode}
-        />
-        <button onClick={this.sendBoardToServer}>Send To Server</button>
+        <div className={GameStyles.sidebar}>
+          <CurrentPlayer
+            player={player}
+            onClick={this.setPlayer}
+            allowPlayerSelection={type == GameType.debug}
+          />
+          {type === GameType.debug && (
+            <button onClick={this.sendBoardToServer}>Send To Server</button>
+          )}
+        </div>
       </div>
     );
   }

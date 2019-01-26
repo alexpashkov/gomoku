@@ -10,7 +10,7 @@ const GameCreator: React.FunctionComponent<{}> = function() {
       <br />
       <Link to={`/game/${gameId}/${GameType.vsComputer}`}>Play Computer</Link>
       <br />
-      <Link to={`/game/${gameId}/${GameType.debugMode}`}>Debug Mode</Link>
+      <Link to={`/game/${gameId}/${GameType.debug}`}>Debug Mode</Link>
     </React.Fragment>
   );
 };

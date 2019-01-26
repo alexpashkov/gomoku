@@ -1,7 +1,7 @@
 export enum GameType {
   vsFriend = "vsFriend",
   vsComputer = "vsComputer",
-  debugMode = "debugMode"
+  debug = "debug"
 }
 
 export enum IPlayer {

@@ -12,11 +12,11 @@ interface ICellProps {
 function stoneClassName(c: IBoardCell): string {
   switch (c) {
     case 0:
-      return BoardStyles["stone--none"];
+      return BoardStyles.stone__none;
     case IPlayer.Black:
-      return BoardStyles["stone--black"];
+      return BoardStyles.stone__black;
     case IPlayer.White:
-      return BoardStyles["stone--white"];
+      return BoardStyles.stone__white;
     default:
       throw new Error("Invalid board cell value " + c);
   }

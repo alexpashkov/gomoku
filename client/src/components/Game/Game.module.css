@@ -1,3 +1,7 @@
 .container {
   display: flex;
 }
+
+.sidebar {
+    padding: 0 10px;
+}

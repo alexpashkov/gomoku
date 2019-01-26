@@ -1,5 +1,7 @@
 import * as React from "react";
 import { IPlayer } from "../../types";
+import CurrentPlayerDisplayStyles from "./CurrentPlayerDisplay.module.css";
+import c from "classnames";
 
 interface ICurrentPlayerDisplayProps {
   player: IPlayer;
@@ -11,21 +13,23 @@ const CurrentPlayerDisplay: React.FunctionComponent<
   ICurrentPlayerDisplayProps
 > = function CurrentPlayerDisplay({ player, onClick, allowPlayerSelection }) {
   return (
-    <div className="current-player">
+    <div>
       <button
         onClick={() => player !== IPlayer.Black && onClick(IPlayer.Black)}
-        className={
-          "current-player__btn current-player__btn--black" +
-          (player === IPlayer.Black ? " current-player__btn--selected" : "")
-        }
+        className={c(
+          CurrentPlayerDisplayStyles.btn,
+          CurrentPlayerDisplayStyles.btn__black,
+          player === IPlayer.Black && CurrentPlayerDisplayStyles.btn__selected
+        )}
         disabled={!allowPlayerSelection}
       />
       <button
         onClick={() => player !== IPlayer.White && onClick(IPlayer.White)}
-        className={
-          "current-player__btn current-player__btn--white" +
-          (player === IPlayer.White ? " current-player__btn--selected" : "")
-        }
+        className={c(
+          CurrentPlayerDisplayStyles.btn,
+          CurrentPlayerDisplayStyles.btn__white,
+          player === IPlayer.White && CurrentPlayerDisplayStyles.btn__selected
+        )}
         disabled={!allowPlayerSelection}
       />
     </div>
