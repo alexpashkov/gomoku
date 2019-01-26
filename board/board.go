@@ -57,50 +57,14 @@ func (b Board) ForEach(f func(int8, Coords)) {
 	}
 }
 
-// IsTerminate a function that checks if there is a winner, and returns who won.
-// author asvirido
-func (b Board) IsTerminate() int8 {
-	for y, row := range b {
-		for x := range row {
-			if (b.GetCell(Coords{x, y}) != 0) {
-				i := 1
-				amountX := 0
-				amountY := 0
-				amountRightZ := 0
-				amountLeftZ := 0
-				for i <= 4 {
-					if (x+i < 19 && b.GetCell(Coords{x + i, y}) == b.GetCell(Coords{x, y})) {
-						amountX++
-					}
-					if (y+i < 19 && b.GetCell(Coords{x, y + i}) == b.GetCell(Coords{x, y})) {
-						amountY++
-					}
-					if (x+i < 19 && y+i < 19 && b.GetCell(Coords{x + i, y + i}) == b.GetCell(Coords{x, y})) {
-						amountRightZ++
-					}
-					if (x-i > 1 && y+i < 19 && b.GetCell(Coords{x - i, y + i}) == b.GetCell(Coords{x, y})) {
-						amountLeftZ++
-					}
-					i++
-				}
-				if amountX == 4 || amountY == 4 || amountRightZ == 4 || amountLeftZ == 4 {
-					return b.GetCell(Coords{x, y})
-				}
-			}
-		}
-	}
-	return 0
-}
-
 // GetCaptures a function returns structure Captures,
 // @position is the chips that were captured
 // @enemy is the one who captured
-// author asvirido
 func (b Board) GetCaptures() Captures {
 	for y, row := range b {
 		for x := range row {
 			if (b.GetCell(Coords{x, y}) != 0) {
-				if (x+3 < 19 && b.GetCell(Coords{x, y}) == b.GetCell(Coords{x + 3, y})) {
+				if (x + 3 < 19 && b.GetCell(Coords{x, y}) == b.GetCell(Coords{x + 3, y})) {
 					if (b.GetCell(Coords{x + 1, y}) != 0 &&
 						b.GetCell(Coords{x + 1, y}) == b.GetCell(Coords{x + 2, y})) {
 						return Captures{
@@ -108,7 +72,7 @@ func (b Board) GetCaptures() Captures {
 							enemy:     b.GetCell(Coords{x, y})}
 					}
 				}
-				if (y+3 < 19 && b.GetCell(Coords{x, y}) == b.GetCell(Coords{x, y + 3})) {
+				if (y + 3 < 19 && b.GetCell(Coords{x, y}) == b.GetCell(Coords{x, y + 3})) {
 					if (b.GetCell(Coords{x, y + 1}) != 0 &&
 						b.GetCell(Coords{x, y + 1}) == b.GetCell(Coords{x, y + 2})) {
 						return Captures{
@@ -116,7 +80,7 @@ func (b Board) GetCaptures() Captures {
 							enemy:     b.GetCell(Coords{x, y})}
 					}
 				}
-				if (y+3 < 19 && x+3 < 19 && b.GetCell(Coords{x, y}) == b.GetCell(Coords{x + 3, y + 3})) {
+				if (y + 3 < 19 && x + 3 < 19 && b.GetCell(Coords{x, y}) == b.GetCell(Coords{x + 3, y + 3})) {
 					if (b.GetCell(Coords{x + 1, y + 1}) != 0 &&
 						b.GetCell(Coords{x + 1, y + 1}) == b.GetCell(Coords{x + 2, y + 2})) {
 						return Captures{
@@ -124,7 +88,7 @@ func (b Board) GetCaptures() Captures {
 							enemy:     b.GetCell(Coords{x, y})}
 					}
 				}
-				if (y+3 < 19 && x-3 > 1 && b.GetCell(Coords{x, y}) == b.GetCell(Coords{x - 3, y + 3})) {
+				if (y + 3 < 19 && x - 3 > 1 && b.GetCell(Coords{x, y}) == b.GetCell(Coords{x - 3, y + 3})) {
 					if (b.GetCell(Coords{x - 1, y + 1}) != 0 &&
 						b.GetCell(Coords{x - 1, y + 1}) == b.GetCell(Coords{x - 2, y + 2})) {
 						return Captures{
