@@ -1,3 +1,9 @@
+export enum GameType {
+  vsFriend = "vsFriend",
+  vsComputer = "vsComputer",
+  debugMode = "debugMode"
+}
+
 export enum IPlayer {
   Black = 1,
   White = 2

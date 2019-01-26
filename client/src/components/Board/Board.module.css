@@ -1,19 +1,18 @@
-.board {
-  background-color: #eee;
+.container {
 }
 
-.board__row {
+.row {
   display: flex;
 }
 
-.board__cell {
+.cell {
   width: 30px;
   height: 30px;
   position: relative;
 }
 
-.board__cell::before,
-.board__cell::after {
+.cell::before,
+.cell::after {
   content: "";
   width: 1px;
   height: 1px;
@@ -21,19 +20,19 @@
   position: absolute;
 }
 
-.board__cell::before {
+.cell::before {
   width: 100%;
   top: 50%;
   transform: translateY(-50%);
 }
 
-.board__cell::after {
+.cell::after {
   height: 100%;
   left: 50%;
   transform: translateX(-50%);
 }
 
-.board__stone {
+.stone {
   width: 70%;
   height: 70%;
   border-radius: 100%;
@@ -44,13 +43,13 @@
   z-index: 1;
 }
 
-.board__stone--none {
+.stone--none {
 }
 
-.board__stone--white {
+.stone--white {
   background-color: white;
 }
 
-.board__stone--black {
+.stone--black {
   background-color: black;
 }

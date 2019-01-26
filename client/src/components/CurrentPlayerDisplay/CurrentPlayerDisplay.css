@@ -1,12 +1,13 @@
-.current-player {
-}
-
 .current-player__btn {
   width: 30px;
   height: 30px;
   border-radius: 100%;
   margin: 3px;
   cursor: pointer;
+}
+
+.current-player__btn:disabled {
+  cursor: default;
 }
 
 .current-player__btn:focus {

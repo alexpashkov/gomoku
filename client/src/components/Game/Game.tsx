@@ -1,14 +1,9 @@
 import React from "react";
-import Board from "../Board";
+import Board from "../Board/Board";
 import CurrentPlayer from "../CurrentPlayerDisplay";
-import { IBoard, ICoords, IPlayer } from "../../types";
+import { GameType, IBoard, ICoords, IPlayer } from "../../types";
 import assocPath from "lodash/fp/assocPath";
 import GameStyles from "./Game.module.css";
-
-export enum GameType {
-  vsFriend = "vsFriend",
-  vsComputer = "vsComputer"
-}
 
 export interface IGameProps {
   id: string;
@@ -20,12 +15,16 @@ interface IGameState {
   board: IBoard;
 }
 
+function initBoard(): IBoard {
+  return Array.from(Array(19)).map(() =>
+    Array.from(Array(19)).fill(0)
+  ) as IBoard;
+}
+
 export default class Game extends React.Component<IGameProps, IGameState> {
   state = {
     player: IPlayer.Black,
-    board: Array.from(Array(19)).map(() =>
-      Array.from(Array(19)).fill(0)
-    ) as IBoard
+    board: initBoard()
   };
 
   setPlayer = (player: IPlayer) => {
@@ -40,7 +39,7 @@ export default class Game extends React.Component<IGameProps, IGameState> {
     });
   };
 
-  sendToServer = () => {
+  sendBoardToServer = () => {
     fetch("/board", {
       method: "POST",
       body: JSON.stringify(this.state.board)
@@ -48,12 +47,17 @@ export default class Game extends React.Component<IGameProps, IGameState> {
   };
 
   render() {
+    const { type } = this.props;
     const { board, player } = this.state;
     return (
       <div className={GameStyles.container}>
         <Board onClick={this.occupyCell}>{board}</Board>
-        <CurrentPlayer player={player} onClick={this.setPlayer} />
-        <button onClick={this.sendToServer}>Send</button>
+        <CurrentPlayer
+          player={player}
+          onClick={this.setPlayer}
+          allowPlayerSelection={type == GameType.debugMode}
+        />
+        <button onClick={this.sendBoardToServer}>Send To Server</button>
       </div>
     );
   }
