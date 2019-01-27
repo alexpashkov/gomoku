@@ -119,14 +119,16 @@ export default class Game extends React.Component<IGameProps, IGameState> {
     const { board, player, aiResponseTime } = this.state;
     return (
       <div className={GameStyles.container}>
-        <div className={GameStyles.sidebar}>
+        <div className={GameStyles.infoPanel}>
           <CurrentPlayer
             player={player}
             onClick={this.setPlayer}
             allowPlayerSelection={type == GameType.debug}
           />
           {type === GameType.vsComputer && !!aiResponseTime && (
-            <div>{aiResponseTime}</div>
+            <div className={GameStyles.responseTime}>
+              AI Response Time: {aiResponseTime}ms
+            </div>
           )}
           {type === GameType.debug && (
             <button onClick={this.sendBoardToServer}>Send To Server</button>

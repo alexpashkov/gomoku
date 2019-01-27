@@ -1,7 +1,11 @@
 .container {
-  /*display: flex;*/
 }
 
-.sidebar {
-    padding: 0 10px;
+.infoPanel {
+    display: flex;
+    align-items: center;
+}
+
+.responseTime {
+    margin-left: 10px;
 }
