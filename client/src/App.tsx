@@ -5,16 +5,24 @@ import {
   Route,
   RouteComponentProps
 } from "react-router-dom";
+import queryString from "querystring";
 import GameCreator from "./components/GameCreator/GameCreator";
 import Game from "./components/Game/Game";
-import { IGameProps } from "./components/Game/Game";
+import { GameType } from "./types";
 
 class App extends Component {
   renderGame = ({
     match: {
       params: { id, type }
-    }
-  }: RouteComponentProps<IGameProps>) => <Game id={id} type={type} />;
+    },
+    location: { search }
+  }: RouteComponentProps<{
+    id: string;
+    type: GameType;
+  }>) => {
+    const { aiPlayer } = queryString.parse(search.replace("?", ""));
+    return <Game id={id} type={type} aiPlayer={+aiPlayer} />;
+  };
 
   render() {
     return (
