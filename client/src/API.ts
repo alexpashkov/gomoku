@@ -1,6 +1,13 @@
 import { IBoard, ICoords, IPlayer, IScores } from "./types";
 
-const BASE_URL = "http://localhost:4444";
+const BASE_URL = process.env.REACT_APP_BASE_URL;
+
+export function sendBoard(board: IBoard) {
+  fetch(BASE_URL + "/board", {
+    method: "POST",
+    body: JSON.stringify(board)
+  });
+}
 
 export function validateMove(
   board: IBoard,

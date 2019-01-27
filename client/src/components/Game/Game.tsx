@@ -107,12 +107,7 @@ export default class Game extends React.Component<IGameProps, IGameState> {
     }
   };
 
-  sendBoardToServer = () => {
-    fetch("/board", {
-      method: "POST",
-      body: JSON.stringify(this.state.board)
-    });
-  };
+  sendBoardToServer = () => API.sendBoard(this.state.board);
 
   render() {
     const { type } = this.props;
