@@ -19,6 +19,7 @@ interface IGameState {
   whiteScore: number;
   suggestedMoves: ICoords[];
   aiIsThinking: boolean;
+  aiResponseTime: number;
 }
 
 function getNextPlayer(p: IPlayer) {
@@ -26,19 +27,20 @@ function getNextPlayer(p: IPlayer) {
 }
 
 export default class Game extends React.Component<IGameProps, IGameState> {
-  componentWillMount(): void {
+  componentDidMount(): void {
     const { type, aiPlayer } = this.props;
     const { player } = this.state;
     if (type === GameType.vsComputer && player === aiPlayer) this.aiMove();
   }
 
-  state = {
+  state: IGameState = {
     player: IPlayer.Black,
     board: Board.init(),
     blackScore: 0,
     whiteScore: 0,
     suggestedMoves: [],
-    aiIsThinking: false
+    aiIsThinking: false,
+    aiResponseTime: 0
   };
 
   setPlayer = (player: IPlayer) => {
@@ -53,13 +55,16 @@ export default class Game extends React.Component<IGameProps, IGameState> {
   };
 
   aiMove = () => {
+    const now = Date.now();
     this.setState({
       aiIsThinking: true
     });
     API.suggestMove(this.state).then(coords => {
+      const aiResponseTime = Date.now() - now;
       this.placeStone(coords);
       this.setState({
-        aiIsThinking: false
+        aiIsThinking: false,
+        aiResponseTime
       });
     });
   };
@@ -111,20 +116,23 @@ export default class Game extends React.Component<IGameProps, IGameState> {
 
   render() {
     const { type } = this.props;
-    const { board, player } = this.state;
+    const { board, player, aiResponseTime } = this.state;
     return (
       <div className={GameStyles.container}>
-        <Board onClick={this.handleCellClick}>{board}</Board>
         <div className={GameStyles.sidebar}>
           <CurrentPlayer
             player={player}
             onClick={this.setPlayer}
             allowPlayerSelection={type == GameType.debug}
           />
+          {type === GameType.vsComputer && !!aiResponseTime && (
+            <div>{aiResponseTime}</div>
+          )}
           {type === GameType.debug && (
             <button onClick={this.sendBoardToServer}>Send To Server</button>
           )}
         </div>
+        <Board onClick={this.handleCellClick}>{board}</Board>
       </div>
     );
   }
