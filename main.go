@@ -3,11 +3,12 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"gomoku/api/suggest_move"
 	"gomoku/board"
+	"gomoku/minimax/heuristic"
 	"io/ioutil"
 	"log"
 	"net/http"
-	"gomoku/minimax/heuristic"
 )
 
 func main() {
@@ -46,7 +47,7 @@ func main() {
 			//threat = []minimax.Threat{}
 		}
 	})
+	http.HandleFunc("/suggest-move", suggest_move.Handler)
 	http.Handle("/", http.FileServer(http.Dir("client/build")))
 	log.Fatalln(http.ListenAndServe(":4444", nil))
 }
-
