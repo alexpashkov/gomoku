@@ -8,8 +8,8 @@ const GameCreator: React.FunctionComponent<{}> = function() {
     <React.Fragment>
       <Link to={`/game/${gameId}/${GameType.vsFriend}`}>Play a Friend</Link>
       <br />
-      <Link to={`/game/${gameId}/${GameType.vsComputer}`}>Play Computer</Link>
-      <br />
+      {/*<Link to={`/game/${gameId}/${GameType.vsComputer}`}>Play Computer</Link>*/}
+      {/*<br />*/}
       <Link to={`/game/${gameId}/${GameType.debug}`}>Debug Mode</Link>
     </React.Fragment>
   );
