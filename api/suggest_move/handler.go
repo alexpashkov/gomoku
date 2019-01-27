@@ -20,5 +20,14 @@ func Handler(res http.ResponseWriter, req *http.Request) {
 		res.WriteHeader(http.StatusBadRequest)
 		return
 	}
-	res.WriteHeader(http.StatusOK)
+	coords := reqBody.Board.RandomCoords()
+	for ; reqBody.Board.CellIsOccupied(coords); coords = reqBody.Board.RandomCoords() {
+	}
+	coordsJSON, err := json.Marshal(coords)
+	if err != nil {
+		res.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+	res.Header().Set("Content-Type", "application/json")
+	_, err = res.Write(coordsJSON)
 }

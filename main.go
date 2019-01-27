@@ -13,7 +13,6 @@ import (
 
 func main() {
 	//threat := []heuristic.Threat{}
-
 	http.HandleFunc("/board", func(res http.ResponseWriter, req *http.Request) {
 		if req.Method != "POST" {
 			return
