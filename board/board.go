@@ -5,10 +5,6 @@ import (
 	"time"
 )
 
-type Captures struct {
-	positions [2]Coords
-	enemy     int8
-}
 
 type Row [19]int8
 type Board [19]Row
@@ -99,7 +95,7 @@ func (b Board) GetCaptures() Captures {
 			}
 		}
 	}
-	return Captures{}
+	return Captures{[2]Coords{{ 0, 0}, { 0,  0}}, 0}
 }
 
 func (b Board) RandomCoords() Coords {
