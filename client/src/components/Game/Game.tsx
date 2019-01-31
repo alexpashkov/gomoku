@@ -16,7 +16,7 @@ interface IGameState {
   player: IPlayer;
   board: IBoard;
   scores: IScores;
-  suggestedMoves: ICoords[];
+  suggestions: ICoords[];
   aiIsThinking: boolean;
   aiResponseTime: number;
 }
@@ -36,7 +36,7 @@ export default class Game extends React.Component<IGameProps, IGameState> {
     player: IPlayer.Black,
     board: Board.init(),
     scores: [0, 0],
-    suggestedMoves: [],
+    suggestions: [],
     aiIsThinking: false,
     aiResponseTime: 0
   };
@@ -52,18 +52,33 @@ export default class Game extends React.Component<IGameProps, IGameState> {
     });
   };
 
-  aiMove = () => {
+  aiFetch = () => {
     this.setState({
       aiIsThinking: true
     });
     const now = Date.now();
-    API.suggestMove(this.state).then((moves: ICoords[]) => {
-      const [coords] = moves;
-      const aiResponseTime = Date.now() - now;
-      this.placeStone(coords);
+    return API.suggestMoves(this.state).then(moves => {
       this.setState({
         aiIsThinking: false,
-        aiResponseTime
+        aiResponseTime: Date.now() - now
+      });
+      return moves;
+    });
+  };
+
+  aiMove = () => {
+    this.setState({
+      suggestions: []
+    });
+    this.aiFetch().then((moves: ICoords[]) => {
+      this.placeStone(moves[0]);
+    });
+  };
+
+  showSuggestions = () => {
+    this.aiFetch().then(suggestions => {
+      this.setState({
+        suggestions
       });
     });
   };
@@ -90,7 +105,10 @@ export default class Game extends React.Component<IGameProps, IGameState> {
         board: assocPath([coords.y, coords.x], player, board),
         player: nextPlayer
       },
-      () => nextPlayer == aiPlayer && this.aiMove()
+      () => {
+        if (nextPlayer == aiPlayer) return this.aiMove();
+        this.showSuggestions();
+      }
     );
   };
 
@@ -115,7 +133,7 @@ export default class Game extends React.Component<IGameProps, IGameState> {
 
   render() {
     const { type } = this.props;
-    const { board, player, aiResponseTime } = this.state;
+    const { board, player, suggestions, aiResponseTime } = this.state;
     return (
       <div className={GameStyles.container}>
         <div className={GameStyles.infoPanel}>
@@ -133,7 +151,9 @@ export default class Game extends React.Component<IGameProps, IGameState> {
             <button onClick={this.sendBoardToServer}>Send To Server</button>
           )}
         </div>
-        <Board onClick={this.handleCellClick}>{board}</Board>
+        <Board suggestions={suggestions} onClick={this.handleCellClick}>
+          {board}
+        </Board>
       </div>
     );
   }

@@ -18,7 +18,7 @@ export function validateMove(
   return Promise.resolve(!cell);
 }
 
-export function suggestMove(params: {
+export function suggestMoves(params: {
   board: IBoard;
   player: IPlayer;
   scores: IScores
