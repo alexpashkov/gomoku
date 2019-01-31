@@ -9,6 +9,8 @@ export enum IPlayer {
   White = 2
 }
 
+export type IScores = [number, number];
+
 export type IBoardCell = 0 | IPlayer;
 
 export type IBoardRow = [
@@ -61,8 +63,3 @@ export interface ICoords {
 }
 
 export type ICellClickHandler = (coords: ICoords) => void;
-
-export interface IScores {
-  1: number;
-  2: number;
-}

@@ -1,7 +1,7 @@
 import React from "react";
 import Board from "../Board/Board";
 import CurrentPlayer from "../CurrentPlayerDisplay";
-import { GameType, IBoard, ICoords, IPlayer } from "../../types";
+import { GameType, IBoard, ICoords, IPlayer, IScores } from "../../types";
 import assocPath from "lodash/fp/assocPath";
 import GameStyles from "./Game.module.css";
 import * as API from "../../API";
@@ -15,8 +15,7 @@ export interface IGameProps {
 interface IGameState {
   player: IPlayer;
   board: IBoard;
-  blackScore: number;
-  whiteScore: number;
+  scores: IScores;
   suggestedMoves: ICoords[];
   aiIsThinking: boolean;
   aiResponseTime: number;
@@ -36,8 +35,7 @@ export default class Game extends React.Component<IGameProps, IGameState> {
   state: IGameState = {
     player: IPlayer.Black,
     board: Board.init(),
-    blackScore: 0,
-    whiteScore: 0,
+    scores: [0, 0],
     suggestedMoves: [],
     aiIsThinking: false,
     aiResponseTime: 0
@@ -59,7 +57,8 @@ export default class Game extends React.Component<IGameProps, IGameState> {
       aiIsThinking: true
     });
     const now = Date.now();
-    API.suggestMove(this.state).then(coords => {
+    API.suggestMove(this.state).then((moves: ICoords[]) => {
+      const [coords] = moves;
       const aiResponseTime = Date.now() - now;
       this.placeStone(coords);
       this.setState({

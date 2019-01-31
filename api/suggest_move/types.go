@@ -5,8 +5,7 @@ import (
 )
 
 type ReqBody struct {
-	Board      *board.Board `json:"board"`
-	Player     *int8        `json:"player"`
-	BlackScore *int8        `json:"blackScore"`
-	WhiteScore *int8        `json:"whiteScore"`
+	Board  *board.Board `json:"board"`
+	Player *int8        `json:"player"`
+	Scores [2]int8      `json:"scores"`
 }

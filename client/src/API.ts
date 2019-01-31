@@ -21,9 +21,8 @@ export function validateMove(
 export function suggestMove(params: {
   board: IBoard;
   player: IPlayer;
-  blackScore: number;
-  whiteScore: number;
-}): Promise<ICoords> {
+  scores: IScores
+}): Promise<ICoords[]> {
   return fetch(BASE_URL + "/suggest-move", {
     method: "POST",
     body: JSON.stringify(params)
