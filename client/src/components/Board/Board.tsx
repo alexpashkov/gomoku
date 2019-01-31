@@ -4,7 +4,6 @@ import { IBoard, ICellClickHandler, ICoords } from "../../types";
 import BoardStyles from "./Board.module.css";
 
 interface IBoardProps {
-  suggestions: ICoords[];
   children: IBoard;
   onClick: ICellClickHandler;
 }

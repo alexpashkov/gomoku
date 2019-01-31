@@ -25,6 +25,16 @@ function getNextPlayer(p: IPlayer) {
   return p == IPlayer.Black ? IPlayer.White : IPlayer.Black;
 }
 
+function mergeBoardWithSuggestions(
+  board: IBoard,
+  suggestions: ICoords[]
+): IBoard {
+  if (!suggestions.length) return board;
+  const merged = board.map(row => row.slice()) as IBoard;
+  suggestions.forEach(({ x, y }, i) => (merged[y][x] = 3 + i));
+  return merged;
+}
+
 export default class Game extends React.Component<IGameProps, IGameState> {
   componentDidMount(): void {
     const { type, aiPlayer } = this.props;
@@ -151,8 +161,8 @@ export default class Game extends React.Component<IGameProps, IGameState> {
             <button onClick={this.sendBoardToServer}>Send To Server</button>
           )}
         </div>
-        <Board suggestions={suggestions} onClick={this.handleCellClick}>
-          {board}
+        <Board onClick={this.handleCellClick}>
+          {mergeBoardWithSuggestions(board, suggestions)}
         </Board>
       </div>
     );

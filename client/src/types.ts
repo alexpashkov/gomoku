@@ -11,7 +11,7 @@ export enum IPlayer {
 
 export type IScores = [number, number];
 
-export type IBoardCell = 0 | IPlayer;
+export type IBoardCell = number;
 
 export type IBoardRow = [
   IBoardCell,
