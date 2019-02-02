@@ -8,7 +8,7 @@ import (
 )
 
 func Handler(res http.ResponseWriter, req *http.Request) {
-	reqBody := ReqBody{}
+	reqBody := SuggestMoveBody{}
 	err := json.NewDecoder(req.Body).Decode(&reqBody)
 	// check if there is no error decoding the body and do some preliminary
 	// validation

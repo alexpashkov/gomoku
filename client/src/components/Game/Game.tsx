@@ -45,7 +45,7 @@ export default class Game extends React.Component<IGameProps, IGameState> {
   state: IGameState = {
     player: IPlayer.Black,
     board: Board.init(),
-    scores: [0, 0],
+    scores: [undefined, 0, 0],
     suggestions: [],
     aiIsThinking: false,
     aiResponseTime: 0

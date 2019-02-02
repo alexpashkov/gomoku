@@ -9,7 +9,7 @@ export enum IPlayer {
   White = 2
 }
 
-export type IScores = [number, number];
+export type IScores = [undefined, number, number];
 
 export type IBoardCell = number;
 
