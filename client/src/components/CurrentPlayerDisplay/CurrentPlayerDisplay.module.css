@@ -5,6 +5,9 @@
   padding: 0;
   margin: 3px;
   cursor: pointer;
+  border: none;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2);
+  opacity: 0.5;
 }
 
 .btn:disabled {
@@ -24,5 +27,6 @@
 }
 
 .btn__selected {
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2);
+  opacity: 1;
+  box-shadow: 0 0 5px 4px rgba(0, 0, 0, 0.2);
 }
