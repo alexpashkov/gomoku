@@ -27,24 +27,9 @@ func main() {
 		if err != nil {
 			fmt.Println("Invalid board sent")
 		} else {
-			//fmt.Println(brd)
-			fmt.Println(heuristic.Evaluation(brd, 6, 8))
-			//fmt.Println(heuristic.IsTerminate(brd, 0, 10))
-			//fmt.Println(brd)
-			//t0 := time.Now()
-			//i := 4
-			//for i >= 1 {
-			//	fmt.Println(heuristic.SearchThreatRowClose(brd, threat, 2))
-			//	threat = minimax.SearchThreatRowClose(brd, threat, i)
-			//	fmt.Println(threat)
-			//	i--
-			//}
-			//threat = minimax.SearchThreatRowOpen(brd, threat, 4)
-			//threat = minimax.SearchThreatRowOpen(brd, threat, 2)
-			//t1 := time.Now()
-			//fmt.Printf("Elapsed time: %s", t1.Sub(t0).Seconds())
-			//fmt.Println(threat)
-			//threat = []minimax.Threat{}
+			fmt.Println(brd)
+			c := board.Coords{5, 5}
+			fmt.Println(heuristic.IsCorrectMove(brd, 2, c))
 		}
 	})
 	mux.HandleFunc("/suggest-move", suggest_move.Handler)

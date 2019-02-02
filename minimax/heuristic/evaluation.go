@@ -63,15 +63,17 @@ func EvaluationRate(threat []Threat, amountPointMinPlayer int8, amountPointMaxPl
 						threat[key].rate = -TwoRowCloseWIN
 					} else if amountPointMinPlayer == 6 {
 						threat[key].rate = -TwoRowCloseSix
+					} else {
+						threat[key].rate = -TwoRowClose
 					}
 				} else if value.owner != minimax.MAX_PLAYER {
 					if amountPointMaxPlayer == 8 {
 						threat[key].rate = TwoRowCloseWIN
 					} else if amountPointMaxPlayer == 6 {
 						threat[key].rate = TwoRowCloseSix
+					} else {
+						threat[key].rate = TwoRowClose
 					}
-				} else {
-					threat[key].rate = TwoRowClose
 				}
 			}
 		}
