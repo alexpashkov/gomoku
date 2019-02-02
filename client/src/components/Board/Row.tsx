@@ -9,7 +9,11 @@ interface IRowProps {
   onClick: ICellClickHandler;
 }
 
-class Row extends React.PureComponent<IRowProps> {
+class Row extends React.Component<IRowProps> {
+  shouldComponentUpdate(nextProps: IRowProps) {
+    return this.props.children.join("") !== nextProps.children.join("");
+  }
+
   render(): React.ReactNode {
     const { children: cells, y, onClick } = this.props;
     return (

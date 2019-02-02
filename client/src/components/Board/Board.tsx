@@ -1,6 +1,6 @@
 import * as React from "react";
 import Row from "./Row";
-import { IBoard, ICellClickHandler, ICoords } from "../../types";
+import { IBoard, ICellClickHandler } from "../../types";
 import BoardStyles from "./Board.module.css";
 
 interface IBoardProps {
