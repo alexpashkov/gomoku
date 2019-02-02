@@ -3,17 +3,18 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/rs/cors"
+	"gomoku/api/suggest_move"
 	"gomoku/board"
+	"gomoku/minimax/heuristic"
 	"io/ioutil"
 	"log"
 	"net/http"
-	"gomoku/minimax/heuristic"
 )
 
 func main() {
-	//threat := []heuristic.Threat{}
-
-	http.HandleFunc("/board", func(res http.ResponseWriter, req *http.Request) {
+	mux := http.NewServeMux()
+	mux.HandleFunc("/board", func(res http.ResponseWriter, req *http.Request) {
 		if req.Method != "POST" {
 			return
 		}
@@ -46,7 +47,7 @@ func main() {
 			//threat = []minimax.Threat{}
 		}
 	})
-	http.Handle("/", http.FileServer(http.Dir("client/build")))
-	log.Fatalln(http.ListenAndServe(":4444", nil))
+	mux.HandleFunc("/suggest-move", suggest_move.Handler)
+	mux.Handle("/", http.FileServer(http.Dir("client/build")))
+	log.Fatalln(http.ListenAndServe(":4444", cors.Default().Handler(mux)))
 }
-

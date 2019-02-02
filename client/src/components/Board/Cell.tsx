@@ -10,16 +10,11 @@ interface ICellProps {
 }
 
 function stoneClassName(c: IBoardCell): string {
-  switch (c) {
-    case 0:
-      return BoardStyles.stone__none;
-    case IPlayer.Black:
-      return BoardStyles.stone__black;
-    case IPlayer.White:
-      return BoardStyles.stone__white;
-    default:
-      throw new Error("Invalid board cell value " + c);
-  }
+  if (c < 0) throw new Error("Invalid board cell value " + c);
+  if (c === 0) return BoardStyles.stone__none;
+  if (c === IPlayer.Black) return BoardStyles.stone__black;
+  if (c === IPlayer.White) return BoardStyles.stone__white;
+  return BoardStyles.stone__suggestion;
 }
 
 class Cell extends React.PureComponent<ICellProps> {

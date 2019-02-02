@@ -1,7 +1,8 @@
 package board
 
 type Coords struct {
-	X, Y int
+	X int `json:"x"`
+	Y int `json:"y"`
 }
 
 func (c Coords) AreWithin() bool {
