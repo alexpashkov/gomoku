@@ -24,6 +24,11 @@ func (b *Board) SetCell(c Coords, val int8) int8 {
 	return val
 }
 
+func (b Board) SetCellImmut(c Coords, val int8) Board {
+	b[c.Y][c.X] = val
+	return b
+}
+
 // SetCells takes an array of coordinates and values ​​and sets them on the board
 func (b *Board) SetCells(coords []Coords, vals []int8) {
 	for i, c := range coords {
