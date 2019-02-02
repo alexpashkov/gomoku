@@ -33,6 +33,5 @@ func main() {
 		}
 	})
 	mux.HandleFunc("/suggest-move", suggest_move.Handler)
-	mux.Handle("/", http.FileServer(http.Dir("client/build")))
 	log.Fatalln(http.ListenAndServe(":4444", cors.Default().Handler(mux)))
 }
