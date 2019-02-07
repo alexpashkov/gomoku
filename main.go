@@ -12,6 +12,8 @@ import (
 	"net/http"
 )
 
+const PORT = ":4444"
+
 func main() {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/board", func(res http.ResponseWriter, req *http.Request) {
@@ -33,5 +35,6 @@ func main() {
 		}
 	})
 	mux.HandleFunc("/suggest-move", suggest_move.Handler)
-	log.Fatalln(http.ListenAndServe(":4444", cors.Default().Handler(mux)))
+	println("Starting server at " + PORT)
+	log.Fatalln(http.ListenAndServe(fmt.Sprintf(PORT), cors.Default().Handler(mux)))
 }

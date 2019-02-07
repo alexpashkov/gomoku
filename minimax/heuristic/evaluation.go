@@ -2,7 +2,6 @@ package heuristic
 
 import (
 	"gomoku/board"
-	"fmt"
 	"gomoku/game"
 )
 
@@ -92,7 +91,6 @@ func Evaluation(brd board.Board, amountPointMinPlayer int8, amountPointMaxPlayer
 		i--
 	}
 	threat = EvaluationRate(threat, amountPointMinPlayer, amountPointMaxPlayer)
-	fmt.Println(threat)
 	for _, value := range threat {
 		power = power + value.rate
 	}
