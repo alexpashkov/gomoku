@@ -6,10 +6,10 @@ import (
 	"github.com/rs/cors"
 	"gomoku/api/suggest_move"
 	"gomoku/board"
-	"gomoku/minimax/heuristic"
 	"io/ioutil"
 	"log"
 	"net/http"
+	"gomoku/minimax/heuristic"
 )
 
 const PORT = ":4444"
@@ -29,9 +29,9 @@ func main() {
 		if err != nil {
 			fmt.Println("Invalid board sent")
 		} else {
-			fmt.Println(brd)
-			c := board.Coords{5, 5}
-			fmt.Println(heuristic.IsCorrectMove(brd, 2, c))
+			//fmt.Println(heuristic.IsTerminate(brd, 0, 0))
+			c := board.Coords{6, 7}
+			fmt.Println(heuristic.IsCorrectMove(brd, 1, c))
 		}
 	})
 	mux.HandleFunc("/suggest-move", suggest_move.Handler)
