@@ -3,6 +3,7 @@ package heuristic
 import (
 	"gomoku/board"
 	"gomoku/minimax"
+	"fmt"
 )
 
 // IsTerminate a function that checks if there is a winner, and returns who won.
@@ -18,7 +19,7 @@ func IsTerminateFigure(b board.Board) int8 {
 				amountY := 0
 				amountRightZ := 0
 				amountLeftZ := 0
-				for i < 5 {
+				for i <    6 {
 					if (x + i < 19 && b.GetCell(board.Coords{x + i, y}) == current) {
 						if len(threat) == 0 || isCapture(threat, x + i, y) == 1{
 							amountX++
@@ -34,15 +35,44 @@ func IsTerminateFigure(b board.Board) int8 {
 							amountRightZ++
 						}
 					}
-					if (x - i > 1 && y + i < 19 && b.GetCell(board.Coords{x - i, y + i}) == current) {
+					if (x - i >= 0 && y + i < 19 && b.GetCell(board.Coords{x - i, y + i}) == current) {
 						if len(threat) == 0 ||  isCapture(threat, x - i, y + i) == 1 {
 							amountLeftZ++
 						}
 					}
 					i++
 				}
-				if amountX == 5 || amountY == 5 || amountRightZ == 5 || amountLeftZ == 5 {
-					return current
+				fmt.Println(amountX, amountY, amountLeftZ, amountRightZ)
+				//if amountX == 5 || amountY == 5 || amountRightZ == 5 || amountLeftZ == 5{
+					//return current
+				//}
+				//fmt.Println(amountX, amountY, amountLeftZ, amountRightZ)
+				if amountX == 5 {
+					if x - 1 >= 0 && b.GetCell(board.Coords{x - 1, y}) != current{
+						return current
+					} else if x == 0 {
+						return current
+					}
+				} else if  amountY == 5 {
+					if y - 1 >= 0 && b.GetCell(board.Coords{x, y - 1}) != current{
+						return current
+					} else if y == 0 {
+						return current
+					}
+				} else if amountRightZ == 5 {
+					if x - 1 >= 0 && y - 1 >= 0 && b.GetCell(board.Coords{x - 1, y - 1}) != current {
+						return current
+					} else if x == 0 || y == 0 {
+						return current
+					}
+				} else if amountLeftZ == 5 {
+					//return 0
+					//fmt.Println(x - 1 >= 0 && y + 1 < 19)
+					if x + 1 < 19 && y - 1 >= 0 && b.GetCell(board.Coords{x + 1, y - 1}) != current {
+						return current
+					} else if y == 0 || x == 18 {
+						return current
+					}
 				}
 			}
 		}
