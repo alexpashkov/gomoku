@@ -27,9 +27,9 @@ func main() {
 		if err != nil {
 			fmt.Println("Invalid board sent")
 		} else {
-			fmt.Println(heuristic.IsTerminate(brd, 0, 0))
-			//c := board.Coords{6, 7}
-			//fmt.Println(heuristic.IsCorrectMove(brd, 1, c))
+			//fmt.Println(heuristic.IsTerminate(brd, 0, 0))
+			c := board.Coords{6, 7}
+			fmt.Println(heuristic.IsCorrectMove(brd, 1, c))
 		}
 	})
 	mux.HandleFunc("/suggest-move", suggest_move.Handler)
