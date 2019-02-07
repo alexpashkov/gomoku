@@ -18,7 +18,7 @@ type State struct {
 
 func (s State) MakeMoveImmut(c board.Coords) State {
 	// TODO handle capturing too
-	s.Board.SetCell(c, int8(s.Player))
+	s.Board.SetCell(c, s.Player)
 	s.switchPlayer()
 	return s
 }
