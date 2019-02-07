@@ -4,13 +4,14 @@ import (
 	"gomoku/board"
 	"fmt"
 	"container/heap"
+	"gomoku/game"
 )
 
 type Move struct {
 	board.Coords
-	BoardAfterMove board.Board
-	Priority       int
-	index          int
+	State      game.State
+	Evaluation int
+	index      int
 }
 
 type PriorityQueue struct {
@@ -18,17 +19,13 @@ type PriorityQueue struct {
 	Moves []Move
 }
 
-func NewPriorityQueue(t int8) (PriorityQueue, error) {
+func NewPriorityQueue(t int8) PriorityQueue {
 	pq := PriorityQueue{
 		Type:  t,
 		Moves: make([]Move, 0),
 	}
-	if t != MIN_PLAYER && t != MAX_PLAYER {
-		return pq, fmt.Errorf("pq.Type must be one of %d, %d, got %d", MIN_PLAYER,
-			MAX_PLAYER, pq.Type)
-	}
 	heap.Init(&pq)
-	return pq, nil
+	return pq
 }
 
 func (pq PriorityQueue) Len() int {
@@ -37,10 +34,10 @@ func (pq PriorityQueue) Len() int {
 
 func (pq PriorityQueue) Less(i, j int) bool {
 	if pq.Type == MIN_PLAYER {
-		return pq.Moves[i].Priority < pq.Moves[j].Priority
+		return pq.Moves[i].Evaluation < pq.Moves[j].Evaluation
 	}
 	if pq.Type == MAX_PLAYER {
-		return pq.Moves[i].Priority > pq.Moves[j].Priority
+		return pq.Moves[i].Evaluation > pq.Moves[j].Evaluation
 	}
 	panic(fmt.Errorf("pq.Type must be one of %d, %d, got %d", MIN_PLAYER,
 		MAX_PLAYER, pq.Type))
