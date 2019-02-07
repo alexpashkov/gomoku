@@ -19,7 +19,7 @@ func isWithinNFrom(c board.Coords, n int, pred func(coords board.Coords) bool) b
 	return false
 }
 
-func PossibleMoves(b board.Board) []board.Coords {
+func PossibleMoves(b board.Board, breadth int) []board.Coords {
 	moves := make([]board.Coords, 0, len(b))
 	if b == (board.Board{}) {
 		// Suggest to place into the center of the board if it's empty
@@ -29,22 +29,10 @@ func PossibleMoves(b board.Board) []board.Coords {
 		// from occupied to the set of possible moves
 		// In golang, set data structures are implemented as map[key]bool
 		b.ForEach(func(cell int8, coords board.Coords) {
-			if b.CellIsEmpty(coords) && isWithinNFrom(coords, 2, b.CellIsOccupied) {
+			if b.CellIsEmpty(coords) && isWithinNFrom(coords, breadth, b.CellIsOccupied) {
 				moves = append(moves, coords)
 			}
 		})
 	}
 	return moves
-}
-
-func PossibleMovesEq(a, b []board.Coords) bool {
-	if len(a) != len(b) {
-		return false
-	}
-	for i := range a {
-		if a[i] != b[i] {
-			return false
-		}
-	}
-	return true
 }
