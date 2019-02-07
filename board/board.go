@@ -3,11 +3,26 @@ package board
 import (
 	"math/rand"
 	"time"
+	"fmt"
 )
-
 
 type Row [19]int8
 type Board [19]Row
+
+func (b Board) String() string {
+	str := ""
+	for _, row := range b {
+		for _, c := range row {
+			if c == 1 || c == 2{
+				str += fmt.Sprintf("%d", c)
+			} else {
+				str += "."
+			}
+		}
+		str += "\n"
+	}
+	return str
+}
 
 // IsEmpty if the board is completely empty
 func (b Board) IsEmpty(c Coords) bool {
@@ -65,7 +80,7 @@ func (b Board) GetCaptures() Captures {
 	for y, row := range b {
 		for x := range row {
 			if (b.GetCell(Coords{x, y}) != 0) {
-				if (x + 3 < 19 && b.GetCell(Coords{x, y}) == b.GetCell(Coords{x + 3, y})) {
+				if (x+3 < 19 && b.GetCell(Coords{x, y}) == b.GetCell(Coords{x + 3, y})) {
 					if (b.GetCell(Coords{x + 1, y}) != 0 &&
 						b.GetCell(Coords{x + 1, y}) == b.GetCell(Coords{x + 2, y})) {
 						return Captures{
@@ -73,7 +88,7 @@ func (b Board) GetCaptures() Captures {
 							enemy:     b.GetCell(Coords{x, y})}
 					}
 				}
-				if (y + 3 < 19 && b.GetCell(Coords{x, y}) == b.GetCell(Coords{x, y + 3})) {
+				if (y+3 < 19 && b.GetCell(Coords{x, y}) == b.GetCell(Coords{x, y + 3})) {
 					if (b.GetCell(Coords{x, y + 1}) != 0 &&
 						b.GetCell(Coords{x, y + 1}) == b.GetCell(Coords{x, y + 2})) {
 						return Captures{
@@ -81,7 +96,7 @@ func (b Board) GetCaptures() Captures {
 							enemy:     b.GetCell(Coords{x, y})}
 					}
 				}
-				if (y + 3 < 19 && x + 3 < 19 && b.GetCell(Coords{x, y}) == b.GetCell(Coords{x + 3, y + 3})) {
+				if (y+3 < 19 && x+3 < 19 && b.GetCell(Coords{x, y}) == b.GetCell(Coords{x + 3, y + 3})) {
 					if (b.GetCell(Coords{x + 1, y + 1}) != 0 &&
 						b.GetCell(Coords{x + 1, y + 1}) == b.GetCell(Coords{x + 2, y + 2})) {
 						return Captures{
@@ -89,7 +104,7 @@ func (b Board) GetCaptures() Captures {
 							enemy:     b.GetCell(Coords{x, y})}
 					}
 				}
-				if (y + 3 < 19 && x - 3 > 1 && b.GetCell(Coords{x, y}) == b.GetCell(Coords{x - 3, y + 3})) {
+				if (y+3 < 19 && x-3 > 1 && b.GetCell(Coords{x, y}) == b.GetCell(Coords{x - 3, y + 3})) {
 					if (b.GetCell(Coords{x - 1, y + 1}) != 0 &&
 						b.GetCell(Coords{x - 1, y + 1}) == b.GetCell(Coords{x - 2, y + 2})) {
 						return Captures{
@@ -100,7 +115,7 @@ func (b Board) GetCaptures() Captures {
 			}
 		}
 	}
-	return Captures{[2]Coords{{ 0, 0}, { 0,  0}}, 0}
+	return Captures{[2]Coords{{0, 0}, {0, 0}}, 0}
 }
 
 func (b Board) RandomCoords() Coords {

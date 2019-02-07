@@ -15,7 +15,7 @@ func Handler(res http.ResponseWriter, req *http.Request) {
 	}
 
 	println("=========================================")
-	moves := minimax.Minimax(state, 4,2)
+	moves := minimax.Minimax(state, 3,2)
 	println("=========================================")
 	resBody, err := json.Marshal(moves)
 	if err != nil {

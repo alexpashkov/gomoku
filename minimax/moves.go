@@ -24,10 +24,10 @@ func (pq Moves) Less(i, j int) bool {
 		return true
 	}
 	if pq[0].State.Player == MIN_PLAYER {
-		return pq[i].Evaluation < pq[j].Evaluation
+		return pq[i].Evaluation > pq[j].Evaluation
 	}
 	if pq[0].State.Player == MAX_PLAYER {
-		return pq[i].Evaluation > pq[j].Evaluation
+		return pq[i].Evaluation < pq[j].Evaluation
 	}
 	panic(fmt.Errorf("pq.Player must be one of %d, %d, got %d", MIN_PLAYER,
 		MAX_PLAYER, pq[0].State.Player))
@@ -49,11 +49,12 @@ func (pq *Moves) Pop() interface{} {
 	*pq = old[0 : n-1]
 	return item
 }
-func (pq *Moves) Slice(n int) []Move {
+
+func (pq Moves) Slice(n int) []Move {
 	movesLen := Min(n, pq.Len())
 	moves := make([]Move, movesLen)
 	for i := range moves {
-		moves[i] = heap.Pop(pq).(Move)
+		moves[i] = heap.Pop(&pq).(Move)
 	}
 	return moves
 }

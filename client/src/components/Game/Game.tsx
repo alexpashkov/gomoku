@@ -35,7 +35,9 @@ function mergeBoardWithSuggestions(
 ): IBoard {
   if (!suggestions.length) return board;
   const merged = board.map(row => row.slice()) as IBoard;
-  suggestions.forEach(({ x, y, evaluation }, i) => (merged[y][x] = 3 + evaluation));
+  suggestions.forEach(
+    ({ x, y, evaluation }, i) => (merged[y][x] = 3 + evaluation)
+  );
   return merged;
 }
 
@@ -87,6 +89,7 @@ export default class Game extends React.Component<IGameProps, IGameState> {
     });
     this.aiFetch().then(moves => {
       this.placeStone(moves[0]);
+      console.log(moves.map(x => x.evaluation).join(","));
       this.setState({
         suggestions: moves.slice(1)
       });

@@ -6,15 +6,15 @@ import (
 )
 
 const (
-	FiveROW      = 10 * 10000000000 + 5 // # # # # #
-	TwoRowCloseWIN = FiveROW - 3
-	ForRowOpen   = 10 * 1000000000 + 4 // # # # #
-	ForRowClose  = 10 * 200000 + 4 // * # # # #
-	ThreeRowOpen = 10 * 10000 + 3 // # # #
-	ThreeRowClose= 10 * 10 + 3 // * # # #
-	TwoRowClose  = 10 * 1000 + 2 // * # #
-	TwoRowOpen   = 10 * 10 + 2 // # #
-	TwoRowCloseSix = 10 * 1000 + 2 // # #
+	FiveROW      = 10000000000000 // # # # # #
+	TwoRowCloseWIN = 0
+	ForRowOpen   = 100000000000 // # # # #
+	ForRowClose  = 20000000 // * # # # #
+	ThreeRowOpen = 100000 // # # #
+	ThreeRowClose= 10 // * # # #
+	TwoRowClose  = 1000 // * # #
+	TwoRowOpen   = 10 + 2 // # #
+	TwoRowCloseSix = 0
 	)
 
 func EvaluationRate(threat []Threat, amountPointMinPlayer int8, amountPointMaxPlayer int8) []Threat{
