@@ -6,7 +6,7 @@ import (
 	"github.com/rs/cors"
 	"gomoku/api/suggest_move"
 	"gomoku/board"
-	"gomoku/minimax/heuristic"
+	"gomoku/heuristic"
 	"io/ioutil"
 	"log"
 	"net/http"
