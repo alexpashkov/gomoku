@@ -3,7 +3,6 @@ package heuristic
 import (
 	"gomoku/board"
 	"gomoku/minimax"
-	"fmt"
 )
 
 // IsTerminate a function that checks if there is a winner, and returns who won.
@@ -19,7 +18,7 @@ func IsTerminateFigure(b board.Board) int8 {
 				amountY := 0
 				amountRightZ := 0
 				amountLeftZ := 0
-				for i <    6 {
+				for i < 6 {
 					if (x + i < 19 && b.GetCell(board.Coords{x + i, y}) == current) {
 						if len(threat) == 0 || isCapture(threat, x + i, y) == 1{
 							amountX++
@@ -42,11 +41,6 @@ func IsTerminateFigure(b board.Board) int8 {
 					}
 					i++
 				}
-				fmt.Println(amountX, amountY, amountLeftZ, amountRightZ)
-				//if amountX == 5 || amountY == 5 || amountRightZ == 5 || amountLeftZ == 5{
-					//return current
-				//}
-				//fmt.Println(amountX, amountY, amountLeftZ, amountRightZ)
 				if amountX == 5 {
 					if x - 1 >= 0 && b.GetCell(board.Coords{x - 1, y}) != current{
 						return current
