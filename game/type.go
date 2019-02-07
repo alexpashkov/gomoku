@@ -1,10 +1,12 @@
 package game
 
-import "gomoku/board"
+import (
+	"gomoku/board"
+)
 
 const (
-	BLACK_PLAYER = 1
-	WHITE_PLAYER = 2
+	BLACK_PLAYER int8 = 1
+	WHITE_PLAYER int8 = 2
 )
 
 type State struct {
@@ -16,7 +18,7 @@ type State struct {
 
 func (s State) MakeMoveImmut(c board.Coords) State {
 	// TODO handle capturing too
-	s.Board.SetCell(c, s.Player)
+	s.Board.SetCell(c, int8(s.Player))
 	s.switchPlayer()
 	return s
 }

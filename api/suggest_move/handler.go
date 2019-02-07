@@ -5,7 +5,6 @@ import (
 	"net/http"
 	"gomoku/game"
 	"gomoku/minimax"
-	"gomoku/board"
 )
 
 func Handler(res http.ResponseWriter, req *http.Request) {
@@ -16,10 +15,9 @@ func Handler(res http.ResponseWriter, req *http.Request) {
 	}
 
 	println("=========================================")
-	_, bestMove := minimax.Minimax(state, 4,2)
+	moves := minimax.Minimax(state, 4,2)
 	println("=========================================")
-	//println(evaluation)
-	resBody, err := json.Marshal([]board.Coords{*bestMove})
+	resBody, err := json.Marshal(moves)
 	if err != nil {
 		res.WriteHeader(http.StatusInternalServerError)
 		return

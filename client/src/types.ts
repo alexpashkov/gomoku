@@ -38,7 +38,7 @@ export type IBoardRow = [
   IBoardCell,
   IBoardCell,
   IBoardCell
-];
+  ];
 
 export type IBoard = [
   IBoardRow,
@@ -60,11 +60,15 @@ export type IBoard = [
   IBoardRow,
   IBoardRow,
   IBoardRow
-];
+  ];
 
 export interface ICoords {
   x: number;
   y: number;
+}
+
+export interface ISuggestion extends ICoords {
+  evaluation: number
 }
 
 export type ICellClickHandler = (coords: ICoords) => void;

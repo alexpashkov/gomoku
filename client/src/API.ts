@@ -1,4 +1,4 @@
-import { IBoard, ICommonGameState, ICoords, IPlayer } from "./types";
+import { IBoard, ICommonGameState, ICoords, IPlayer, ISuggestion } from "./types";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
@@ -18,7 +18,7 @@ export function validateMove(
   return Promise.resolve(!cell);
 }
 
-export function suggestMoves(params: ICommonGameState): Promise<ICoords[]> {
+export function suggestMoves(params: ICommonGameState): Promise<ISuggestion[]> {
   return fetch(BASE_URL + "/suggest-move", {
     method: "POST",
     body: JSON.stringify(params)

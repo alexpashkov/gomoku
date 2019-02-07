@@ -1,11 +1,9 @@
 package minimax
 
 import (
-	"gomoku/board"
 	"gomoku/minimax/heuristic"
 	"container/heap"
 	"gomoku/game"
-	"fmt"
 )
 
 func Min(a, b int) int {
@@ -15,9 +13,14 @@ func Min(a, b int) int {
 	return b
 }
 
-func Minimax(state game.State, width, depth int) (int64, *board.Coords) {
+func Minimax(state game.State, width, depth int) []Move {
 	if depth == 0 {
-		return heuristic.Evaluation(state.Board, state.BlackScore, state.WhiteScore), nil
+		return []Move{
+			{
+				State:      state,
+				Evaluation: heuristic.Evaluation(state.Board, state.BlackScore, state.WhiteScore),
+			},
+		}
 	}
 	// get all possible moves (cells adjacent to occupied cells
 	pq := NewPriorityQueue(state.Player)
@@ -37,20 +40,13 @@ func Minimax(state game.State, width, depth int) (int64, *board.Coords) {
 	heap.Init(&pq)
 	bestMovesLen := Min(width, pq.Len())
 	bestMoves := make([]Move, bestMovesLen)
-	// take n best moves and proceed with them, discard the rest
+	// take best moves and proceed with them, discard the rest
 	for i := 0; i < bestMovesLen; i++ {
 		move := heap.Pop(&pq).(Move)
-		evaluation, _ := Minimax(move.State, width, depth-1)
-		move.Evaluation = evaluation
+		move.Evaluation = Minimax(move.State, width, depth-1)[0].Evaluation
 		bestMoves[i] = move
 	}
 	pq.Moves = bestMoves
 	heap.Init(&pq)
-	move := heap.Pop(&pq).(Move)
-	fmt.Printf("player: %d\n best move %x\another moves:\n", state.Player, move.Evaluation)
-	for pq.Len() > 0 {
-		move := heap.Pop(&pq).(Move)
-		fmt.Printf("%x\n", move.Evaluation)
-	}
-	return move.Evaluation, &move.Coords
+	return pq.Slice(pq.Len())
 }

@@ -6,7 +6,8 @@ import {
   IBoard,
   ICommonGameState,
   ICoords,
-  IPlayer
+  IPlayer,
+  ISuggestion
 } from "../../types";
 import assocPath from "lodash/fp/assocPath";
 import GameStyles from "./Game.module.css";
@@ -19,7 +20,7 @@ export interface IGameProps {
 }
 
 interface IGameState extends ICommonGameState {
-  suggestions: ICoords[];
+  suggestions: ISuggestion[];
   aiIsThinking: boolean;
   aiResponseTime: number;
 }
@@ -30,11 +31,11 @@ function getNextPlayer(p: IPlayer) {
 
 function mergeBoardWithSuggestions(
   board: IBoard,
-  suggestions: ICoords[]
+  suggestions: ISuggestion[]
 ): IBoard {
   if (!suggestions.length) return board;
   const merged = board.map(row => row.slice()) as IBoard;
-  suggestions.forEach(({ x, y }, i) => (merged[y][x] = 3 + i));
+  suggestions.forEach(({ x, y, evaluation }, i) => (merged[y][x] = 3 + evaluation));
   return merged;
 }
 
@@ -84,8 +85,11 @@ export default class Game extends React.Component<IGameProps, IGameState> {
     this.setState({
       suggestions: []
     });
-    this.aiFetch().then((moves: ICoords[]) => {
+    this.aiFetch().then(moves => {
       this.placeStone(moves[0]);
+      this.setState({
+        suggestions: moves.slice(1)
+      });
     });
   };
 
@@ -121,6 +125,7 @@ export default class Game extends React.Component<IGameProps, IGameState> {
       },
       () => {
         if (nextPlayer == aiPlayer) return this.aiMove();
+        // TODO move back
         // this.showSuggestions();
       }
     );

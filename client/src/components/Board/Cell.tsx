@@ -10,7 +10,6 @@ interface ICellProps {
 }
 
 function stoneClassName(c: IBoardCell): string {
-  if (c < 0) throw new Error("Invalid board cell value " + c);
   if (c === 0) return BoardStyles.stone__none;
   if (c === IPlayer.Black) return BoardStyles.stone__black;
   if (c === IPlayer.White) return BoardStyles.stone__white;
@@ -22,7 +21,7 @@ class Cell extends React.PureComponent<ICellProps> {
     const { children: cell, x, y, onClick } = this.props;
     return (
       <div className={BoardStyles.cell} onClick={() => onClick({ x, y })}>
-        <div className={`${BoardStyles.stone} ${stoneClassName(cell)}`} />
+        <div title={cell.toString()} className={`${BoardStyles.stone} ${stoneClassName(cell)}`}/>
       </div>
     );
   }

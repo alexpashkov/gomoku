@@ -9,20 +9,20 @@ import (
 
 type Move struct {
 	board.Coords
-	State      game.State
-	Evaluation int64
+	State      game.State `json:"state"`
+	Evaluation int64 `json:"evaluation"`
 	index      int
 }
 
 type PriorityQueue struct {
-	Type  int8
-	Moves []Move
+	Player int8
+	Moves  []Move
 }
 
 func NewPriorityQueue(t int8) PriorityQueue {
 	pq := PriorityQueue{
-		Type:  t,
-		Moves: make([]Move, 0),
+		Player: t,
+		Moves:  make([]Move, 0),
 	}
 	heap.Init(&pq)
 	return pq
@@ -33,14 +33,14 @@ func (pq PriorityQueue) Len() int {
 }
 
 func (pq PriorityQueue) Less(i, j int) bool {
-	if pq.Type == MIN_PLAYER {
+	if pq.Player == MIN_PLAYER {
 		return pq.Moves[i].Evaluation < pq.Moves[j].Evaluation
 	}
-	if pq.Type == MAX_PLAYER {
+	if pq.Player == MAX_PLAYER {
 		return pq.Moves[i].Evaluation > pq.Moves[j].Evaluation
 	}
-	panic(fmt.Errorf("pq.Type must be one of %d, %d, got %d", MIN_PLAYER,
-		MAX_PLAYER, pq.Type))
+	panic(fmt.Errorf("pq.Player must be one of %d, %d, got %d", MIN_PLAYER,
+		MAX_PLAYER, pq.Player))
 }
 
 func (pq PriorityQueue) Swap(i, j int) {
@@ -63,4 +63,12 @@ func (pq *PriorityQueue) Pop() interface{} {
 	item.index = -1 // for safety
 	pq.Moves = oldMoves[0 : n-1]
 	return item
+}
+func (pq *PriorityQueue) Slice(n int) []Move {
+	movesLen := Min(n, pq.Len())
+	moves := make([]Move, movesLen)
+	for i := range moves {
+		moves[i] = heap.Pop(pq).(Move)
+	}
+	return moves
 }
