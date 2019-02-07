@@ -2,7 +2,7 @@ package minimax
 
 import (
 	"gomoku/board"
-	"gomoku/heuristic"
+	"gomoku/minimax/heuristic"
 	"container/heap"
 	"gomoku/game"
 )

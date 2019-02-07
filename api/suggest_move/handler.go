@@ -3,8 +3,8 @@ package suggest_move
 import (
 	"encoding/json"
 	"gomoku/board"
-	"gomoku/minimax"
 	"net/http"
+	"gomoku/game"
 )
 
 func Handler(res http.ResponseWriter, req *http.Request) {
@@ -15,7 +15,7 @@ func Handler(res http.ResponseWriter, req *http.Request) {
 	if err != nil ||
 		reqBody.Board == nil ||
 		reqBody.Player == nil ||
-		*reqBody.Player != minimax.MIN_PLAYER && *reqBody.Player != minimax.MAX_PLAYER {
+		*reqBody.Player != game.BLACK_PLAYER && *reqBody.Player != game.WHITE_PLAYER {
 		res.WriteHeader(http.StatusBadRequest)
 		return
 	}

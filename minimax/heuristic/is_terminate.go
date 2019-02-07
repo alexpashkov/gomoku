@@ -2,7 +2,7 @@ package heuristic
 
 import (
 	"gomoku/board"
-	"gomoku/minimax"
+	"gomoku/game"
 )
 
 // IsTerminate a function that checks if there is a winner, and returns who won.
@@ -63,9 +63,9 @@ func isCapture(threat []Threat, x int, y int) int {
 
 func IsTerminate(b board.Board, amountPointMinPlayer int8, amountPointMaxPlayer int8) int8 {
 	if amountPointMinPlayer == 10 {
-		return minimax.MIN_PLAYER
+		return game.BLACK_PLAYER
 	} else if amountPointMaxPlayer == 10 {
-		return minimax.MAX_PLAYER
+		return game.WHITE_PLAYER
 	}
 	return IsTerminateFigure(b)
 }
