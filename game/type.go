@@ -8,9 +8,10 @@ const (
 )
 
 type State struct {
-	Board                  board.Board
-	Player                 int8
-	BlackScore, WhiteScore int8
+	Board      board.Board `json:"board"`
+	Player     int8        `json:"player"`
+	BlackScore int8        `json:"blackScore"`
+	WhiteScore int8        `json:"whiteScore"`
 }
 
 func (s State) MakeMoveImmut(c board.Coords) State {
