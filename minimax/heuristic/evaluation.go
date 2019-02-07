@@ -8,7 +8,7 @@ import (
 const (
 	FiveROW      = 10 * 10000000000 + 5 // # # # # #
 	TwoRowCloseWIN = FiveROW - 3
-	ForRowOpen   = 10 * 100000000 + 4 // # # # #
+	ForRowOpen   = 10 * 1000000000 + 4 // # # # #
 	ForRowClose  = 10 * 200000 + 4 // * # # # #
 	ThreeRowOpen = 10 * 10000 + 3 // # # #
 	ThreeRowClose= 10 * 10 + 3 // * # # #
@@ -80,8 +80,8 @@ func EvaluationRate(threat []Threat, amountPointMinPlayer int8, amountPointMaxPl
 	return threat
 }
 
-func Evaluation(brd board.Board, amountPointMinPlayer int8, amountPointMaxPlayer int8) int {
-	power := 0
+func Evaluation(brd board.Board, amountPointMinPlayer int8, amountPointMaxPlayer int8) int64 {
+	var power int64 = 0
 
 	i := 5
 	threat := []Threat{}

@@ -11,7 +11,7 @@ type Threat struct {
 	owner		int8
 	size 		int8
 	status		int8
-	rate		int
+	rate		int64
 }
 
 func (t Threat) log() {

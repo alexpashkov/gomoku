@@ -10,7 +10,7 @@ import (
 type Move struct {
 	board.Coords
 	State      game.State
-	Evaluation int
+	Evaluation int64
 	index      int
 }
 

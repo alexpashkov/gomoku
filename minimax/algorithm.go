@@ -5,6 +5,7 @@ import (
 	"gomoku/minimax/heuristic"
 	"container/heap"
 	"gomoku/game"
+	"fmt"
 )
 
 func Min(a, b int) int {
@@ -14,7 +15,7 @@ func Min(a, b int) int {
 	return b
 }
 
-func Minimax(state game.State, width, depth int) (int, *board.Coords) {
+func Minimax(state game.State, width, depth int) (int64, *board.Coords) {
 	if depth == 0 {
 		return heuristic.Evaluation(state.Board, state.BlackScore, state.WhiteScore), nil
 	}
@@ -46,5 +47,10 @@ func Minimax(state game.State, width, depth int) (int, *board.Coords) {
 	pq.Moves = bestMoves
 	heap.Init(&pq)
 	move := heap.Pop(&pq).(Move)
-	return 0, &move.Coords
+	fmt.Printf("player: %d\n best move %x\another moves:\n", state.Player, move.Evaluation)
+	for pq.Len() > 0 {
+		move := heap.Pop(&pq).(Move)
+		fmt.Printf("%x\n", move.Evaluation)
+	}
+	return move.Evaluation, &move.Coords
 }

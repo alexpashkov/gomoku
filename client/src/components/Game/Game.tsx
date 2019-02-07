@@ -121,7 +121,7 @@ export default class Game extends React.Component<IGameProps, IGameState> {
       },
       () => {
         if (nextPlayer == aiPlayer) return this.aiMove();
-        this.showSuggestions();
+        // this.showSuggestions();
       }
     );
   };

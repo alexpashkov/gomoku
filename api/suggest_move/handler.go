@@ -15,7 +15,10 @@ func Handler(res http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	_, bestMove := minimax.Minimax(state, 4,4)
+	println("=========================================")
+	_, bestMove := minimax.Minimax(state, 4,2)
+	println("=========================================")
+	//println(evaluation)
 	resBody, err := json.Marshal([]board.Coords{*bestMove})
 	if err != nil {
 		res.WriteHeader(http.StatusInternalServerError)
