@@ -2,9 +2,9 @@ package suggest_move
 
 import (
 	"encoding/json"
-	"net/http"
 	"gomoku/game"
 	"gomoku/minimax"
+	"net/http"
 )
 
 func Handler(res http.ResponseWriter, req *http.Request) {
@@ -14,9 +14,7 @@ func Handler(res http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	println("=========================================")
-	moves := minimax.Minimax(state, 3,2)
-	println("=========================================")
+	moves := minimax.Minimax(state, 500, 2)
 	resBody, err := json.Marshal(moves)
 	if err != nil {
 		res.WriteHeader(http.StatusInternalServerError)
