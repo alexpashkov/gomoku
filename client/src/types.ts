@@ -9,7 +9,12 @@ export enum IPlayer {
   White = 2
 }
 
-export type IScores = [undefined, number, number];
+export interface ICommonGameState {
+  player: IPlayer;
+  board: IBoard;
+  blackScore: number;
+  whiteScore: number;
+}
 
 export type IBoardCell = number;
 

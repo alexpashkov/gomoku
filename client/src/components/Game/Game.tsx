@@ -1,7 +1,13 @@
 import React from "react";
 import Board from "../Board/Board";
 import CurrentPlayer from "../CurrentPlayerDisplay";
-import { GameType, IBoard, ICoords, IPlayer, IScores } from "../../types";
+import {
+  GameType,
+  IBoard,
+  ICommonGameState,
+  ICoords,
+  IPlayer
+} from "../../types";
 import assocPath from "lodash/fp/assocPath";
 import GameStyles from "./Game.module.css";
 import * as API from "../../API";
@@ -12,10 +18,7 @@ export interface IGameProps {
   aiPlayer?: IPlayer;
 }
 
-interface IGameState {
-  player: IPlayer;
-  board: IBoard;
-  scores: IScores;
+interface IGameState extends ICommonGameState {
   suggestions: ICoords[];
   aiIsThinking: boolean;
   aiResponseTime: number;
@@ -45,7 +48,8 @@ export default class Game extends React.Component<IGameProps, IGameState> {
   state: IGameState = {
     player: IPlayer.Black,
     board: Board.init(),
-    scores: [undefined, 0, 0],
+    blackScore: 0,
+    whiteScore: 0,
     suggestions: [],
     aiIsThinking: false,
     aiResponseTime: 0
