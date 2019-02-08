@@ -6,22 +6,26 @@ import (
 )
 
 const (
-	FiveROW      = 10000000000000 // # # # # #
+	FiveROW        = 100000000000 // # # # # #
 	TwoRowCloseWIN = 0
-	ForRowOpen   = 100000000000 // # # # #
-	ForRowClose  = 20000000 // * # # # #
-	ThreeRowOpen = 100000 // # # #
-	ThreeRowClose= 10 // * # # #
-	TwoRowClose  = 1000 // * # #
-	TwoRowOpen   = 10 + 2 // # #
+	ForRowOpen     = 1000000000 // # # # #
+	ForRowClose    = 20000000   // * # # # #
+	ThreeRowOpen   = 100000     // # # #
+	ThreeRowClose  = 1000       // * # # #
+	TwoRowClose    = 100        // * # #
+	TwoRowOpen     = 10 + 2     // # #
 	TwoRowCloseSix = 0
 	)
 
 func EvaluationRate(threat []Threat, amountPointMinPlayer int8, amountPointMaxPlayer int8) []Threat{
 	for key, value := range threat {
 		if value.size == 5 {
-			threat[key].rate = FiveROW
-		} else if value.size == 3 {
+			if value.owner != game.BLACK_PLAYER {
+				threat[key].rate = FiveROW
+			} else {
+				threat[key].rate = -FiveROW
+			}
+		} else if value.size == 4 {
 			if value.status == 1 {
 				if value.owner != game.BLACK_PLAYER {
 					threat[key].rate = ForRowOpen
