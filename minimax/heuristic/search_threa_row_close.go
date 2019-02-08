@@ -19,14 +19,13 @@ func SearchThreatRowClose(b board.Board, threat []Threat, len int) []Threat{
 				amountLeftZ := 0
 				current := b.GetCell(board.Coords{x, y})
 				for i <= len {
-					if x + len < 19 && x - 1 >= 0 {
-						if (((b.GetCell(board.Coords{x - 1, y}) == 0 && b.GetCell(board.Coords{x + len, y}) != 0 && b.GetCell(board.Coords{x + len, y}) != current) ||
+					if x + len < 19 && x - 1 >= 0{
+						if ((b.GetCell(board.Coords{x - 1, y}) == 0 && b.GetCell(board.Coords{x + len, y}) != 0 && b.GetCell(board.Coords{x + len, y}) != current) ||
 							(b.GetCell(board.Coords{x - 1, y}) != 0 && (b.GetCell(board.Coords{x + len, y}) == 0) && b.GetCell(board.Coords{x - 1, y}) != current)) &&
-							b.GetCell(board.Coords{x + i, y}) == current) {
+							b.GetCell(board.Coords{x + i, y}) == current {
 							amountX++
 							positionsX = append(positionsX, board.Coords{x + i, y})
 						}
-
 						if y - 1 >= 0 && y + len < 19 {
 							if (((b.GetCell(board.Coords{x - 1, y - 1}) == 0 && b.GetCell(board.Coords{x + len, y + len}) != 0 && b.GetCell(board.Coords{x + len, y + len}) != current) ||
 								(b.GetCell(board.Coords{x - 1, y - 1}) != 0 && b.GetCell(board.Coords{x + len, y + len}) == 0 && b.GetCell(board.Coords{x - 1, y - 1}) != current)) &&
