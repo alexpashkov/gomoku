@@ -9,8 +9,8 @@ import (
 
 type Move struct {
 	board.Coords
-	State      game.State `json:"state"`
 	Evaluation int64      `json:"evaluation"`
+	State      game.State `json:"state"`
 }
 
 type Moves []Move
