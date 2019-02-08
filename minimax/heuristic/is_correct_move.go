@@ -222,7 +222,7 @@ func IsCorrectMove(b board.Board, player int8, cord board.Coords) bool {
 	}
 	// capture
 	b.SetCell(cord, player)
-	s := game.GetCaptures(b)
+	s := game.GetCaptures(b, cord)
 	if len(s) != 0 && b.GetCell(s[0]) != player {
 		return true
 	}
