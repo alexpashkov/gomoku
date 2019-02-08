@@ -170,7 +170,10 @@ export default class Game extends React.Component<IGameProps, IGameState> {
             </div>
           )}
           {type === GameType.debug && (
-            <button onClick={this.sendBoardToServer}>Send To Server</button>
+            <div>
+              <button onClick={this.sendBoardToServer}>Send To Server</button>
+              <button onClick={this.aiMove}>AI Move</button>
+            </div>
           )}
         </div>
         <Board onClick={this.handleCellClick}>
