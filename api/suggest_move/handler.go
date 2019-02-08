@@ -8,15 +8,13 @@ import (
 )
 
 func Handler(res http.ResponseWriter, req *http.Request) {
+	println("---------------------------------------------------------------")
 	state := game.State{}
 	if json.NewDecoder(req.Body).Decode(&state) != nil {
 		res.WriteHeader(http.StatusBadRequest)
 		return
 	}
-
-	println("=========================================")
-	moves := minimax.Minimax(state, 3,2)
-	println("=========================================")
+	moves := minimax.Minimax(state, 3,5)
 	resBody, err := json.Marshal(moves)
 	if err != nil {
 		res.WriteHeader(http.StatusInternalServerError)

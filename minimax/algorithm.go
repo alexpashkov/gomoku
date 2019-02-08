@@ -16,20 +16,18 @@ func Min(a, b int) int {
 
 func Minimax(state game.State, width, depth int) Moves {
 	if depth == 0 {
-		evaluation := heuristic.Evaluation(state.Board, state.BlackScore, state.WhiteScore)
-		fmt.Printf("%x\n%s\n\n", evaluation, state.Board)
 		return []Move{
 			{
 				State:      state,
-				Evaluation: evaluation,
+				Evaluation: heuristic.Evaluation(state.Board, state.BlackScore, state.WhiteScore),
 			},
 		}
 	}
-	// get all possible moves (cells adjacent to occupied cells
-	moveCoords := PossibleMoves(state.Board, 1)
-	moves := make(Moves, len(moveCoords))
-	// traverse all moves and order them by priority
-	for i, coords := range moveCoords {
+	// get all cells adjacent to occupied cells
+	cellsAdjacentToOccupied := CellsAdjacentToOccupied(state.Board, 1)
+	moves := make(Moves, len(cellsAdjacentToOccupied))
+
+	for i, coords := range cellsAdjacentToOccupied {
 		stateAfterMove := state.MakeMoveImmut(coords)
 		moves[i] = Move{
 			Coords: coords,
