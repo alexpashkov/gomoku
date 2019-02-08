@@ -2,6 +2,7 @@ package game
 
 import (
 	"gomoku/board"
+	"fmt"
 )
 
 const (
@@ -17,8 +18,20 @@ type State struct {
 }
 
 func (s State) MakeMoveImmut(c board.Coords) State {
-	// TODO handle capturing too
 	s.Board.SetCell(c, s.Player)
+	if caputedCells := GetCaptures(s.Board); len(caputedCells) != 0 {
+		if len(caputedCells)%2 != 0 {
+			panic(fmt.Errorf("odd captures len %d", len(caputedCells)))
+		}
+		for _, capturedCell := range caputedCells {
+			s.Board.SetCell(capturedCell, 0)
+		}
+		if s.Player == BLACK_PLAYER {
+			s.BlackScore += int8(len(caputedCells))
+		} else {
+			s.WhiteScore += int8(len(caputedCells))
+		}
+	}
 	s.switchPlayer()
 	return s
 }
