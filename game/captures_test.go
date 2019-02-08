@@ -22,17 +22,18 @@ func caputesEq(expected, received []board.Coords) bool {
 	return true
 }
 
-var validTestCases = []struct {
+var validTestCases = map[string]struct {
 	State    State
+	Coords   board.Coords
 	Expected []board.Coords
 }{
-	{
+	"empty": {
 		State: State{
 			Board: board.Board{},
 		},
 		Expected: nil,
 	},
-	{
+	"top left corner": {
 		State: State{
 			Board: board.Board{
 				{2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -56,9 +57,12 @@ var validTestCases = []struct {
 				{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 			},
 		},
+		Coords: board.Coords{
+			X: 0, Y: 0,
+		},
 		Expected: []board.Coords{{X: 0, Y: 1,}, {X: 0, Y: 2}},
 	},
-	{
+	"top left corner two": {
 		State: State{
 			Board: board.Board{
 				{0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -82,9 +86,12 @@ var validTestCases = []struct {
 				{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 			},
 		},
+		Coords: board.Coords{
+			X: 3, Y: 3,
+		},
 		Expected: []board.Coords{{X: 3, Y: 1,}, {X: 3, Y: 2}, {X: 1, Y: 3,}, {X: 2, Y: 3},},
 	},
-	{
+	"bottom right corner": {
 		State: State{
 			Board: board.Board{
 				{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -108,9 +115,12 @@ var validTestCases = []struct {
 				{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 1, 2},
 			},
 		},
+		Coords: board.Coords{
+			X: 18, Y: 18,
+		},
 		Expected: []board.Coords{{X: 16, Y: 18,}, {X: 17, Y: 18}},
 	},
-	{
+	"center diagonal": {
 		State: State{
 			Board: board.Board{
 				{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -134,9 +144,12 @@ var validTestCases = []struct {
 				{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 			},
 		},
+		Coords: board.Coords{
+			X: 10, Y: 8,
+		},
 		Expected: []board.Coords{{X: 9, Y: 9,}, {X: 8, Y: 10}},
 	},
-	{
+	"center more complex": {
 		State: State{
 			Board: board.Board{
 				{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -160,15 +173,12 @@ var validTestCases = []struct {
 				{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 			},
 		},
+		Coords: board.Coords{
+			X: 8, Y: 8,
+		},
 		Expected: []board.Coords{{X: 9, Y: 9,}, {X: 10, Y: 10}},
 	},
-}
-
-var validTestCasesPlayerTwo = []struct {
-	State    State
-	Expected []board.Coords
-}{
-	{
+	"duplicate": {
 		State: State{
 			Board: board.Board{
 				{2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -192,15 +202,18 @@ var validTestCasesPlayerTwo = []struct {
 				{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 			},
 		},
-		Expected: []board.Coords{{X: 0, Y: 1,}, {X: 0, Y: 2}},
+		Coords: board.Coords{
+			X: 0, Y: 1,
+		},
+		Expected: nil,
 	},
 }
 
 func TestBoard_GetCaptures(t *testing.T) {
-	for i, testCase := range validTestCases {
-		received := GetCaptures(testCase.State.Board, 2)
+	for descr, testCase := range validTestCases {
+		received := GetCaptures(testCase.State.Board, testCase.Coords)
 		if !caputesEq(testCase.Expected, received) {
-			t.Error(fmt.Errorf("Case %d: expected %#v, got %#v", i, testCase.Expected, received))
+			t.Error(fmt.Errorf("Case %s: expected %#v, got %#v", descr, testCase.Expected, received))
 		}
 	}
 }

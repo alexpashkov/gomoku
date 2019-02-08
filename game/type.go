@@ -19,7 +19,7 @@ type State struct {
 
 func (s State) MakeMoveImmut(c board.Coords) State {
 	s.Board.SetCell(c, s.Player)
-	if caputedCells := GetCaptures(s.Board); len(caputedCells) != 0 {
+	if caputedCells := GetCaptures(s.Board, c); len(caputedCells) != 0 {
 		if len(caputedCells)%2 != 0 {
 			panic(fmt.Errorf("odd captures len %d", len(caputedCells)))
 		}
