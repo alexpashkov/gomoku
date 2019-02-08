@@ -3,6 +3,7 @@ package heuristic
 import (
 	"gomoku/board"
 	"fmt"
+	"gomoku/game"
 )
 
 const (
@@ -17,8 +18,7 @@ const (
 	MAX_Y_7X7_BOARD int = 12
 )
 
-
-func SearchDoubleThreat(b board.Board, threat []Threat, len int) []Threat{
+func SearchDoubleThreat(b board.Board, threat []Threat, len int) []Threat {
 	for y, row := range b {
 		for x := range row {
 			if (b.GetCell(board.Coords{x, y}) != 0) {
@@ -33,8 +33,8 @@ func SearchDoubleThreat(b board.Board, threat []Threat, len int) []Threat{
 				amountLeftZ := 0
 				current := b.GetCell(board.Coords{x, y})
 				for i <= len {
-					if x + len < 19 && x - 1 >= 0 {
-						if (y - 1 >= 0 && y + len < 19 &&
+					if x+len < 19 && x-1 >= 0 {
+						if (y-1 >= 0 && y+len < 19 &&
 							(b.GetCell(board.Coords{x - 1, y - 1}) == 0) &&
 							(b.GetCell(board.Coords{x + len, y + len}) == 0) &&
 							(b.GetCell(board.Coords{x + i, y + i}) == current)) {
@@ -48,14 +48,14 @@ func SearchDoubleThreat(b board.Board, threat []Threat, len int) []Threat{
 							positionsX = append(positionsX, board.Coords{x + i, y})
 						}
 					}
-					if y - 1 >= 0 && y + len < 19 {
+					if y-1 >= 0 && y+len < 19 {
 						if ((b.GetCell(board.Coords{x, y - 1}) == 0) &&
 							(b.GetCell(board.Coords{x, y + len}) == 0) &&
 							(b.GetCell(board.Coords{x, y + i}) == current)) {
 							amountY++
 							positionsY = append(positionsY, board.Coords{x, y + i})
 						}
-						if (x + 1 < 19 && x - len >= 0 &&
+						if (x+1 < 19 && x-len >= 0 &&
 							(b.GetCell(board.Coords{x + 1, y - 1}) == 0) &&
 							(b.GetCell(board.Coords{x - len, y + len}) == 0) &&
 							(b.GetCell(board.Coords{x - i, y + i}) == current)) {
@@ -67,19 +67,19 @@ func SearchDoubleThreat(b board.Board, threat []Threat, len int) []Threat{
 				}
 				if amountX == len {
 					corner := []board.Coords{{positionsX[0].X - 1, positionsX[0].Y}, {positionsX[2].X + 1, positionsX[2].Y}}
- 					threat = append(threat, Threat{owner:current, positions:positionsX, size:int8(len), status:1, corner:corner})
+					threat = append(threat, Threat{owner: current, positions: positionsX, size: int8(len), status: 1, corner: corner})
 				}
 				if amountY == len {
 					corner := []board.Coords{{positionsY[0].X, positionsY[0].Y - 1}, {positionsY[2].X, positionsY[2].Y + 1}}
-					threat = append(threat, Threat{owner:current, positions:positionsY, size:int8(len), status:1, corner:corner})
+					threat = append(threat, Threat{owner: current, positions: positionsY, size: int8(len), status: 1, corner: corner})
 				}
 				if amountRightZ == len {
 					corner := []board.Coords{{positionsRightZ[0].X - 1, positionsRightZ[0].Y - 1}, {positionsRightZ[2].X + 1, positionsRightZ[2].Y + 1}}
-					threat = append(threat, Threat{owner:current, positions:positionsRightZ, size:int8(len), status:1, corner:corner})
+					threat = append(threat, Threat{owner: current, positions: positionsRightZ, size: int8(len), status: 1, corner: corner})
 				}
 				if amountLeftZ == len {
 					corner := []board.Coords{{positionsLeftZ[0].X + 1, positionsLeftZ[0].Y - 1}, {positionsLeftZ[2].X - 1, positionsLeftZ[2].Y + 1}}
-					threat = append(threat, Threat{owner:current, positions:positionsLeftZ, size:int8(len), status:1, corner:corner})
+					threat = append(threat, Threat{owner: current, positions: positionsLeftZ, size: int8(len), status: 1, corner: corner})
 				}
 			}
 		}
@@ -87,71 +87,71 @@ func SearchDoubleThreat(b board.Board, threat []Threat, len int) []Threat{
 	return threat
 }
 
-func SearchDoubleThreatMid(b board.Board, threat []Threat, size int) []Threat{
+func SearchDoubleThreatMid(b board.Board, threat []Threat, size int) []Threat {
 	for y, row := range b {
 		for x := range row {
 			if (b.GetCell(board.Coords{x, y}) != 0) {
 				current := b.GetCell(board.Coords{x, y})
-				if x + size + 1 < 19 && x - 1 >= 0 {
-						if (y - 1 >= 0 && y + size + 1 < 19 && b.GetCell(board.Coords{x - 1, y - 1}) == 0) {
-							if b.GetCell(board.Coords{x + 1, y + 1}) == current && b.GetCell(board.Coords{x + 2, y + 2}) == 0 && b.GetCell(board.Coords{x + 3, y + 3}) == current {
-								//fmt.Println("????????????ZR2")
-								positionsRightZ := []board.Coords{{x, y},{x + 1, y + 1}, {x + 3, y + 3}}
-								cornerRZ := []board.Coords{{positionsRightZ[0].X - 1, positionsRightZ[0].Y - 1}, {positionsRightZ[2].X + 1, positionsRightZ[2].Y + 1}, {positionsRightZ[0].X + 2, positionsRightZ[0].Y + 2}}
-								threat = append(threat, Threat{owner:current, positions:positionsRightZ, size:int8(3), status:1, corner:cornerRZ})
-							} else if b.GetCell(board.Coords{x + 1, y + 1}) == 0 && b.GetCell(board.Coords{x + 2, y + 2}) == current && b.GetCell(board.Coords{x + 3, y + 3}) == current {
-								//fmt.Println("????????????ZR1")
-								positionsRightZ := []board.Coords{{x, y},{x + 2, y + 2}, {x + 3, y + 3}}
-								cornerRZ := []board.Coords{{positionsRightZ[0].X - 1, positionsRightZ[0].Y - 1}, {positionsRightZ[2].X + 1, positionsRightZ[2].Y + 1}, {positionsRightZ[0].X + 1, positionsRightZ[0].Y + 1}}
-								threat = append(threat, Threat{owner:current, positions:positionsRightZ, size:int8(3), status:1, corner:cornerRZ})
-							}
+				if x+size+1 < 19 && x-1 >= 0 {
+					if (y-1 >= 0 && y+size+1 < 19 && b.GetCell(board.Coords{x - 1, y - 1}) == 0) {
+						if b.GetCell(board.Coords{x + 1, y + 1}) == current && b.GetCell(board.Coords{x + 2, y + 2}) == 0 && b.GetCell(board.Coords{x + 3, y + 3}) == current {
+							//fmt.Println("????????????ZR2")
+							positionsRightZ := []board.Coords{{x, y}, {x + 1, y + 1}, {x + 3, y + 3}}
+							cornerRZ := []board.Coords{{positionsRightZ[0].X - 1, positionsRightZ[0].Y - 1}, {positionsRightZ[2].X + 1, positionsRightZ[2].Y + 1}, {positionsRightZ[0].X + 2, positionsRightZ[0].Y + 2}}
+							threat = append(threat, Threat{owner: current, positions: positionsRightZ, size: int8(3), status: 1, corner: cornerRZ})
+						} else if b.GetCell(board.Coords{x + 1, y + 1}) == 0 && b.GetCell(board.Coords{x + 2, y + 2}) == current && b.GetCell(board.Coords{x + 3, y + 3}) == current {
+							//fmt.Println("????????????ZR1")
+							positionsRightZ := []board.Coords{{x, y}, {x + 2, y + 2}, {x + 3, y + 3}}
+							cornerRZ := []board.Coords{{positionsRightZ[0].X - 1, positionsRightZ[0].Y - 1}, {positionsRightZ[2].X + 1, positionsRightZ[2].Y + 1}, {positionsRightZ[0].X + 1, positionsRightZ[0].Y + 1}}
+							threat = append(threat, Threat{owner: current, positions: positionsRightZ, size: int8(3), status: 1, corner: cornerRZ})
 						}
-						if ((b.GetCell(board.Coords{x - 1, y}) == 0) && (b.GetCell(board.Coords{x + size + 1, y}) == 0)) {
-							if b.GetCell(board.Coords{x + 1, y}) == current && b.GetCell(board.Coords{x + 2, y}) == 0 && b.GetCell(board.Coords{x + 3, y}) == current {
-								//fmt.Println("????????????X2")
-								positionsX := []board.Coords{{x, y}, {x + 1, y},{x + 3, y} }
-								cornerX := []board.Coords{{positionsX[0].X - 1, positionsX[0].Y}, {positionsX[2].X + 1, positionsX[2].Y}, {positionsX[0].X + 2, positionsX[0].Y}}
-								threat = append(threat, Threat{owner:current, positions:positionsX, size:int8(3), status:1, corner:cornerX})
-							} else if b.GetCell(board.Coords{x + 1, y}) == 0 && b.GetCell(board.Coords{x + 2, y}) == current && b.GetCell(board.Coords{x + 3, y}) == current {
-								//fmt.Println("????????????X1")
-								positionsX := []board.Coords{{x, y}, {x + 2, y},{x + 3, y} }
-								cornerX := []board.Coords{{positionsX[0].X - 1, positionsX[0].Y}, {positionsX[2].X + 1, positionsX[2].Y}, {positionsX[0].X + 1, positionsX[0].Y}}
-								threat = append(threat, Threat{owner:current, positions:positionsX, size:int8(3), status:1, corner:cornerX})
-							}
+					}
+					if ((b.GetCell(board.Coords{x - 1, y}) == 0) && (b.GetCell(board.Coords{x + size + 1, y}) == 0)) {
+						if b.GetCell(board.Coords{x + 1, y}) == current && b.GetCell(board.Coords{x + 2, y}) == 0 && b.GetCell(board.Coords{x + 3, y}) == current {
+							//fmt.Println("????????????X2")
+							positionsX := []board.Coords{{x, y}, {x + 1, y}, {x + 3, y}}
+							cornerX := []board.Coords{{positionsX[0].X - 1, positionsX[0].Y}, {positionsX[2].X + 1, positionsX[2].Y}, {positionsX[0].X + 2, positionsX[0].Y}}
+							threat = append(threat, Threat{owner: current, positions: positionsX, size: int8(3), status: 1, corner: cornerX})
+						} else if b.GetCell(board.Coords{x + 1, y}) == 0 && b.GetCell(board.Coords{x + 2, y}) == current && b.GetCell(board.Coords{x + 3, y}) == current {
+							//fmt.Println("????????????X1")
+							positionsX := []board.Coords{{x, y}, {x + 2, y}, {x + 3, y}}
+							cornerX := []board.Coords{{positionsX[0].X - 1, positionsX[0].Y}, {positionsX[2].X + 1, positionsX[2].Y}, {positionsX[0].X + 1, positionsX[0].Y}}
+							threat = append(threat, Threat{owner: current, positions: positionsX, size: int8(3), status: 1, corner: cornerX})
 						}
-					if y - 1 >= 0 && y + size + 1 < 19 {
+					}
+					if y-1 >= 0 && y+size+1 < 19 {
 						if ((b.GetCell(board.Coords{x, y - 1}) == 0) && (b.GetCell(board.Coords{x, y + size + 1}) == 0)) {
 							if b.GetCell(board.Coords{x, y + 1}) == current && b.GetCell(board.Coords{x, y + 2}) == 0 && b.GetCell(board.Coords{x, y + 3}) == current {
 								//fmt.Println("????????????Y2")
-								positionsY := []board.Coords{{x, y}, {x, y + 1}, {x, y + 3} }
+								positionsY := []board.Coords{{x, y}, {x, y + 1}, {x, y + 3}}
 								corner := []board.Coords{{positionsY[0].X, positionsY[0].Y - 1}, {positionsY[2].X, positionsY[2].Y + 1}, {positionsY[0].X, positionsY[0].Y + 2}}
-								threat = append(threat, Threat{owner:current, positions:positionsY, size:int8(3), status:1, corner:corner})
+								threat = append(threat, Threat{owner: current, positions: positionsY, size: int8(3), status: 1, corner: corner})
 							} else if b.GetCell(board.Coords{x, y + 1}) == 0 && b.GetCell(board.Coords{x, y + 2}) == current && b.GetCell(board.Coords{x, y + 3}) == current {
 								//fmt.Println("????????????Y1")
-								positionsY := []board.Coords{{x, y}, {x, y + 2}, {x, y + 3} }
+								positionsY := []board.Coords{{x, y}, {x, y + 2}, {x, y + 3}}
 								corner := []board.Coords{{positionsY[0].X, positionsY[0].Y - 1}, {positionsY[2].X, positionsY[2].Y + 1}, {positionsY[0].X, positionsY[0].Y + 1}}
-								threat = append(threat, Threat{owner:current, positions:positionsY, size:int8(3), status:1, corner:corner})
+								threat = append(threat, Threat{owner: current, positions: positionsY, size: int8(3), status: 1, corner: corner})
 							}
 						}
-						if x + 1 < 19 && x - (size + 1) >= 0 && b.GetCell(board.Coords{x + 1, y - 1}) == 0 && b.GetCell(board.Coords{x - (size + 1), y + (size + 1)}) == 0 {
+						if x+1 < 19 && x-(size+1) >= 0 && b.GetCell(board.Coords{x + 1, y - 1}) == 0 && b.GetCell(board.Coords{x - (size + 1), y + (size + 1)}) == 0 {
 							if b.GetCell(board.Coords{x - 1, y + 1}) == 0 && b.GetCell(board.Coords{x - 2, y + 2}) == current && b.GetCell(board.Coords{x - 3, y + 3}) == current {
 								//fmt.Println("????????????LZ1")
-								positionsLeftZ := []board.Coords{{x,y}, {x - 2, y + 2}, {x - 3, y + 3}}
+								positionsLeftZ := []board.Coords{{x, y}, {x - 2, y + 2}, {x - 3, y + 3}}
 								corner := []board.Coords{{positionsLeftZ[0].X + 1, positionsLeftZ[0].Y - 1}, {positionsLeftZ[2].X - 1, positionsLeftZ[2].Y + 1}, {positionsLeftZ[0].X - 1, positionsLeftZ[0].Y + 1}}
-								threat = append(threat, Threat{owner:current, positions:positionsLeftZ, size:int8(3), status:1, corner:corner})
-							} else 	if b.GetCell(board.Coords{x - 1, y + 1}) == current && b.GetCell(board.Coords{x - 2, y + 2}) == 0 && b.GetCell(board.Coords{x - 3, y + 3}) == current {
+								threat = append(threat, Threat{owner: current, positions: positionsLeftZ, size: int8(3), status: 1, corner: corner})
+							} else if b.GetCell(board.Coords{x - 1, y + 1}) == current && b.GetCell(board.Coords{x - 2, y + 2}) == 0 && b.GetCell(board.Coords{x - 3, y + 3}) == current {
 								//fmt.Println("????????????LZ2")
-								positionsLeftZ := []board.Coords{{x,y}, {x - 1, y + 1}, {x - 3, y + 3}}
+								positionsLeftZ := []board.Coords{{x, y}, {x - 1, y + 1}, {x - 3, y + 3}}
 								corner := []board.Coords{{positionsLeftZ[0].X + 1, positionsLeftZ[0].Y - 1}, {positionsLeftZ[2].X - 1, positionsLeftZ[2].Y + 1}, {positionsLeftZ[0].X - 2, positionsLeftZ[0].Y + 2}}
-								threat = append(threat, Threat{owner:current, positions:positionsLeftZ, size:int8(3), status:1, corner:corner})
+								threat = append(threat, Threat{owner: current, positions: positionsLeftZ, size: int8(3), status: 1, corner: corner})
 							}
-						}
 						}
 					}
 				}
-
 			}
+
 		}
+	}
 	return threat
 }
 
@@ -186,7 +186,7 @@ func FindDoubleThreeThreat(b board.Board, player int8, cord board.Coords) bool {
 	return true
 }
 
-func IsCenter(cord board.Coords, state int8) bool{
+func IsCenter(cord board.Coords, state int8) bool {
 	if state == 7 {
 		if (cord.X >= MIN_X_7X7_BOARD && cord.X <= MAX_X_7X7_BOARD) &&
 			(cord.Y >= MIN_Y_7X7_BOARD && cord.Y <= MAX_Y_7X7_BOARD) {
@@ -222,8 +222,8 @@ func IsCorrectMove(b board.Board, player int8, cord board.Coords) bool {
 	}
 	// capture
 	b.SetCell(cord, player)
-	s := b.GetCaptures()
-	if s.GetEnemy() != 0 && s.GetEnemy() != player {
+	s := game.GetCaptures(b)
+	if len(s) != 0 && b.GetCell(s[0]) != player {
 		return true
 	}
 	// double

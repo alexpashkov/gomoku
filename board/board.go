@@ -73,44 +73,6 @@ func (b Board) ForEach(f func(int8, Coords)) {
 	}
 }
 
-// GetCaptures a function returns structure Captures,
-// @position is the chips that were captured
-// @enemy is the one who captured
-func (b Board) GetCaptures() []Coords {
-	coords := []Coords{}
-	for y, row := range b {
-		for x := range row {
-			if (b.GetCell(Coords{x, y}) != 0) {
-				if (x+3 < 19 && b.GetCell(Coords{x, y}) == b.GetCell(Coords{x + 3, y})) {
-					if (b.GetCell(Coords{x + 1, y}) != 0 &&
-						b.GetCell(Coords{x + 1, y}) == b.GetCell(Coords{x + 2, y})) {
-						coords = append(coords, Coords{x + 1, y}, Coords{x + 2, y})
-					}
-				}
-			}
-			if (y+3 < 19 && b.GetCell(Coords{x, y}) == b.GetCell(Coords{x, y + 3})) {
-				if (b.GetCell(Coords{x, y + 1}) != 0 &&
-					b.GetCell(Coords{x, y + 1}) == b.GetCell(Coords{x, y + 2})) {
-					coords = append(coords, Coords{x, y + 1}, Coords{x, y + 2})
-				}
-			}
-			if (y + 3 < 19 && x + 3 < 19 && b.GetCell(Coords{x, y}) == b.GetCell(Coords{x + 3, y + 3})) {
-				if (b.GetCell(Coords{x + 1, y + 1}) != 0 &&
-					b.GetCell(Coords{x + 1, y + 1}) == b.GetCell(Coords{x + 2, y + 2})) {
-					coords = append(coords, Coords{x + 1, y + 1}, Coords{x + 2, y + 2})
-				}
-			}
-			if (y + 3 < 19 && x - 3 > 1 && b.GetCell(Coords{x, y}) == b.GetCell(Coords{x - 3, y + 3})) {
-				if (b.GetCell(Coords{x - 1, y + 1}) != 0 &&
-					b.GetCell(Coords{x - 1, y + 1}) == b.GetCell(Coords{x - 2, y + 2})) {
-					coords = append(coords, Coords{x - 1, y + 1}, Coords{x - 2, y + 2})
-				}
-			}
-		}
-	}
-	return nil
-}
-
 func (b Board) RandomCoords() Coords {
 	rand.Seed(time.Now().UnixNano())
 	return Coords{
