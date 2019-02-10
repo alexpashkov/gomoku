@@ -3,17 +3,16 @@ package minimax
 import (
 	"gomoku/board"
 	"fmt"
-	"container/heap"
 	"gomoku/game"
 )
 
 type Move struct {
-	board.Coords
+	*board.Coords
 	Evaluation int64      `json:"evaluation"`
 	State      game.State `json:"state"`
 }
 
-type Moves []Move
+type Moves []*Move
 
 func (pq Moves) Len() int {
 	return len(pq)
@@ -35,26 +34,4 @@ func (pq Moves) Less(i, j int) bool {
 
 func (pq Moves) Swap(i, j int) {
 	pq[i], pq[j] = pq[j], pq[i]
-}
-
-func (pq *Moves) Push(x interface{}) {
-	item := x.(Move)
-	*pq = append(*pq, item)
-}
-
-func (pq *Moves) Pop() interface{} {
-	old := *pq
-	n := len(old)
-	item := old[n-1]
-	*pq = old[0 : n-1]
-	return item
-}
-
-func (pq Moves) Slice(n int) []Move {
-	movesLen := Min(n, pq.Len())
-	moves := make([]Move, movesLen)
-	for i := range moves {
-		moves[i] = heap.Pop(&pq).(Move)
-	}
-	return moves
 }

@@ -2,8 +2,8 @@ package minimax
 
 import (
 	"gomoku/minimax/heuristic"
-	"container/heap"
 	"gomoku/game"
+	"sort"
 )
 
 func Min(a, b int) int {
@@ -13,9 +13,9 @@ func Min(a, b int) int {
 	return b
 }
 
-func Minimax(state game.State, width, depth int) Moves {
+func Minimax(state game.State, maxWidth, depth int) Moves {
 	if depth == 0 {
-		return []Move{
+		return []*Move{
 			{
 				State:      state,
 				Evaluation: heuristic.Evaluation(state.Board, state.BlackScore, state.WhiteScore),
@@ -28,21 +28,18 @@ func Minimax(state game.State, width, depth int) Moves {
 
 	for i, coords := range cellsAdjacentToOccupied {
 		state := state.MakeMoveImmut(coords)
-		moves[i] = Move{
-			Coords:     coords,
+		moves[i] = &Move{
+			Coords:     &coords,
 			State:      state,
 			Evaluation: heuristic.Evaluation(state.Board, state.BlackScore, state.WhiteScore),
 		}
 	}
-	heap.Init(&moves)
-	bestMovesLen := Min(width, moves.Len())
-	bestMoves := make(Moves, bestMovesLen)
+	sort.Sort(moves)
+	moves = moves[:Min(maxWidth, moves.Len())]
 	// take best moves and proceed with them, discard the rest
-	for i := 0; i < bestMovesLen; i++ {
-		move := heap.Pop(&moves).(Move)
-		move.Evaluation = Minimax(move.State, width, depth-1)[0].Evaluation
-		bestMoves[i] = move
+	for _, move := range moves {
+		move.Evaluation = Minimax(move.State, maxWidth, depth-1)[0].Evaluation
 	}
-	heap.Init(&bestMoves)
-	return bestMoves.Slice(bestMoves.Len())
+	sort.Sort(moves)
+	return moves
 }

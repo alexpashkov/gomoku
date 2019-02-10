@@ -2,7 +2,6 @@ package heuristic
 
 import (
 	"gomoku/board"
-	"fmt"
 )
 
 const (
@@ -118,10 +117,5 @@ func SearchThreatRowClose(b board.Board, threat []Threat, len int) []Threat {
 			}
 		}
 	}
-	fmt.Println("END")
-	for _, value := range threat {
-		fmt.Println(value)
-	}
-	//fmt.Println(threat)
 	return threat
 }
