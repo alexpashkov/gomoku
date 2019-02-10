@@ -1,11 +1,23 @@
 .container {
+  position: relative;
 }
 
 .infoPanel {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .responseTime {
-    margin-left: 10px;
+  margin-left: 10px;
+}
+
+.winnerModal {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.2);
 }

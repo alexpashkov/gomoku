@@ -6,14 +6,14 @@ import (
 
 const (
 	FiveROW        = 10000000000000 // # # # # #
-	TwoRowCloseWIN = 0
+	TwoRowCloseWIN = FiveROW
 	ForRowOpen     = 100000000000 // # # # #
 	ForRowClose    = 100000000    // * # # # #
 	ThreeRowOpen   = 1000000      // # # #
 	ThreeRowClose  = 1000         // * # # #
 	TwoRowClose    = 100          // * # #
 	TwoRowOpen     = 10 + 2       // # #
-	TwoRowCloseSix = 0
+	TwoRowCloseSix = ThreeRowOpen
 )
 
 func EvaluationRate(threat []Threat, amountPointMinPlayer int8, amountPointMaxPlayer int8) []Threat {
@@ -74,7 +74,7 @@ func EvaluationRate(threat []Threat, amountPointMinPlayer int8, amountPointMaxPl
 					} else if amountPointMaxPlayer == 6 {
 						threat[key].rate = TwoRowCloseSix
 					} else {
-						threat[key].rate = TwoRowClose
+						threat[key].rate = ThreeRowClose
 					}
 				}
 			}

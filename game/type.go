@@ -12,10 +12,14 @@ type State struct {
 	BlackScore int8        `json:"blackScore"`
 	WhiteScore int8        `json:"whiteScore"`
 	Board      board.Board `json:"board"`
+	Winner     int8        `json:"winner"`
 }
 
 // Move returns new state after applying
 func (s State) Move(coords board.Coords) (State, error) {
+	if s.Winner != 0 {
+		return s, fmt.Errorf("game is finished")
+	}
 	if !s.Board.CellIsEmpty(coords) {
 		return s, fmt.Errorf("cell is occupied")
 	}
@@ -32,7 +36,10 @@ func (s State) Move(coords board.Coords) (State, error) {
 	} else if heuristic.FindDoubleThreeThreat(s.Board, s.Player, coords) == false { // ya eby
 		return s, errors.New("double three threat")
 	}
-	s.switchPlayer()
+	s.Winner = heuristic.IsTerminate(s.Board, s.BlackScore, s.WhiteScore)
+	if s.Winner == 0 {
+		s.switchPlayer()
+	}
 	return s, nil
 }
 

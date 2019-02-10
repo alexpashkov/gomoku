@@ -1,6 +1,7 @@
 import React from "react";
 import Board from "../Board/Board";
 import CurrentPlayer from "../CurrentPlayerDisplay";
+import WinnerModal from "./WinnerModal";
 import {
   GameType,
   IBoard,
@@ -41,28 +42,33 @@ function mergeBoardWithSuggestions(
   return merged;
 }
 
-export default class Game extends React.Component<IGameProps, IGameState> {
-  componentDidMount(): void {
-    const { type, aiPlayer } = this.props;
-    const { player } = this.state;
-    if (type === GameType.vsComputer && player === aiPlayer) this.aiMove();
-  }
+const INITIAL_STATE = {
+  player: IPlayer.Black,
+  board: Board.init(),
+  blackScore: 0,
+  whiteScore: 0,
+  winner: 0,
+  suggestions: [],
+  aiIsThinking: false,
+  aiResponseTime: 0
+};
 
-  state: IGameState = {
-    player: IPlayer.Black,
-    board: Board.init(),
-    blackScore: 0,
-    whiteScore: 0,
-    suggestions: [],
-    aiIsThinking: false,
-    aiResponseTime: 0
-  };
+export default class Game extends React.Component<IGameProps, IGameState> {
+  resetGame = () =>
+    this.setState(INITIAL_STATE, () => {
+      const { type, aiPlayer } = this.props;
+      const { player } = this.state;
+      if (type === GameType.vsComputer && player === aiPlayer) this.aiMove();
+    });
+
+  componentWillMount = this.resetGame;
 
   setPlayer = (player: IPlayer) => {
     this.props.type === GameType.debug && this.setState({ player });
   };
 
   humanMove = (coords: ICoords) => {
+    !this.state.winner &&
     API.makeMove(this.state, coords).then(this.setGameState, console.error);
   };
 
@@ -81,6 +87,7 @@ export default class Game extends React.Component<IGameProps, IGameState> {
   };
 
   aiMove = () => {
+    if (this.state.winner) return;
     this.setState({
       suggestions: []
     });
@@ -111,6 +118,7 @@ export default class Game extends React.Component<IGameProps, IGameState> {
   };
 
   setGameState = (state: ICommonGameState) =>
+    !this.state.winner &&
     this.setState(state, () => {
       if (state.player == this.props.aiPlayer) this.aiMove();
     });
@@ -141,6 +149,7 @@ export default class Game extends React.Component<IGameProps, IGameState> {
       player,
       blackScore,
       whiteScore,
+      winner,
       suggestions,
       aiResponseTime
     } = this.state;
@@ -169,6 +178,7 @@ export default class Game extends React.Component<IGameProps, IGameState> {
         <Board onClick={this.handleCellClick}>
           {mergeBoardWithSuggestions(board, suggestions)}
         </Board>
+        <WinnerModal winner={winner} onRestart={this.resetGame}/>
       </div>
     );
   }

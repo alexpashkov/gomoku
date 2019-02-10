@@ -30,11 +30,15 @@ func Minimax(state game.State, maxWidth, depth int) Moves {
 	for _, coords := range cellsAdjacentToOccupied {
 		state, err := state.Move(coords)
 		if err == nil {
-			moves = append(moves, &Move{
-				Coords:     coords,
-				State:      state,
-				Evaluation: heuristic.Evaluation(state.Board, state.BlackScore, state.WhiteScore),
-			})
+			move := &Move{
+				Coords: coords,
+				State:  state,
+			}
+			if state.Player == state.Winner {
+				return []*Move{move}
+			}
+			move.Evaluation = heuristic.Evaluation(state.Board, state.BlackScore, state.WhiteScore)
+			moves = append(moves, move)
 		} else {
 			log.Printf("%v", err)
 		}

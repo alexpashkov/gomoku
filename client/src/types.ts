@@ -14,6 +14,7 @@ export interface ICommonGameState {
   board: IBoard;
   blackScore: number;
   whiteScore: number;
+  winner: IPlayer | 0
 }
 
 export type IBoardCell = number;
