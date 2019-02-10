@@ -25,23 +25,23 @@ func Minimax(state game.State, maxWidth, depth int) Moves {
 	}
 	// get all cells adjacent to occupied cells
 	cellsAdjacentToOccupied := CellsAdjacentToOccupied(state.Board, 1)
-	moves := make(Moves, len(cellsAdjacentToOccupied))
+	moves := make(Moves, 0, len(cellsAdjacentToOccupied))
 
-	for i, coords := range cellsAdjacentToOccupied {
+	for _, coords := range cellsAdjacentToOccupied {
 		state, err := state.Move(coords)
-		if err != nil {
+		if err == nil {
+			moves = append(moves, &Move{
+				Coords:     coords,
+				State:      state,
+				Evaluation: heuristic.Evaluation(state.Board, state.BlackScore, state.WhiteScore),
+			})
+		} else {
 			log.Printf("%v", err)
-			continue
-		}
-		moves[i] = &Move{
-			Coords:     coords,
-			State:      state,
-			Evaluation: heuristic.Evaluation(state.Board, state.BlackScore, state.WhiteScore),
 		}
 	}
 	sort.Sort(moves)
-	// take best moves and proceed with them, discard the rest
 	moves = moves[:Min(maxWidth, moves.Len())]
+	// take best moves and proceed with them, discard the rest
 	for _, move := range moves {
 		move.Evaluation = Minimax(move.State, maxWidth, depth-1)[0].Evaluation
 	}
