@@ -3,7 +3,6 @@ package heuristic
 import (
 	"gomoku/board"
 	"fmt"
-	"gomoku/game"
 )
 
 const (
@@ -182,7 +181,6 @@ func FindDoubleThreeThreat(b board.Board, player int8, cord board.Coords) bool {
 		}
 		return false
 	}
-	//fmt.Println("DOESN'T FIND")
 	return true
 }
 
@@ -211,27 +209,5 @@ func IsCorrectMovePro(cord board.Coords, countMove int, state int8) bool {
 			return true
 		}
 	}
-	return true
-}
-
-func IsCorrectMove(b board.Board, player int8, cord board.Coords) bool {
-	// base
-	current := b.GetCell(cord)
-	if current != 0 {
-		return false
-	}
-	// capture
-	b.SetCell(cord, player)
-	s := game.GetCaptures(b, cord)
-	if len(s) != 0 && b.GetCell(s[0]) != player {
-		return true
-	}
-	// double
-	if FindDoubleThreeThreat(b, player, cord) == false {
-		return false
-	}
-
-	//fmt.Println(IsCorrectMovePro(cord, 3, 5))
-	//fmt.Println(IsCenter(cord, 7))
 	return true
 }

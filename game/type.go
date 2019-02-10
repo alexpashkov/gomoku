@@ -3,11 +3,8 @@ package game
 import (
 	"gomoku/board"
 	"fmt"
-)
-
-const (
-	BLACK_PLAYER int8 = 1
-	WHITE_PLAYER int8 = 2
+	"gomoku/minimax/heuristic"
+	"errors"
 )
 
 type State struct {
@@ -27,20 +24,22 @@ func (s State) Move(coords board.Coords) (State, error) {
 		for _, capturedCell := range caputedCells {
 			s.Board.SetCell(capturedCell, 0)
 		}
-		if s.Player == BLACK_PLAYER {
+		if s.Player == board.BLACK_PLAYER {
 			s.BlackScore += int8(len(caputedCells))
 		} else {
 			s.WhiteScore += int8(len(caputedCells))
 		}
+	} else if heuristic.FindDoubleThreeThreat(s.Board, s.Player, coords) == false { // ya eby
+		return s, errors.New("double three threat")
 	}
 	s.switchPlayer()
 	return s, nil
 }
 
 func (s *State) switchPlayer() {
-	if s.Player == BLACK_PLAYER {
-		s.Player = WHITE_PLAYER
+	if s.Player == board.BLACK_PLAYER {
+		s.Player = board.WHITE_PLAYER
 	} else {
-		s.Player = BLACK_PLAYER
+		s.Player = board.BLACK_PLAYER
 	}
 }
