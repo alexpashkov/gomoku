@@ -55,7 +55,6 @@ func searchRightZ(b board.Board, x int, y int, player int8, len int, i int) bool
 }
 
 func searchLeftZ(b board.Board, x int, y int, player int8, len int, i int) bool {
-	//fmt.Println("|||||||")
 	if y-1 >= 0 && y+len < HEIGHT && x+1 < HEIGHT && x-len >= 0 &&
 		((b.GetCell(board.Coords{x + 1, y - 1}) == 0 && b.GetCell(board.Coords{x - len, y + len}) != 0 && b.GetCell(board.Coords{x - len, y + len}) != player) ||
 			(b.GetCell(board.Coords{x + 1, y - 1}) != 0 && b.GetCell(board.Coords{x - len, y + len}) == 0 && b.GetCell(board.Coords{x + 1, y - 1}) != player)) &&

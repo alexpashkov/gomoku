@@ -1,6 +1,8 @@
 package heuristic
 
-import "gomoku/board"
+import (
+	"gomoku/board"
+)
 
 func SearchThreatRowOpen(b board.Board, threat []Threat, len int) []Threat{
 	for y, row := range b {

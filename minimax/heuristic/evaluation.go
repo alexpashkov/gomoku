@@ -2,14 +2,15 @@ package heuristic
 
 import (
 	"gomoku/board"
+	"gomoku/game"
 )
 
 const (
-	FiveROW        = 100000000000 // # # # # #
+	FiveROW        = 10000000000000 // # # # # #
 	TwoRowCloseWIN = 0
-	ForRowOpen     = 1000000000 // # # # #
-	ForRowClose    = 20000000   // * # # # #
-	ThreeRowOpen   = 100000     // # # #
+	ForRowOpen     = 100000000000 // # # # #
+	ForRowClose    = 100000000   // * # # # #
+	ThreeRowOpen   = 1000000     // # # #
 	ThreeRowClose  = 1000       // * # # #
 	TwoRowClose    = 100        // * # #
 	TwoRowOpen     = 10 + 2     // # #
@@ -19,48 +20,48 @@ const (
 func EvaluationRate(threat []Threat, amountPointMinPlayer int8, amountPointMaxPlayer int8) []Threat{
 	for key, value := range threat {
 		if value.size == 5 {
-			if value.owner != board.BLACK_PLAYER {
+			if value.owner != game.BLACK_PLAYER {
 				threat[key].rate = FiveROW
 			} else {
 				threat[key].rate = -FiveROW
 			}
 		} else if value.size == 4 {
-			if value.status == 1 {
-				if value.owner != board.BLACK_PLAYER {
+			if value.status == OPEN_THREAT {
+				if value.owner != game.BLACK_PLAYER {
 					threat[key].rate = ForRowOpen
 				} else {
 					threat[key].rate = -ForRowOpen
 				}
 			} else {
-				if value.owner != board.BLACK_PLAYER {
+				if value.owner != game.BLACK_PLAYER {
 					threat[key].rate = ForRowClose
 				} else {
 					threat[key].rate = -ForRowClose
 				}
 			}
 		} else if value.size == 3 {
-			if value.status == 1 {
-				if value.owner != board.BLACK_PLAYER {
+			if value.status == OPEN_THREAT {
+				if value.owner != game.BLACK_PLAYER {
 					threat[key].rate = ThreeRowOpen
 				} else {
 					threat[key].rate = -ThreeRowOpen
 				}
 			} else {
-				if value.owner != board.BLACK_PLAYER {
+				if value.owner != game.BLACK_PLAYER {
 					threat[key].rate = ThreeRowClose
 				} else {
 					threat[key].rate = -ThreeRowClose
 				}
 			}
 		} else if value.size == 2 {
-			if value.status == 1 {
-				if value.owner != board.BLACK_PLAYER {
+			if value.status == OPEN_THREAT {
+				if value.owner != game.BLACK_PLAYER {
 					threat[key].rate = TwoRowOpen
 				} else {
 					threat[key].rate = -TwoRowCloseSix
 				}
 			} else {
-				if value.owner != board.BLACK_PLAYER {
+				if value.owner != game.BLACK_PLAYER {
 					if amountPointMinPlayer == 8 {
 						threat[key].rate = -TwoRowCloseWIN
 					} else if amountPointMinPlayer == 6 {
@@ -68,7 +69,7 @@ func EvaluationRate(threat []Threat, amountPointMinPlayer int8, amountPointMaxPl
 					} else {
 						threat[key].rate = -TwoRowClose
 					}
-				} else if value.owner != board.WHITE_PLAYER {
+				} else if value.owner != game.WHITE_PLAYER {
 					if amountPointMaxPlayer == 8 {
 						threat[key].rate = TwoRowCloseWIN
 					} else if amountPointMaxPlayer == 6 {

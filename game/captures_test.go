@@ -6,22 +6,6 @@ import (
 	"fmt"
 )
 
-func caputesEq(expected, received []board.Coords) bool {
-	if len(expected) != len(received) {
-		return false
-	}
-	expMap := make(map[board.Coords]bool)
-	for _, x := range expected {
-		expMap[x] = true
-	}
-	for _, x := range received {
-		if !expMap[x] {
-			return false
-		}
-	}
-	return true
-}
-
 var validTestCases = map[string]struct {
 	State    State
 	Coords   board.Coords
@@ -270,7 +254,7 @@ var validTestCases = map[string]struct {
 func TestBoard_GetCaptures(t *testing.T) {
 	for descr, testCase := range validTestCases {
 		received := GetCaptures(testCase.State.Board, testCase.Coords)
-		if !caputesEq(testCase.Expected, received) {
+		if !DiffCoords(testCase.Expected, received) {
 			t.Error(fmt.Errorf("Case %s: expected %#v, got %#v", descr, testCase.Expected, received))
 		}
 	}
