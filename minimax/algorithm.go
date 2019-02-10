@@ -1,10 +1,12 @@
 package minimax
 
 import (
-	"gomoku/minimax/heuristic"
+	"gomoku/board"
 	"gomoku/game"
-	"sort"
+	"gomoku/minimax/heuristic"
 	"log"
+	"math"
+	"sort"
 )
 
 func Min(a, b int) int {
@@ -29,25 +31,34 @@ func Minimax(state game.State, maxWidth, depth int) Moves {
 
 	for _, coords := range cellsAdjacentToOccupied {
 		state, err := state.Move(coords)
-		if err == nil {
-			move := &Move{
-				Coords: coords,
-				State:  state,
-			}
-			if state.Player == state.Winner {
-				return []*Move{move}
-			}
-			move.Evaluation = heuristic.Evaluation(state.Board, state.BlackScore, state.WhiteScore)
-			moves = append(moves, move)
-		} else {
+		if err != nil {
 			log.Printf("%v", err)
+			continue
 		}
+		move := &Move{
+			Coords: coords,
+			State:  state,
+		}
+		if state.Player == state.Winner {
+			if state.Player == board.BLACK_PLAYER {
+				move.Evaluation = math.MinInt64
+			}
+			if state.Player == board.WHITE_PLAYER {
+				move.Evaluation = math.MinInt64
+			}
+			return []*Move{move}
+		}
+		move.Evaluation = heuristic.Evaluation(state.Board, state.BlackScore, state.WhiteScore)
+		moves = append(moves, move)
 	}
 	sort.Sort(moves)
 	moves = moves[:Min(maxWidth, moves.Len())]
 	// take best moves and proceed with them, discard the rest
 	for _, move := range moves {
-		move.Evaluation = Minimax(move.State, maxWidth, depth-1)[0].Evaluation
+		opponentMoves := Minimax(move.State, maxWidth, depth-1)
+		if len(opponentMoves) != 0 {
+			move.Evaluation = opponentMoves[0].Evaluation
+		}
 	}
 	sort.Sort(moves)
 	return moves
