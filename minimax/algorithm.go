@@ -16,7 +16,7 @@ func Min(a, b int) int {
 
 func Minimax(state game.State, maxWidth, depth int) Moves {
 	if depth == 0 {
-		return []*Move{
+		return Moves{
 			{
 				State:      state,
 				Evaluation: heuristic.Evaluation(state.Board, state.BlackScore, state.WhiteScore),
