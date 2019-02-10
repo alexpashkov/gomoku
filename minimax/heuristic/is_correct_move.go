@@ -2,7 +2,6 @@ package heuristic
 
 import (
 	"gomoku/board"
-	"fmt"
 )
 
 const (
@@ -156,7 +155,6 @@ func SearchDoubleThreatMid(b board.Board, threat []Threat, size int) []Threat {
 
 func FindDoubleThreeThreat(b board.Board, player int8, cord board.Coords) bool {
 	b.SetCell(cord, player)
-	fmt.Println(b)
 	var threat []Threat
 	threat = SearchDoubleThreat(b, threat, 3)
 	threat = SearchDoubleThreatMid(b, threat, 3)
