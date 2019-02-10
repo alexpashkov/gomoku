@@ -44,7 +44,7 @@ func Minimax(state game.State, maxWidth, depth int,
 				move.Evaluation = math.MinInt64
 			}
 			if state.Player == board.WHITE_PLAYER {
-				move.Evaluation = math.MinInt64
+				move.Evaluation = math.MaxInt64
 			}
 			return []*Move{move}
 		}

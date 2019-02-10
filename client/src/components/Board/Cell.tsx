@@ -21,6 +21,7 @@ class Cell extends React.PureComponent<ICellProps> {
     const { children: cell, x, y, onClick } = this.props;
     return (
       <div className={BoardStyles.cell} onClick={() => onClick({ x, y })}>
+        {x} {y}
         <div title={cell.toString()} className={`${BoardStyles.stone} ${stoneClassName(cell)}`}/>
       </div>
     );

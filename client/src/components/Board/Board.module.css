@@ -6,6 +6,8 @@
 }
 
 .cell {
+  font-size: 6px;
+  color: #cacaca;
   width: 30px;
   height: 30px;
   position: relative;
