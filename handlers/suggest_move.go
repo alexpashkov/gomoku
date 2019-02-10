@@ -10,7 +10,7 @@ import (
 
 func SuggestMove(res http.ResponseWriter, req *http.Request) {
 	state := game.State{}
-	if json.NewDecoder(req.Body).Decode(&state) != nil {
+	if json.NewDecoder(req.Body).Decode(&state) != nil || state.Winner != 0 {
 		res.WriteHeader(http.StatusBadRequest)
 		return
 	}
