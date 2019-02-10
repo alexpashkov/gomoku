@@ -70,18 +70,3 @@ func GetCaptures(b board.Board, c board.Coords) []board.Coords {
 	return captures
 }
 
-func DiffCoords(expected, received []board.Coords) bool {
-	if len(expected) != len(received) {
-		return false
-	}
-	expMap := make(map[board.Coords]bool)
-	for _, x := range expected {
-		expMap[x] = true
-	}
-	for _, x := range received {
-		if !expMap[x] {
-			return false
-		}
-	}
-	return true
-}
