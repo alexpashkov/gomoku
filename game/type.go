@@ -2,7 +2,6 @@ package game
 
 import (
 	"gomoku/board"
-	"fmt"
 )
 
 const (
@@ -17,12 +16,10 @@ type State struct {
 	Board      board.Board `json:"board"`
 }
 
-func (s State) MakeMoveImmut(c board.Coords) State {
-	s.Board.SetCell(c, s.Player)
-	if caputedCells := GetCaptures(s.Board, c); len(caputedCells) != 0 {
-		if len(caputedCells)%2 != 0 {
-			panic(fmt.Errorf("odd captures len %d", len(caputedCells)))
-		}
+// Move returns new state after applying
+func (s State) Move(coords board.Coords) (State, error) {
+	s.Board.SetCell(coords, s.Player)
+	if caputedCells := GetCaptures(s.Board, coords); len(caputedCells) != 0 {
 		for _, capturedCell := range caputedCells {
 			s.Board.SetCell(capturedCell, 0)
 		}
@@ -33,7 +30,7 @@ func (s State) MakeMoveImmut(c board.Coords) State {
 		}
 	}
 	s.switchPlayer()
-	return s
+	return s, nil
 }
 
 func (s *State) switchPlayer() {

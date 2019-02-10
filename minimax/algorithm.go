@@ -4,6 +4,7 @@ import (
 	"gomoku/minimax/heuristic"
 	"gomoku/game"
 	"sort"
+	"log"
 )
 
 func Min(a, b int) int {
@@ -27,7 +28,11 @@ func Minimax(state game.State, maxWidth, depth int) Moves {
 	moves := make(Moves, len(cellsAdjacentToOccupied))
 
 	for i, coords := range cellsAdjacentToOccupied {
-		state := state.MakeMoveImmut(coords)
+		state, err := state.Move(coords)
+		if err != nil {
+			log.Printf("%v", err)
+			continue
+		}
 		moves[i] = &Move{
 			Coords:     coords,
 			State:      state,
