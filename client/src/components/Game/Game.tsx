@@ -1,14 +1,7 @@
 import React from "react";
 import Board from "../Board/Board";
 import CurrentPlayer from "../CurrentPlayerDisplay";
-import {
-  GameType,
-  IBoard,
-  ICommonGameState,
-  ICoords,
-  IPlayer,
-  ISuggestion
-} from "../../types";
+import { GameType, IBoard, ICommonGameState, ICoords, IPlayer, ISuggestion } from "../../types";
 import assocPath from "lodash/fp/assocPath";
 import GameStyles from "./Game.module.css";
 import * as API from "../../API";
@@ -63,10 +56,7 @@ export default class Game extends React.Component<IGameProps, IGameState> {
   };
 
   humanMove = (coords: ICoords) => {
-    const { player, board } = this.state;
-    API.validateMove(board, player, coords).then(valid => {
-      valid && this.placeStone(coords);
-    });
+    API.makeMove(this.state, coords).then(this.setGameState, console.error);
   };
 
   aiFetch = () => {
@@ -88,11 +78,7 @@ export default class Game extends React.Component<IGameProps, IGameState> {
       suggestions: []
     });
     this.aiFetch().then(moves => {
-      this.placeStone(moves[0]);
-      console.log(moves.map(x => x.evaluation).join(","));
-      this.setState({
-        suggestions: moves.slice(1)
-      });
+      this.setGameState(moves[0].state);
     });
   };
 
@@ -117,22 +103,10 @@ export default class Game extends React.Component<IGameProps, IGameState> {
     });
   };
 
-  placeStone = (coords: ICoords) => {
-    const { aiPlayer } = this.props;
-    const { player, board } = this.state;
-    const nextPlayer = getNextPlayer(player);
-    this.setState(
-      {
-        board: assocPath([coords.y, coords.x], player, board),
-        player: nextPlayer
-      },
-      () => {
-        if (nextPlayer == aiPlayer) return this.aiMove();
-        // TODO move back
-        // this.showSuggestions();
-      }
-    );
-  };
+  setGameState = (state: ICommonGameState) =>
+    this.setState(state, () => {
+      if (state.player == this.props.aiPlayer) this.aiMove();
+    });
 
   handleCellClick = (coords: ICoords) => {
     const { type, aiPlayer } = this.props;

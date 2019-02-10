@@ -5,6 +5,8 @@ import (
 	"gomoku/game"
 	"encoding/json"
 	"gomoku/board"
+	"errors"
+	"fmt"
 )
 
 func MakeMove(res http.ResponseWriter, req *http.Request) {
@@ -12,14 +14,16 @@ func MakeMove(res http.ResponseWriter, req *http.Request) {
 		State  *game.State   `json:"state"`
 		Coords *board.Coords `json:"coords"`
 	}{}
-	if json.NewDecoder(req.Body).Decode(&body) != nil ||
-		body.State == nil || body.Coords == nil {
-		res.WriteHeader(http.StatusBadRequest)
+	if err := json.NewDecoder(req.Body).Decode(&body); err != nil {
+		sendError(res, fmt.Errorf("invalid body: %v", err), http.StatusBadRequest)
+	}
+	if body.State == nil || body.Coords == nil {
+		sendError(res, errors.New("state and coords are required"), http.StatusBadRequest)
 		return
 	}
 	newState, err := body.State.Move(*body.Coords)
 	if err != nil {
-		res.WriteHeader(http.StatusBadRequest)
+		sendError(res, fmt.Errorf("cannot make move: %v", err), http.StatusBadRequest)
 		return
 	}
 	marshaledState, err := json.Marshal(newState)

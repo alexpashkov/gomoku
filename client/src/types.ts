@@ -68,6 +68,7 @@ export interface ICoords {
 }
 
 export interface ISuggestion extends ICoords {
+  state: ICommonGameState
   evaluation: number
 }
 

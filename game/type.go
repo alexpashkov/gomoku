@@ -2,6 +2,7 @@ package game
 
 import (
 	"gomoku/board"
+	"fmt"
 )
 
 const (
@@ -18,6 +19,9 @@ type State struct {
 
 // Move returns new state after applying
 func (s State) Move(coords board.Coords) (State, error) {
+	if !s.Board.CellIsEmpty(coords) {
+		return s, fmt.Errorf("cell is occupied")
+	}
 	s.Board.SetCell(coords, s.Player)
 	if caputedCells := GetCaptures(s.Board, coords); len(caputedCells) != 0 {
 		for _, capturedCell := range caputedCells {
