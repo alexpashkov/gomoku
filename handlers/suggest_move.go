@@ -1,4 +1,4 @@
-package suggest_move
+package handlers
 
 import (
 	"encoding/json"
@@ -7,7 +7,7 @@ import (
 	"gomoku/minimax"
 )
 
-func Handler(res http.ResponseWriter, req *http.Request) {
+func SuggestMove(res http.ResponseWriter, req *http.Request) {
 	state := game.State{}
 	if json.NewDecoder(req.Body).Decode(&state) != nil {
 		res.WriteHeader(http.StatusBadRequest)
