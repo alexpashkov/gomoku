@@ -39,11 +39,10 @@ func Minimax(state game.State, maxWidth, depth int,
 			Coords: coords,
 			State:  state,
 		}
-		if state.Player == state.Winner {
-			if state.Player == board.BLACK_PLAYER {
+		if state.Winner != 0 {
+			if state.Winner == board.BLACK_PLAYER {
 				move.Evaluation = math.MinInt64
-			}
-			if state.Player == board.WHITE_PLAYER {
+			} else {
 				move.Evaluation = math.MaxInt64
 			}
 			return []*Move{move}

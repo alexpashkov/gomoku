@@ -1,10 +1,10 @@
 package game
 
 import (
-	"gomoku/board"
-	"fmt"
-	"gomoku/minimax/heuristic"
 	"errors"
+	"fmt"
+	"gomoku/board"
+	"gomoku/minimax/heuristic"
 )
 
 type State struct {
@@ -37,6 +37,9 @@ func (s State) Move(coords board.Coords) (State, error) {
 		return s, errors.New("double three threat")
 	}
 	s.Winner = heuristic.IsTerminate(s.Board, s.BlackScore, s.WhiteScore)
+	if s.Winner != 0 && s.Winner != s.Player {
+		panic(errors.New("a player became a winner without moving"))
+	}
 	if s.Winner == 0 {
 		s.switchPlayer()
 	}
