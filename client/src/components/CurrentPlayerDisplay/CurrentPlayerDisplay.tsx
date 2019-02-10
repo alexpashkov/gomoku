@@ -5,13 +5,20 @@ import c from "classnames";
 
 interface ICurrentPlayerDisplayProps {
   player: IPlayer;
+  blackScore: number;
+  whiteScore: number;
   onClick(p: IPlayer): void;
   allowPlayerSelection: boolean;
 }
 
 const CurrentPlayerDisplay: React.FunctionComponent<
-  ICurrentPlayerDisplayProps
-> = function CurrentPlayerDisplay({ player, onClick, allowPlayerSelection }) {
+  ICurrentPlayerDisplayProps> = function CurrentPlayerDisplay({
+                                                                player,
+                                                                blackScore,
+                                                                whiteScore,
+                                                                onClick,
+                                                                allowPlayerSelection
+                                                              }) {
   return (
     <div>
       <button
@@ -22,7 +29,9 @@ const CurrentPlayerDisplay: React.FunctionComponent<
           player === IPlayer.Black && CurrentPlayerDisplayStyles.btn__selected
         )}
         disabled={!allowPlayerSelection}
-      />
+      >
+        {blackScore}
+      </button>
       <button
         onClick={() => player !== IPlayer.White && onClick(IPlayer.White)}
         className={c(
@@ -31,7 +40,9 @@ const CurrentPlayerDisplay: React.FunctionComponent<
           player === IPlayer.White && CurrentPlayerDisplayStyles.btn__selected
         )}
         disabled={!allowPlayerSelection}
-      />
+      >
+        {whiteScore}
+      </button>
     </div>
   );
 };

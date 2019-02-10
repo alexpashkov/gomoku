@@ -1,7 +1,14 @@
 import React from "react";
 import Board from "../Board/Board";
 import CurrentPlayer from "../CurrentPlayerDisplay";
-import { GameType, IBoard, ICommonGameState, ICoords, IPlayer, ISuggestion } from "../../types";
+import {
+  GameType,
+  IBoard,
+  ICommonGameState,
+  ICoords,
+  IPlayer,
+  ISuggestion
+} from "../../types";
 import assocPath from "lodash/fp/assocPath";
 import GameStyles from "./Game.module.css";
 import * as API from "../../API";
@@ -129,12 +136,21 @@ export default class Game extends React.Component<IGameProps, IGameState> {
 
   render() {
     const { type } = this.props;
-    const { board, player, suggestions, aiResponseTime } = this.state;
+    const {
+      board,
+      player,
+      blackScore,
+      whiteScore,
+      suggestions,
+      aiResponseTime
+    } = this.state;
     return (
       <div className={GameStyles.container}>
         <div className={GameStyles.infoPanel}>
           <CurrentPlayer
             player={player}
+            blackScore={blackScore}
+            whiteScore={whiteScore}
             onClick={this.setPlayer}
             allowPlayerSelection={type == GameType.debug}
           />
