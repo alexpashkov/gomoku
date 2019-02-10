@@ -14,7 +14,7 @@ func Handler(res http.ResponseWriter, req *http.Request) {
 		res.WriteHeader(http.StatusBadRequest)
 		return
 	}
-	moves := minimax.Minimax(state, 3, 2)
+	moves := minimax.Minimax(state, 3, 3)
 	resBody, err := json.Marshal(moves)
 	if err != nil {
 		res.WriteHeader(http.StatusInternalServerError)

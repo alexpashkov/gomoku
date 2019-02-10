@@ -60,8 +60,6 @@ func IsTerminateFigure(b board.Board) int8 {
 						return current
 					}
 				} else if amountLeftZ == 5 {
-					//return 0
-					//fmt.Println(x - 1 >= 0 && y + 1 < 19)
 					if x + 1 < 19 && y - 1 >= 0 && b.GetCell(board.Coords{x + 1, y - 1}) != current {
 						return current
 					} else if y == 0 || x == 18 {

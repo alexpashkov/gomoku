@@ -13,34 +13,34 @@ func GetCaptures(b board.Board, c board.Coords) []board.Coords {
 	}
 
 	if (x+3 < 19 && player == b.GetCell(board.Coords{x + 3, y})) {
-		if (b.GetCell(board.Coords{x + 1, y}) != 0 &&
+		if (b.GetCell(board.Coords{x + 1, y}) != 0 && player != b.GetCell(board.Coords{x + 1, y}) &&
 			b.GetCell(board.Coords{x + 1, y}) == b.GetCell(board.Coords{x + 2, y})) {
 			captures = append(captures, board.Coords{x + 1, y}, board.Coords{x + 2, y})
 		}
 	}
 	if (x-3 >= 0 && player == b.GetCell(board.Coords{x - 3, y})) {
-		if (b.GetCell(board.Coords{x - 1, y}) != 0 &&
+		if (b.GetCell(board.Coords{x - 1, y}) != 0 && player != b.GetCell(board.Coords{x - 1, y}) &&
 			b.GetCell(board.Coords{x - 1, y}) == b.GetCell(board.Coords{x - 2, y})) {
 			captures = append(captures, board.Coords{x - 1, y}, board.Coords{x - 2, y})
 		}
 	}
 
 	if (y+3 < 19 && player == b.GetCell(board.Coords{x, y + 3})) {
-		if (b.GetCell(board.Coords{x, y + 1}) != 0 &&
+		if (b.GetCell(board.Coords{x, y + 1}) != 0 && player != b.GetCell(board.Coords{x, y + 1}) &&
 			b.GetCell(board.Coords{x, y + 1}) == b.GetCell(board.Coords{x, y + 2})) {
 			captures = append(captures, board.Coords{x, y + 1}, board.Coords{x, y + 2})
 		}
 	}
 
-	if (y-3 >= 0 &&player == b.GetCell(board.Coords{x, y - 3})) {
-		if (b.GetCell(board.Coords{x, y - 1}) != 0 &&
+	if (y-3 >= 0 && player == b.GetCell(board.Coords{x, y - 3})) {
+		if (b.GetCell(board.Coords{x, y - 1}) != 0 && player != b.GetCell(board.Coords{x, y - 1}) &&
 			b.GetCell(board.Coords{x, y - 1}) == b.GetCell(board.Coords{x, y - 2})) {
 			captures = append(captures, board.Coords{x, y - 1}, board.Coords{x, y - 2})
 		}
 	}
 
 	if (y+3 < 19 && x+3 < 19 && player == b.GetCell(board.Coords{x + 3, y + 3})) {
-		if (b.GetCell(board.Coords{x + 1, y + 1}) != 0 &&
+		if (b.GetCell(board.Coords{x + 1, y + 1}) != 0 &&player != b.GetCell(board.Coords{x + 1, y - 1}) &&
 			b.GetCell(board.Coords{x + 1, y + 1}) == b.GetCell(board.Coords{x + 2, y + 2})) {
 			captures = append(captures, board.Coords{x + 1, y + 1}, board.Coords{x + 2, y + 2})
 		}
@@ -68,4 +68,20 @@ func GetCaptures(b board.Board, c board.Coords) []board.Coords {
 	}
 
 	return captures
+}
+
+func DiffCoords(expected, received []board.Coords) bool {
+	if len(expected) != len(received) {
+		return false
+	}
+	expMap := make(map[board.Coords]bool)
+	for _, x := range expected {
+		expMap[x] = true
+	}
+	for _, x := range received {
+		if !expMap[x] {
+			return false
+		}
+	}
+	return true
 }
