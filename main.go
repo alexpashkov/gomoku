@@ -12,7 +12,7 @@ import (
 	"gomoku/minimax/heuristic"
 )
 
-const PORT = ":4444"
+const PORT = ":5555"
 
 func main() {
 	mux := http.NewServeMux()
