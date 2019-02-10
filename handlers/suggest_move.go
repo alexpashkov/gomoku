@@ -2,9 +2,10 @@ package handlers
 
 import (
 	"encoding/json"
-	"net/http"
 	"gomoku/game"
 	"gomoku/minimax"
+	"gomoku/minimax/heuristic"
+	"net/http"
 )
 
 func SuggestMove(res http.ResponseWriter, req *http.Request) {
@@ -13,7 +14,7 @@ func SuggestMove(res http.ResponseWriter, req *http.Request) {
 		res.WriteHeader(http.StatusBadRequest)
 		return
 	}
-	moves := minimax.Minimax(state, 3, 4)
+	moves := minimax.Minimax(state, 3, 4, heuristic.Evaluation)
 	resBody, err := json.Marshal(moves)
 	if err != nil {
 		res.WriteHeader(http.StatusInternalServerError)
