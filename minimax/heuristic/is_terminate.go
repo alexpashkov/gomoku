@@ -83,9 +83,9 @@ func isCapture(threat []Threat, x int, y int) int {
 }
 
 func IsTerminate(b board.Board, amountPointMinPlayer int8, amountPointMaxPlayer int8) int8 {
-	if amountPointMinPlayer == 10 {
+	if amountPointMinPlayer >= 10 {
 		return board.BLACK_PLAYER
-	} else if amountPointMaxPlayer == 10 {
+	} else if amountPointMaxPlayer >= 10 {
 		return board.WHITE_PLAYER
 	}
 	return IsTerminateFigure(b)

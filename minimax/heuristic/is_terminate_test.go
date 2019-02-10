@@ -17,8 +17,8 @@ var IsTerminateValidTestCases = map[string]struct {
 	},
 	"score white": {
 		Board:      board.Board{},
-		blackScore: 12,
-		whiteScore: 0,
+		blackScore: 0,
+		whiteScore: 12,
 		expected:   board.WHITE_PLAYER,
 	},
 }
