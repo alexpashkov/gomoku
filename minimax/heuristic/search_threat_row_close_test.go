@@ -3,7 +3,6 @@ package heuristic
 import (
 	"testing"
 	"gomoku/board"
-	"gomoku/game"
 	"fmt"
 )
 
@@ -18,9 +17,9 @@ func threatEq(expected, received []Threat) bool {
 			return false
 		} else if expected[key].status != value.status {
 			return false
-		} else if game.DiffCoords(expected[key].corner, value.corner) == false {
+		} else if board.DiffCoords(expected[key].corner, value.corner) == false {
 			return false
-		} else if game.DiffCoords(expected[key].positions, value.positions) == false {
+		} else if board.DiffCoords(expected[key].positions, value.positions) == false {
 			return false
 		}
 	}
@@ -56,7 +55,7 @@ var validTestCasesClose = map[string]struct {
 		},
 		len: 2,
 		Expected: []Threat{
-			{owner: game.BLACK_PLAYER, positions: []board.Coords{{0, 0}, {0, 1}}, size: 2, status: CLOSE_THREAT},
+			{owner: board.BLACK_PLAYER, positions: []board.Coords{{0, 0}, {0, 1}}, size: 2, status: CLOSE_THREAT},
 		},
 	},
 	"top left corner threa close threat type-y": {
@@ -83,7 +82,7 @@ var validTestCasesClose = map[string]struct {
 		},
 		len: 3,
 		Expected: []Threat{
-			{owner: game.BLACK_PLAYER, positions: []board.Coords{{0, 0}, {0, 1}, {0, 2}}, corner: nil, size: 3, status: CLOSE_THREAT},
+			{owner: board.BLACK_PLAYER, positions: []board.Coords{{0, 0}, {0, 1}, {0, 2}}, corner: nil, size: 3, status: CLOSE_THREAT},
 		},
 	},
 	"top left corner four close threat type-y": {
@@ -110,7 +109,7 @@ var validTestCasesClose = map[string]struct {
 		},
 		len: 4,
 		Expected: []Threat{
-			{owner: game.BLACK_PLAYER, positions: []board.Coords{{0, 0}, {0, 1}, {0, 2}, {0, 3}}, corner: nil, size: 4, status: CLOSE_THREAT},
+			{owner: board.BLACK_PLAYER, positions: []board.Coords{{0, 0}, {0, 1}, {0, 2}, {0, 3}}, corner: nil, size: 4, status: CLOSE_THREAT},
 		},
 	},
 	"top left corner five close threat type-y": {
@@ -137,7 +136,7 @@ var validTestCasesClose = map[string]struct {
 		},
 		len: 5,
 		Expected: []Threat{
-			{owner: game.BLACK_PLAYER, positions: []board.Coords{{0, 0}, {0, 1}, {0, 2}, {0, 3}, {0, 4}}, corner: nil, size: 5, status: CLOSE_THREAT},
+			{owner: board.BLACK_PLAYER, positions: []board.Coords{{0, 0}, {0, 1}, {0, 2}, {0, 3}, {0, 4}}, corner: nil, size: 5, status: CLOSE_THREAT},
 		},
 	},
 	"top left corner four close threat type-y another user": {
@@ -164,7 +163,7 @@ var validTestCasesClose = map[string]struct {
 		},
 		len: 4,
 		Expected: []Threat{
-			{owner: game.WHITE_PLAYER, positions: []board.Coords{{0, 0}, {0, 1}, {0, 2}, {0, 3}}, corner: nil, size: 4, status: CLOSE_THREAT},
+			{owner: board.WHITE_PLAYER, positions: []board.Coords{{0, 0}, {0, 1}, {0, 2}, {0, 3}}, corner: nil, size: 4, status: CLOSE_THREAT},
 		},
 	},
 	"down left corner five close threat type-y": {
@@ -191,7 +190,7 @@ var validTestCasesClose = map[string]struct {
 		},
 		len: 5,
 		Expected: []Threat{
-			{owner: game.BLACK_PLAYER, positions: []board.Coords{{0, 14}, {0, 15}, {0, 16}, {0, 17}, {0, 18}}, corner: nil, size: 5, status: CLOSE_THREAT},
+			{owner: board.BLACK_PLAYER, positions: []board.Coords{{0, 14}, {0, 15}, {0, 16}, {0, 17}, {0, 18}}, corner: nil, size: 5, status: CLOSE_THREAT},
 		},
 	},
 	"down left corner four close threat type-y": {
@@ -218,7 +217,7 @@ var validTestCasesClose = map[string]struct {
 		},
 		len: 4,
 		Expected: []Threat{
-			{owner: game.BLACK_PLAYER, positions: []board.Coords{{0, 15}, {0, 16}, {0, 17}, {0, 18}}, corner: nil, size: 4, status: CLOSE_THREAT},
+			{owner: board.BLACK_PLAYER, positions: []board.Coords{{0, 15}, {0, 16}, {0, 17}, {0, 18}}, corner: nil, size: 4, status: CLOSE_THREAT},
 		},
 	},
 	"down left corner three close threat type-y": {
@@ -245,7 +244,7 @@ var validTestCasesClose = map[string]struct {
 		},
 		len: 3,
 		Expected: []Threat{
-			{owner: game.BLACK_PLAYER, positions: []board.Coords{{0, 16}, {0, 17}, {0, 18}}, corner: nil, size: 3, status: CLOSE_THREAT},
+			{owner: board.BLACK_PLAYER, positions: []board.Coords{{0, 16}, {0, 17}, {0, 18}}, corner: nil, size: 3, status: CLOSE_THREAT},
 		},
 	},
 	"down left corner two close threat type-y": {
@@ -272,7 +271,7 @@ var validTestCasesClose = map[string]struct {
 		},
 		len: 2,
 		Expected: []Threat{
-			{owner: game.BLACK_PLAYER, positions: []board.Coords{{0, 17}, {0, 18}}, corner: nil, size: 2, status: CLOSE_THREAT},
+			{owner: board.BLACK_PLAYER, positions: []board.Coords{{0, 17}, {0, 18}}, corner: nil, size: 2, status: CLOSE_THREAT},
 		},
 	},
 	"down right corner five close threat type-y": {
@@ -299,7 +298,7 @@ var validTestCasesClose = map[string]struct {
 		},
 		len: 5,
 		Expected: []Threat{
-			{owner: game.BLACK_PLAYER, positions: []board.Coords{{18, 14}, {18, 15}, {18, 16}, {18, 17}, {18, 18}}, corner: nil, size: 5, status: CLOSE_THREAT},
+			{owner: board.BLACK_PLAYER, positions: []board.Coords{{18, 14}, {18, 15}, {18, 16}, {18, 17}, {18, 18}}, corner: nil, size: 5, status: CLOSE_THREAT},
 		},
 	},
 	"down right corner four close threat type-y": {
@@ -326,7 +325,7 @@ var validTestCasesClose = map[string]struct {
 		},
 		len: 4,
 		Expected: []Threat{
-			{owner: game.BLACK_PLAYER, positions: []board.Coords{{18, 15}, {18, 16}, {18, 17}, {18, 18}}, corner: nil, size: 4, status: CLOSE_THREAT},
+			{owner: board.BLACK_PLAYER, positions: []board.Coords{{18, 15}, {18, 16}, {18, 17}, {18, 18}}, corner: nil, size: 4, status: CLOSE_THREAT},
 		},
 	},
 	"down right corner three close threat type-y": {
@@ -353,7 +352,7 @@ var validTestCasesClose = map[string]struct {
 		},
 		len: 3,
 		Expected: []Threat{
-			{owner: game.BLACK_PLAYER, positions: []board.Coords{{18, 16}, {18, 17}, {18, 18}}, corner: nil, size: 3, status: CLOSE_THREAT},
+			{owner: board.BLACK_PLAYER, positions: []board.Coords{{18, 16}, {18, 17}, {18, 18}}, corner: nil, size: 3, status: CLOSE_THREAT},
 		},
 	},
 	"down right corner two close threat type-y": {
@@ -380,7 +379,7 @@ var validTestCasesClose = map[string]struct {
 		},
 		len: 2,
 		Expected: []Threat{
-			{owner: game.BLACK_PLAYER, positions: []board.Coords{{18, 17}, {18, 18}}, corner: nil, size: 2, status: CLOSE_THREAT},
+			{owner: board.BLACK_PLAYER, positions: []board.Coords{{18, 17}, {18, 18}}, corner: nil, size: 2, status: CLOSE_THREAT},
 		},
 	},
 	"top right corner five close threat type-y": {
@@ -407,7 +406,7 @@ var validTestCasesClose = map[string]struct {
 		},
 		len: 5,
 		Expected: []Threat{
-			{owner: game.BLACK_PLAYER, positions: []board.Coords{{18, 0}, {18, 1}, {18, 2}, {18, 3}, {18, 4}}, corner: nil, size: 5, status: CLOSE_THREAT},
+			{owner: board.BLACK_PLAYER, positions: []board.Coords{{18, 0}, {18, 1}, {18, 2}, {18, 3}, {18, 4}}, corner: nil, size: 5, status: CLOSE_THREAT},
 		},
 	},
 	"top right corner four close threat type-y": {
@@ -434,7 +433,7 @@ var validTestCasesClose = map[string]struct {
 		},
 		len: 4,
 		Expected: []Threat{
-			{owner: game.BLACK_PLAYER, positions: []board.Coords{{18, 0}, {18, 1}, {18, 2}, {18, 3}}, corner: nil, size: 4, status: CLOSE_THREAT},
+			{owner: board.BLACK_PLAYER, positions: []board.Coords{{18, 0}, {18, 1}, {18, 2}, {18, 3}}, corner: nil, size: 4, status: CLOSE_THREAT},
 		},
 	},
 	"top right corner three close threat type-y": {
@@ -461,7 +460,7 @@ var validTestCasesClose = map[string]struct {
 		},
 		len: 3,
 		Expected: []Threat{
-			{owner: game.BLACK_PLAYER, positions: []board.Coords{{18, 0}, {18, 1}, {18, 2}}, corner: nil, size: 3, status: CLOSE_THREAT},
+			{owner: board.BLACK_PLAYER, positions: []board.Coords{{18, 0}, {18, 1}, {18, 2}}, corner: nil, size: 3, status: CLOSE_THREAT},
 		},
 	},
 	"top right corner two close threat type-y": {
@@ -488,7 +487,7 @@ var validTestCasesClose = map[string]struct {
 		},
 		len: 2,
 		Expected: []Threat{
-			{owner: game.BLACK_PLAYER, positions: []board.Coords{{18, 0}, {18, 1}}, corner: nil, size: 2, status: CLOSE_THREAT},
+			{owner: board.BLACK_PLAYER, positions: []board.Coords{{18, 0}, {18, 1}}, corner: nil, size: 2, status: CLOSE_THREAT},
 		},
 	},
 	"center threat five close threat type-y": {
@@ -515,7 +514,7 @@ var validTestCasesClose = map[string]struct {
 		},
 		len: 5,
 		Expected: []Threat{
-			{owner: game.BLACK_PLAYER, positions: []board.Coords{{9, 8}, {9, 9}, {9, 10}, {9, 11}, {9, 12}}, corner: nil, size: 5, status: CLOSE_THREAT},
+			{owner: board.BLACK_PLAYER, positions: []board.Coords{{9, 8}, {9, 9}, {9, 10}, {9, 11}, {9, 12}}, corner: nil, size: 5, status: CLOSE_THREAT},
 		},
 	},
 	"center threat four close threat type-y": {
@@ -542,7 +541,7 @@ var validTestCasesClose = map[string]struct {
 		},
 		len: 4,
 		Expected: []Threat{
-			{owner: game.BLACK_PLAYER, positions: []board.Coords{{9, 9}, {9, 10}, {9, 11}, {9, 12}}, corner: nil, size: 4, status: CLOSE_THREAT},
+			{owner: board.BLACK_PLAYER, positions: []board.Coords{{9, 9}, {9, 10}, {9, 11}, {9, 12}}, corner: nil, size: 4, status: CLOSE_THREAT},
 		},
 	},
 	"center threat three close threat type-y": {
@@ -569,7 +568,7 @@ var validTestCasesClose = map[string]struct {
 		},
 		len: 3,
 		Expected: []Threat{
-			{owner: game.BLACK_PLAYER, positions: []board.Coords{{9, 10}, {9, 11}, {9, 12}}, corner: nil, size: 3, status: CLOSE_THREAT},
+			{owner: board.BLACK_PLAYER, positions: []board.Coords{{9, 10}, {9, 11}, {9, 12}}, corner: nil, size: 3, status: CLOSE_THREAT},
 		},
 	},
 	"center threat two close threat type-y": {
@@ -596,7 +595,7 @@ var validTestCasesClose = map[string]struct {
 		},
 		len: 2,
 		Expected: []Threat{
-			{owner: game.BLACK_PLAYER, positions: []board.Coords{{9, 11}, {9, 12}}, corner: nil, size: 2, status: CLOSE_THREAT},
+			{owner: board.BLACK_PLAYER, positions: []board.Coords{{9, 11}, {9, 12}}, corner: nil, size: 2, status: CLOSE_THREAT},
 		},
 	},
 	"top left corner two close threat type-x": {
@@ -623,7 +622,7 @@ var validTestCasesClose = map[string]struct {
 		},
 		len: 2,
 		Expected: []Threat{
-			{owner: game.BLACK_PLAYER, positions: []board.Coords{{0, 0}, {1, 0}}, size: 2, status: CLOSE_THREAT},
+			{owner: board.BLACK_PLAYER, positions: []board.Coords{{0, 0}, {1, 0}}, size: 2, status: CLOSE_THREAT},
 		},
 	},
 	"top left corner threa close threat type-x": {
@@ -650,7 +649,7 @@ var validTestCasesClose = map[string]struct {
 		},
 		len: 3,
 		Expected: []Threat{
-			{owner: game.BLACK_PLAYER, positions: []board.Coords{{0, 0}, {1, 0}, {2, 0}}, corner: nil, size: 3, status: CLOSE_THREAT},
+			{owner: board.BLACK_PLAYER, positions: []board.Coords{{0, 0}, {1, 0}, {2, 0}}, corner: nil, size: 3, status: CLOSE_THREAT},
 		},
 	},
 	"top left corner four close threat type-x": {
@@ -677,7 +676,7 @@ var validTestCasesClose = map[string]struct {
 		},
 		len: 4,
 		Expected: []Threat{
-			{owner: game.BLACK_PLAYER, positions: []board.Coords{{0, 0}, {1, 0}, {2, 0}, {3, 0}}, corner: nil, size: 4, status: CLOSE_THREAT},
+			{owner: board.BLACK_PLAYER, positions: []board.Coords{{0, 0}, {1, 0}, {2, 0}, {3, 0}}, corner: nil, size: 4, status: CLOSE_THREAT},
 		},
 	},
 	"top left corner five close threat type-x": {
@@ -704,7 +703,7 @@ var validTestCasesClose = map[string]struct {
 		},
 		len: 5,
 		Expected: []Threat{
-			{owner: game.BLACK_PLAYER, positions: []board.Coords{{0, 0}, {1, 0}, {2, 0}, {3, 0}, {4, 0}}, corner: nil, size: 5, status: CLOSE_THREAT},
+			{owner: board.BLACK_PLAYER, positions: []board.Coords{{0, 0}, {1, 0}, {2, 0}, {3, 0}, {4, 0}}, corner: nil, size: 5, status: CLOSE_THREAT},
 		},
 	},
 	"top left corner four close threat type-x another user": {
@@ -731,7 +730,7 @@ var validTestCasesClose = map[string]struct {
 		},
 		len: 4,
 		Expected: []Threat{
-			{owner: game.WHITE_PLAYER, positions: []board.Coords{{0, 0}, {1, 0}, {2, 0}, {3, 0}}, corner: nil, size: 4, status: CLOSE_THREAT},
+			{owner: board.WHITE_PLAYER, positions: []board.Coords{{0, 0}, {1, 0}, {2, 0}, {3, 0}}, corner: nil, size: 4, status: CLOSE_THREAT},
 		},
 	},
 	"down left corner five close threat type-x": {
@@ -758,7 +757,7 @@ var validTestCasesClose = map[string]struct {
 		},
 		len: 5,
 		Expected: []Threat{
-			{owner: game.BLACK_PLAYER, positions: []board.Coords{{0, 18}, {1, 18}, {2, 18}, {3, 18}, {4, 18}}, corner: nil, size: 5, status: CLOSE_THREAT},
+			{owner: board.BLACK_PLAYER, positions: []board.Coords{{0, 18}, {1, 18}, {2, 18}, {3, 18}, {4, 18}}, corner: nil, size: 5, status: CLOSE_THREAT},
 		},
 	},
 	"down left corner four close threat type-x": {
@@ -785,7 +784,7 @@ var validTestCasesClose = map[string]struct {
 		},
 		len: 4,
 		Expected: []Threat{
-			{owner: game.BLACK_PLAYER, positions: []board.Coords{{0, 18}, {1, 18}, {2, 18}, {3, 18}}, corner: nil, size: 4, status: CLOSE_THREAT},
+			{owner: board.BLACK_PLAYER, positions: []board.Coords{{0, 18}, {1, 18}, {2, 18}, {3, 18}}, corner: nil, size: 4, status: CLOSE_THREAT},
 		},
 	},
 	"down left corner three close threat type-x": {
@@ -812,7 +811,7 @@ var validTestCasesClose = map[string]struct {
 		},
 		len: 3,
 		Expected: []Threat{
-			{owner: game.BLACK_PLAYER, positions: []board.Coords{{0, 18}, {1, 18}, {2, 18}}, corner: nil, size: 3, status: CLOSE_THREAT},
+			{owner: board.BLACK_PLAYER, positions: []board.Coords{{0, 18}, {1, 18}, {2, 18}}, corner: nil, size: 3, status: CLOSE_THREAT},
 		},
 	},
 	"down left corner two close threat type-x": {
@@ -839,7 +838,7 @@ var validTestCasesClose = map[string]struct {
 		},
 		len: 2,
 		Expected: []Threat{
-			{owner: game.BLACK_PLAYER, positions: []board.Coords{{0, 18}, {1, 18}}, corner: nil, size: 2, status: CLOSE_THREAT},
+			{owner: board.BLACK_PLAYER, positions: []board.Coords{{0, 18}, {1, 18}}, corner: nil, size: 2, status: CLOSE_THREAT},
 		},
 	},
 	"down right corner five close threat type-x": {
@@ -866,7 +865,7 @@ var validTestCasesClose = map[string]struct {
 		},
 		len: 5,
 		Expected: []Threat{
-			{owner: game.BLACK_PLAYER, positions: []board.Coords{{14, 18}, {15, 18}, {16, 18}, {17, 18}, {18, 18}}, corner: nil, size: 5, status: CLOSE_THREAT},
+			{owner: board.BLACK_PLAYER, positions: []board.Coords{{14, 18}, {15, 18}, {16, 18}, {17, 18}, {18, 18}}, corner: nil, size: 5, status: CLOSE_THREAT},
 		},
 	},
 	"down right corner four close threat type-x": {
@@ -893,7 +892,7 @@ var validTestCasesClose = map[string]struct {
 		},
 		len: 4,
 		Expected: []Threat{
-			{owner: game.BLACK_PLAYER, positions: []board.Coords{{15, 18}, {16, 18}, {17, 18}, {18, 18}}, corner: nil, size: 4, status: CLOSE_THREAT},
+			{owner: board.BLACK_PLAYER, positions: []board.Coords{{15, 18}, {16, 18}, {17, 18}, {18, 18}}, corner: nil, size: 4, status: CLOSE_THREAT},
 		},
 	},
 	"down right corner three close threat type-x": {
@@ -920,7 +919,7 @@ var validTestCasesClose = map[string]struct {
 		},
 		len: 3,
 		Expected: []Threat{
-			{owner: game.BLACK_PLAYER, positions: []board.Coords{ {16, 18}, {17, 18}, {18, 18}}, corner: nil, size: 3, status: CLOSE_THREAT},
+			{owner: board.BLACK_PLAYER, positions: []board.Coords{ {16, 18}, {17, 18}, {18, 18}}, corner: nil, size: 3, status: CLOSE_THREAT},
 		},
 	},
 	"down right corner two close threat type-x": {
@@ -947,7 +946,7 @@ var validTestCasesClose = map[string]struct {
 		},
 		len: 2,
 		Expected: []Threat{
-			{owner: game.BLACK_PLAYER, positions: []board.Coords{{17, 18}, {18, 18}}, corner: nil, size: 2, status: CLOSE_THREAT},
+			{owner: board.BLACK_PLAYER, positions: []board.Coords{{17, 18}, {18, 18}}, corner: nil, size: 2, status: CLOSE_THREAT},
 		},
 	},
 	"top right corner five close threat type-x": {
@@ -974,7 +973,7 @@ var validTestCasesClose = map[string]struct {
 		},
 		len: 5,
 		Expected: []Threat{
-			{owner: game.BLACK_PLAYER, positions: []board.Coords{{14, 0}, {15, 0}, {16, 0}, {17, 0}, {18, 0}}, corner: nil, size: 5, status: CLOSE_THREAT},
+			{owner: board.BLACK_PLAYER, positions: []board.Coords{{14, 0}, {15, 0}, {16, 0}, {17, 0}, {18, 0}}, corner: nil, size: 5, status: CLOSE_THREAT},
 		},
 	},
 	"top right corner four close threat type-x": {
@@ -1001,7 +1000,7 @@ var validTestCasesClose = map[string]struct {
 		},
 		len: 4,
 		Expected: []Threat{
-			{owner: game.BLACK_PLAYER, positions: []board.Coords{ {15, 0}, {16, 0}, {17, 0}, {18, 0}}, corner: nil, size: 4, status: CLOSE_THREAT},
+			{owner: board.BLACK_PLAYER, positions: []board.Coords{ {15, 0}, {16, 0}, {17, 0}, {18, 0}}, corner: nil, size: 4, status: CLOSE_THREAT},
 		},
 	},
 	"top right corner three close threat type-x": {
@@ -1028,7 +1027,7 @@ var validTestCasesClose = map[string]struct {
 		},
 		len: 3,
 		Expected: []Threat{
-			{owner: game.BLACK_PLAYER, positions: []board.Coords{{16, 0}, {17, 0}, {18, 0}}, corner: nil, size: 3, status: CLOSE_THREAT},
+			{owner: board.BLACK_PLAYER, positions: []board.Coords{{16, 0}, {17, 0}, {18, 0}}, corner: nil, size: 3, status: CLOSE_THREAT},
 		},
 	},
 	"top right corner two close threat type-x": {
@@ -1055,7 +1054,7 @@ var validTestCasesClose = map[string]struct {
 		},
 		len: 2,
 		Expected: []Threat{
-			{owner: game.BLACK_PLAYER, positions: []board.Coords{{17, 0}, {18, 0}}, corner: nil, size: 2, status: CLOSE_THREAT},
+			{owner: board.BLACK_PLAYER, positions: []board.Coords{{17, 0}, {18, 0}}, corner: nil, size: 2, status: CLOSE_THREAT},
 		},
 	},
 	"center threat five close threat type-x": {
@@ -1082,7 +1081,330 @@ var validTestCasesClose = map[string]struct {
 		},
 		len: 5,
 		Expected: []Threat{
-			{owner: game.BLACK_PLAYER, positions: []board.Coords{{5, 8}, {6, 8}, {7, 8}, {8, 8}, {9, 8}}, corner: nil, size: 5, status: CLOSE_THREAT},
+			{owner: board.BLACK_PLAYER, positions: []board.Coords{{5, 8}, {6, 8}, {7, 8}, {8, 8}, {9, 8}}, corner: nil, size: 5, status: CLOSE_THREAT},
+		},
+	},
+	"center threat four close threat type-x": {
+		Board: board.Board{
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+		},
+		len: 4,
+		Expected: []Threat{
+			{owner: board.BLACK_PLAYER, positions: []board.Coords{ {6, 8}, {7, 8}, {8, 8}, {9, 8}}, corner: nil, size: 4, status: CLOSE_THREAT},
+		},
+	},
+	"center threat three close threat type-x": {
+		Board: board.Board{
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+		},
+		len: 3,
+		Expected: []Threat{
+			{owner: board.BLACK_PLAYER, positions: []board.Coords{ {7, 8}, {8, 8}, {9, 8}}, corner: nil, size: 3, status: CLOSE_THREAT},
+		},
+	},
+	"center threat two close threat type-x": {
+		Board: board.Board{
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+		},
+		len: 2,
+		Expected: []Threat{
+			{owner: board.BLACK_PLAYER, positions: []board.Coords{ {8, 8}, {9, 8}}, corner: nil, size: 2, status: CLOSE_THREAT},
+		},
+	},
+	"top left corner threat five close type-z right": {
+		Board: board.Board{
+			{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+		},
+		len: 5,
+		Expected: []Threat{
+			{owner: board.BLACK_PLAYER, positions: []board.Coords{{0, 0}, {1, 1}, {2, 2}, {3, 3}, {4, 4}}, corner: nil, size: 5, status: CLOSE_THREAT},
+		},
+	},
+	"top left corner threat four close type-z right": {
+		Board: board.Board{
+			{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+		},
+		len: 4,
+		Expected: []Threat{
+			{owner: board.BLACK_PLAYER, positions: []board.Coords{{0, 0}, {1, 1}, {2, 2}, {3, 3}}, corner: nil, size: 4, status: CLOSE_THREAT},
+		},
+	},
+	"down right corner threat five close type-z right": {
+		Board: board.Board{
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+		},
+		len: 5,
+		Expected: []Threat{
+			{owner: board.BLACK_PLAYER, positions: []board.Coords{{14, 14}, {15, 15}, {16, 16}, {17, 17}, {18, 18}}, corner: nil, size: 5, status: CLOSE_THREAT},
+		},
+	},
+	"down right corner threat four close type-z right": {
+		Board: board.Board{
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+		},
+		len: 4,
+		Expected: []Threat{
+			{owner: board.BLACK_PLAYER, positions: []board.Coords{{15, 15}, {16, 16}, {17, 17}, {18, 18}}, corner: nil, size: 4, status: CLOSE_THREAT},
+		},
+	},
+	"down left corner threat four close type-z right invalid": {
+		Board: board.Board{
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+		},
+		len: 4,
+		Expected: []Threat{
+		},
+	},
+	"down left corner threat four close type-z right": {
+		Board: board.Board{
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+		},
+		len: 4,
+		Expected: []Threat{
+			{owner: board.BLACK_PLAYER, positions: []board.Coords{{0, 14}, {1, 15}, {2, 16}, {3, 17}}, corner: nil, size: 4, status: CLOSE_THREAT},
+		},
+	},
+	"down left corner threat three close type-z right": {
+		Board: board.Board{
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+		},
+		len: 3,
+		Expected: []Threat{
+			{owner: board.BLACK_PLAYER, positions: []board.Coords{{0, 14}, {1, 15}, {2, 16}}, corner: nil, size: 3, status: CLOSE_THREAT},
+		},
+	},
+	"center threat three close type-z right": {
+		Board: board.Board{
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+		},
+		len: 3,
+		Expected: []Threat{
+			{owner: board.BLACK_PLAYER, positions: []board.Coords{{7, 10}, {8, 11}, {9, 12}}, corner: nil, size: 3, status: CLOSE_THREAT},
+		},
+	},
+	"center right corner threat three close type-z right": {
+		Board: board.Board{
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+		},
+		len: 3,
+		Expected: []Threat{
+			{owner: board.BLACK_PLAYER, positions: []board.Coords{{16, 8}, {17, 9}, {18, 10}}, corner: nil, size: 3, status: CLOSE_THREAT},
 		},
 	},
 }

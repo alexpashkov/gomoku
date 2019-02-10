@@ -27,3 +27,19 @@ func (c Coords) Neighbors(r int8) []Coords {
 	}
 	return neighbors
 }
+
+func DiffCoords(expected, received []Coords) bool {
+	if len(expected) != len(received) {
+		return false
+	}
+	expMap := make(map[Coords]bool)
+	for _, x := range expected {
+		expMap[x] = true
+	}
+	for _, x := range received {
+		if !expMap[x] {
+			return false
+		}
+	}
+	return true
+}
