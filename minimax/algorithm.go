@@ -29,13 +29,12 @@ func Minimax(state game.State, maxWidth, depth int) Moves {
 	for i, coords := range cellsAdjacentToOccupied {
 		state := state.MakeMoveImmut(coords)
 		moves[i] = &Move{
-			Coords:     &coords,
+			Coords:     coords,
 			State:      state,
 			Evaluation: heuristic.Evaluation(state.Board, state.BlackScore, state.WhiteScore),
 		}
 	}
 	sort.Sort(moves)
-	moves = moves[:Min(maxWidth, moves.Len())]
 	// take best moves and proceed with them, discard the rest
 	for _, move := range moves {
 		move.Evaluation = Minimax(move.State, maxWidth, depth-1)[0].Evaluation

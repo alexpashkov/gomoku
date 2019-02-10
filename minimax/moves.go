@@ -7,7 +7,7 @@ import (
 )
 
 type Move struct {
-	*board.Coords
+	board.Coords
 	Evaluation int64      `json:"evaluation"`
 	State      game.State `json:"state"`
 }
@@ -34,4 +34,16 @@ func (pq Moves) Less(i, j int) bool {
 
 func (pq Moves) Swap(i, j int) {
 	pq[i], pq[j] = pq[j], pq[i]
+}
+
+func (moves Moves) String() string {
+	movesString := ""
+	for _, move := range moves {
+		movesString += fmt.Sprintf("X: %d Y: %d Eval: %d\n", move.X, move.Y, move.Evaluation)
+	}
+	return movesString
+}
+
+func (moves Moves) Print() {
+	fmt.Printf("%s\n", moves)
 }
