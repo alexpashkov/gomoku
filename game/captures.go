@@ -40,28 +40,28 @@ func GetCaptures(b board.Board, c board.Coords) []board.Coords {
 	}
 
 	if (y+3 < 19 && x+3 < 19 && player == b.GetCell(board.Coords{x + 3, y + 3})) {
-		if (b.GetCell(board.Coords{x + 1, y + 1}) != 0 &&player != b.GetCell(board.Coords{x + 1, y - 1}) &&
+		if (b.GetCell(board.Coords{x + 1, y + 1}) != 0 && player != b.GetCell(board.Coords{x + 1, y + 1}) &&
 			b.GetCell(board.Coords{x + 1, y + 1}) == b.GetCell(board.Coords{x + 2, y + 2})) {
 			captures = append(captures, board.Coords{x + 1, y + 1}, board.Coords{x + 2, y + 2})
 		}
 	}
 
 	if (y-3 >= 0 && x-3 >= 0 && player == b.GetCell(board.Coords{x - 3, y - 3})) {
-		if (b.GetCell(board.Coords{x - 1, y - 1}) != 0 &&
+		if (b.GetCell(board.Coords{x - 1, y - 1}) != 0 && player != b.GetCell(board.Coords{x - 1, y - 1}) &&
 			b.GetCell(board.Coords{x - 1, y - 1}) == b.GetCell(board.Coords{x - 2, y - 2})) {
 			captures = append(captures, board.Coords{x - 1, y - 1}, board.Coords{x - 2, y - 2})
 		}
 	}
 
 	if (y+3 < 19 && x-3 >= 0 && player == b.GetCell(board.Coords{x - 3, y + 3})) {
-		if (b.GetCell(board.Coords{x - 1, y + 1}) != 0 &&
+		if (b.GetCell(board.Coords{x - 1, y + 1}) != 0 && player != b.GetCell(board.Coords{x - 1, y + 1}) &&
 			b.GetCell(board.Coords{x - 1, y + 1}) == b.GetCell(board.Coords{x - 2, y + 2})) {
 			captures = append(captures, board.Coords{x - 1, y + 1}, board.Coords{x - 2, y + 2})
 		}
 	}
 
 	if (y-3 >= 0 && x+3 < 19 && player == b.GetCell(board.Coords{x + 3, y - 3})) {
-		if (b.GetCell(board.Coords{x + 1, y - 1}) != 0 &&
+		if (b.GetCell(board.Coords{x + 1, y - 1}) != 0 && player != b.GetCell(board.Coords{x + 1, y - 1}) &&
 			b.GetCell(board.Coords{x + 1, y - 1}) == b.GetCell(board.Coords{x + 2, y - 2})) {
 			captures = append(captures, board.Coords{x + 1, y - 1}, board.Coords{x + 2, y - 2})
 		}
