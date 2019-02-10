@@ -14,6 +14,11 @@ type Threat struct {
 	rate		int64
 }
 
+const (
+	CLOSE_THREAT = 0
+	OPEN_THREAT = 1
+)
+
 func (t Threat) log() {
 	fmt.Println("Positions: ", t.positions)
 	fmt.Println("corner: ", t.corner)

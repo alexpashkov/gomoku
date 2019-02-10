@@ -50,16 +50,16 @@ func SearchThreatRowOpen(b board.Board, threat []Threat, len int) []Threat{
 					i++
 				}
 				if amountX == len {
-					threat = append(threat, Threat{owner:current, positions:positionsX, size:int8(len), status:1})
+					threat = append(threat, Threat{owner:current, positions:positionsX, size:int8(len), status:OPEN_THREAT})
 				}
 				if amountY == len {
-					threat = append(threat, Threat{owner:current, positions:positionsY, size:int8(len), status:1})
+					threat = append(threat, Threat{owner:current, positions:positionsY, size:int8(len), status:OPEN_THREAT})
 				}
 				if amountRightZ == len {
-					threat = append(threat, Threat{owner:current, positions:positionsRightZ, size:int8(len), status:1})
+					threat = append(threat, Threat{owner:current, positions:positionsRightZ, size:int8(len), status:OPEN_THREAT})
 				}
 				if amountLeftZ == len {
-					threat = append(threat, Threat{owner:current, positions:positionsLeftZ, size:int8(len), status:1})
+					threat = append(threat, Threat{owner:current, positions:positionsLeftZ, size:int8(len), status:OPEN_THREAT})
 				}
 			}
 		}
