@@ -36,6 +36,7 @@ func Minimax(state game.State, maxWidth, depth int) Moves {
 	}
 	sort.Sort(moves)
 	// take best moves and proceed with them, discard the rest
+	moves = moves[:Min(maxWidth, moves.Len())]
 	for _, move := range moves {
 		move.Evaluation = Minimax(move.State, maxWidth, depth-1)[0].Evaluation
 	}
