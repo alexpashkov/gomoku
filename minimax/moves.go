@@ -8,12 +8,12 @@ import (
 )
 
 type Move struct {
-	board.Coords
+	*board.Coords
 	Evaluation int64      `json:"evaluation"`
 	State      game.State `json:"state"`
 }
 
-type Moves []Move
+type Moves []*Move
 
 func (pq Moves) Len() int {
 	return len(pq)
