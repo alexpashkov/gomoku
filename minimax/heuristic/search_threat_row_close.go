@@ -62,7 +62,7 @@ func searchLeftZ(b board.Board, x int, y int, player int8, len int, i int) bool 
 		return true
 	} else if (x == HEIGHT-1 || y == 0) && (x-i >= 0 && y+len < HEIGHT && x-len >= 0) && b.GetCell(board.Coords{x - len, y + len}) == 0 && b.GetCell(board.Coords{x - i, y + i}) == player {
 		return true
-	} else if x-i >= 0 && y+i < HEIGHT && b.GetCell(board.Coords{x - i, y + i}) == player {
+	} else if x-i >= 0 && y+i < HEIGHT && b.GetCell(board.Coords{x - i, y + i}) == player && x+1 < HEIGHT && y-1 >= 0 && b.GetCell(board.Coords{x + 1, y - 1}) == 0{
 		return true
 	}
 	return false
@@ -116,5 +116,6 @@ func SearchThreatRowClose(b board.Board, threat []Threat, len int) []Threat {
 			}
 		}
 	}
+	//log.Println(threat)
 	return threat
 }
