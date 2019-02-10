@@ -17,7 +17,7 @@ func IsTerminateFigure(b board.Board) int8 {
 				amountY := 0
 				amountRightZ := 0
 				amountLeftZ := 0
-				for i < 6 {
+				for i < 5 {
 					if (x+i < 19 && b.GetCell(board.Coords{x + i, y}) == current) {
 						if len(threat) == 0 || isCapture(threat, x+i, y) == 1 {
 							amountX++
