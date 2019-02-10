@@ -155,29 +155,31 @@ export default class Game extends React.Component<IGameProps, IGameState> {
     } = this.state;
     return (
       <div className={GameStyles.container}>
-        <div className={GameStyles.infoPanel}>
-          <CurrentPlayer
-            player={player}
-            blackScore={blackScore}
-            whiteScore={whiteScore}
-            onClick={this.setPlayer}
-            allowPlayerSelection={type == GameType.debug}
-          />
-          {type === GameType.vsComputer && !!aiResponseTime && (
-            <div className={GameStyles.responseTime}>
-              AI Response Time: {aiResponseTime}ms
-            </div>
-          )}
-          {type === GameType.debug && (
-            <div>
-              <button onClick={this.sendBoardToServer}>Send To Server</button>
-              <button onClick={this.aiMove}>AI Move</button>
-            </div>
-          )}
+        <div className={GameStyles.centerWrapper}>
+          <div className={GameStyles.infoPanel}>
+            <CurrentPlayer
+              player={player}
+              blackScore={blackScore}
+              whiteScore={whiteScore}
+              onClick={this.setPlayer}
+              allowPlayerSelection={type == GameType.debug}
+            />
+            {type === GameType.vsComputer && !!aiResponseTime && (
+              <div className={GameStyles.responseTime}>
+                AI Response Time: {aiResponseTime}ms
+              </div>
+            )}
+            {type === GameType.debug && (
+              <div>
+                <button onClick={this.sendBoardToServer}>Send To Server</button>
+                <button onClick={this.aiMove}>AI Move</button>
+              </div>
+            )}
+          </div>
+          <Board onClick={this.handleCellClick}>
+            {mergeBoardWithSuggestions(board, suggestions)}
+          </Board>
         </div>
-        <Board onClick={this.handleCellClick}>
-          {mergeBoardWithSuggestions(board, suggestions)}
-        </Board>
         <WinnerModal winner={winner} onRestart={this.resetGame}/>
       </div>
     );
