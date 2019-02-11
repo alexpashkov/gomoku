@@ -17,7 +17,9 @@ type Threat struct {
 const (
 	CLOSE_THREAT = 0
 	OPEN_THREAT = 1
+	HEIGHT = 19
 )
+
 
 func (t Threat) log() {
 	fmt.Println("Positions: ", t.positions)

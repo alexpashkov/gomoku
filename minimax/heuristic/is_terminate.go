@@ -8,6 +8,7 @@ import (
 func IsTerminateFigure(b board.Board) int8 {
 	threat := []Threat{}
 	threat = SearchThreatRowClose(b, threat, 2)
+	//log.Println(threat)
 	for y, row := range b {
 		for x := range row {
 			if (b.GetCell(board.Coords{x, y}) != 0) {
@@ -18,22 +19,22 @@ func IsTerminateFigure(b board.Board) int8 {
 				amountRightZ := 0
 				amountLeftZ := 0
 				for i < 5 {
-					if (x+i < 19 && b.GetCell(board.Coords{x + i, y}) == current) {
+					if (x+i < HEIGHT && b.GetCell(board.Coords{x + i, y}) == current) {
 						if len(threat) == 0 || isCapture(threat, x+i, y) == 1 {
 							amountX++
 						}
 					}
-					if (y+i < 19 && b.GetCell(board.Coords{x, y + i}) == current) {
+					if (y+i < HEIGHT && b.GetCell(board.Coords{x, y + i}) == current) {
 						if len(threat) == 0 || isCapture(threat, x, y+i) == 1 {
 							amountY++
 						}
 					}
-					if (x+i < 19 && y+i < 19 && b.GetCell(board.Coords{x + i, y + i}) == current) {
+					if (x+i < HEIGHT && y+i < HEIGHT && b.GetCell(board.Coords{x + i, y + i}) == current) {
 						if len(threat) == 0 || isCapture(threat, x+i, y+i) == 1 {
 							amountRightZ++
 						}
 					}
-					if (x-i >= 0 && y+i < 19 && b.GetCell(board.Coords{x - i, y + i}) == current) {
+					if (x-i >= 0 && y+i < HEIGHT && b.GetCell(board.Coords{x - i, y + i}) == current) {
 						if len(threat) == 0 || isCapture(threat, x-i, y+i) == 1 {
 							amountLeftZ++
 						}
@@ -41,29 +42,16 @@ func IsTerminateFigure(b board.Board) int8 {
 					i++
 				}
 				if amountX == 5 {
-					if x-1 >= 0 && b.GetCell(board.Coords{x - 1, y}) != current {
-						return current
-					} else if x == 0 {
-						return current
-					}
-				} else if amountY == 5 {
-					if y-1 >= 0 && b.GetCell(board.Coords{x, y - 1}) != current {
-						return current
-					} else if y == 0 {
-						return current
-					}
-				} else if amountRightZ == 5 {
-					if x-1 >= 0 && y-1 >= 0 && b.GetCell(board.Coords{x - 1, y - 1}) != current {
-						return current
-					} else if x == 0 || y == 0 {
-						return current
-					}
-				} else if amountLeftZ == 5 {
-					if x+1 < 19 && y-1 >= 0 && b.GetCell(board.Coords{x + 1, y - 1}) != current {
-						return current
-					} else if y == 0 || x == 18 {
-						return current
-					}
+					return current
+				}
+				if amountY == 5 {
+					return current
+				}
+				if amountRightZ == 5 {
+					return current
+				}
+				if amountLeftZ == 5 {
+					return current
 				}
 			}
 		}

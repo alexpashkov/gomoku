@@ -12,7 +12,7 @@ const (
 	ThreeRowOpen   = 1000000      // # # #
 	ThreeRowClose  = 1000         // * # # #
 	TwoRowClose    = 100          // * # #
-	TwoRowOpen     = 10 + 2       // # #
+	TwoRowOpen     = 100       // # #
 	TwoRowCloseSix = ThreeRowOpen
 )
 

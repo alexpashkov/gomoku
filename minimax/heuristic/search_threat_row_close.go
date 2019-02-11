@@ -4,10 +4,6 @@ import (
 	"gomoku/board"
 )
 
-const (
-	HEIGHT = 19
-)
-
 func searchY(b board.Board, x int, y int, player int8, len int, i int) bool {
 	if y-1 >= 0 && y+len < HEIGHT {
 		if (((b.GetCell(board.Coords{x, y - 1}) == 0 && b.GetCell(board.Coords{x, y + len}) != 0 && b.GetCell(board.Coords{x, y + len}) != player) ||
@@ -49,8 +45,12 @@ func searchRightZ(b board.Board, x int, y int, player int8, len int, i int) bool
 	} else if (x == 0 || y == 0) && (x+len < HEIGHT && y+len < HEIGHT) && b.GetCell(board.Coords{x + len, y + len}) == 0 && (b.GetCell(board.Coords{x + i, y + i}) == player) {
 		return true
 	} else if (x-1 >= 0 && y-1 >= 0 && b.GetCell(board.Coords{x - 1, y - 1}) == 0) && (x+i < HEIGHT && y+i < HEIGHT && b.GetCell(board.Coords{x + i, y + i}) == player) {
+		if y+len < HEIGHT && x+len < HEIGHT && (b.GetCell(board.Coords{x+len, y+len}) == 0 || b.GetCell(board.Coords{x+len, y+len}) == player){
+			return false
+		}
 		return true
 	}
+
 	return false
 }
 
@@ -62,7 +62,10 @@ func searchLeftZ(b board.Board, x int, y int, player int8, len int, i int) bool 
 		return true
 	} else if (x == HEIGHT-1 || y == 0) && (x-i >= 0 && y+len < HEIGHT && x-len >= 0) && b.GetCell(board.Coords{x - len, y + len}) == 0 && b.GetCell(board.Coords{x - i, y + i}) == player {
 		return true
-	} else if x-i >= 0 && y+i < HEIGHT && b.GetCell(board.Coords{x - i, y + i}) == player && x+1 < HEIGHT && y-1 >= 0 && b.GetCell(board.Coords{x + 1, y - 1}) == 0{
+	} else if x+1 < HEIGHT && y-1 >= 0 && b.GetCell(board.Coords{x + 1, y - 1}) == 0 && y+i < HEIGHT && x-i >= 0 && b.GetCell(board.Coords{x - i, y + i}) == player {
+		if y+len < HEIGHT && x-len >= 0 && (b.GetCell(board.Coords{x-len, y+len}) == 0 || b.GetCell(board.Coords{x-len, y+len}) == player) {
+			return false
+		}
 		return true
 	}
 	return false
@@ -82,7 +85,7 @@ func SearchThreatRowClose(b board.Board, threat []Threat, len int) []Threat {
 				amountRightZ := 0
 				amountLeftZ := 0
 				player := b.GetCell(board.Coords{x, y})
-				for i <= len {
+				for i < len {
 					if searchRightZ(b, x, y, player, len, i) == true {
 						amountRightZ++
 						positionsRightZ = append(positionsRightZ, board.Coords{x + i, y + i})
@@ -116,6 +119,5 @@ func SearchThreatRowClose(b board.Board, threat []Threat, len int) []Threat {
 			}
 		}
 	}
-	//log.Println(threat)
 	return threat
 }

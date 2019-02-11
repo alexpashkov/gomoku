@@ -23,10 +23,10 @@ func Board(_ http.ResponseWriter, req *http.Request) {
 	if err != nil {
 		fmt.Println("Invalid board sent")
 	} else {
-		threat := []heuristic.Threat{}
+		//threat := []heuristic.Threat{}
 		fmt.Println("START")
-		heuristic.SearchThreatRowClose(brd, threat, 4)
-		//fmt.Println(heuristic.IsTerminate(brd, 0, 0))
+		//heuristic.SearchThreatRowClose(brd, threat, 2)
+		fmt.Println(heuristic.IsTerminate(brd, 0, 0))
 		//c := board.Coords{6, 7}
 		//fmt.Println(heuristic.IsCorrectMove(brd, 1, c))
 	}

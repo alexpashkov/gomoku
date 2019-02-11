@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"gomoku/board"
 	"gomoku/minimax/heuristic"
+	"log"
 )
 
 type State struct {
@@ -38,6 +39,10 @@ func (s State) Move(coords board.Coords) (State, error) {
 	}
 	s.Winner = heuristic.IsTerminate(s.Board, s.BlackScore, s.WhiteScore)
 	if s.Winner != 0 && s.Winner != s.Player {
+		log.Println("")
+		log.Println(s.Board)
+		log.Println("Winner, ", s.Winner)
+		log.Println("Player, ", s.Player)
 		panic(errors.New("a player became a winner without moving"))
 	}
 	if s.Winner == 0 {
