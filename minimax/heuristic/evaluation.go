@@ -10,10 +10,10 @@ const (
 	ForRowOpen     = 100000000000 // # # # #
 	ForRowClose    = 100000000    // * # # # #
 	ThreeRowOpen   = 1000000      // # # #
-	ThreeRowClose  = 1000         // * # # #
-	TwoRowClose    = 100          // * # #
-	TwoRowOpen     = 100       // # #
-	TwoRowCloseSix = ThreeRowOpen
+	ThreeRowClose  = 10000         // * # # #
+	TwoRowClose    = 1000          // * # #
+	TwoRowOpen     = 10       // # #
+	TwoRowCloseSix = ThreeRowClose * 2
 )
 
 func EvaluationRate(threat []Threat, amountPointMinPlayer int8, amountPointMaxPlayer int8) []Threat {
@@ -57,10 +57,10 @@ func EvaluationRate(threat []Threat, amountPointMinPlayer int8, amountPointMaxPl
 				if value.owner != board.BLACK_PLAYER {
 					threat[key].rate = TwoRowOpen
 				} else {
-					threat[key].rate = -TwoRowCloseSix
+					threat[key].rate = -TwoRowOpen
 				}
 			} else {
-				if value.owner != board.BLACK_PLAYER {
+				if value.owner == board.WHITE_PLAYER {
 					if amountPointMinPlayer == 8 {
 						threat[key].rate = -TwoRowCloseWIN
 					} else if amountPointMinPlayer == 6 {
@@ -68,13 +68,13 @@ func EvaluationRate(threat []Threat, amountPointMinPlayer int8, amountPointMaxPl
 					} else {
 						threat[key].rate = -TwoRowClose
 					}
-				} else if value.owner != board.WHITE_PLAYER {
+				} else if value.owner == board.BLACK_PLAYER {
 					if amountPointMaxPlayer == 8 {
 						threat[key].rate = TwoRowCloseWIN
 					} else if amountPointMaxPlayer == 6 {
 						threat[key].rate = TwoRowCloseSix
 					} else {
-						threat[key].rate = ThreeRowClose
+						threat[key].rate = TwoRowClose
 					}
 				}
 			}

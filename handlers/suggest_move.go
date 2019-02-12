@@ -14,7 +14,7 @@ func SuggestMove(res http.ResponseWriter, req *http.Request) {
 		res.WriteHeader(http.StatusBadRequest)
 		return
 	}
-	moves := minimax.Minimax(state, 3, 4, heuristic.Evaluation)
+	moves := minimax.Minimax(state, 4, 3, heuristic.Evaluation)
 	resBody, err := json.Marshal(moves)
 	if err != nil {
 		res.WriteHeader(http.StatusInternalServerError)

@@ -8,7 +8,6 @@ import (
 func IsTerminateFigure(b board.Board) int8 {
 	threat := []Threat{}
 	threat = SearchThreatRowClose(b, threat, 2)
-	//log.Println(threat)
 	for y, row := range b {
 		for x := range row {
 			if (b.GetCell(board.Coords{x, y}) != 0) {
