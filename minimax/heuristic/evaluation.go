@@ -7,8 +7,8 @@ import (
 const (
 	FiveROW        = 10000000000000 // # # # # #
 	TwoRowCloseWIN = FiveROW
-	ForRowOpen     = 100000000000 // # # # #
-	ForRowClose    = 100000000    // * # # # #
+	FourRowOpen     = 100000000000 // # # # #
+	FourRowClose    = 100000000    // * # # # #
 	ThreeRowOpen   = 1000000      // # # #
 	ThreeRowClose  = 10000         // * # # #
 	TwoRowClose    = 1000          // * # #
@@ -19,34 +19,34 @@ const (
 func EvaluationRate(threat []Threat, amountPointMinPlayer int8, amountPointMaxPlayer int8) []Threat {
 	for key, value := range threat {
 		if value.size == 5 {
-			if value.owner != board.BLACK_PLAYER {
+			if value.owner == board.WHITE_PLAYER {
 				threat[key].rate = FiveROW
 			} else {
 				threat[key].rate = -FiveROW
 			}
 		} else if value.size == 4 {
 			if value.status == OPEN_THREAT {
-				if value.owner != board.BLACK_PLAYER {
-					threat[key].rate = ForRowOpen
+				if value.owner == board.WHITE_PLAYER {
+					threat[key].rate = FourRowOpen
 				} else {
-					threat[key].rate = -ForRowOpen
+					threat[key].rate = -FourRowOpen
 				}
 			} else {
-				if value.owner != board.BLACK_PLAYER {
-					threat[key].rate = ForRowClose
+				if value.owner == board.WHITE_PLAYER {
+					threat[key].rate = FourRowClose
 				} else {
-					threat[key].rate = -ForRowClose
+					threat[key].rate = -FourRowClose
 				}
 			}
 		} else if value.size == 3 {
 			if value.status == OPEN_THREAT {
-				if value.owner != board.BLACK_PLAYER {
+				if value.owner == board.WHITE_PLAYER {
 					threat[key].rate = ThreeRowOpen
 				} else {
 					threat[key].rate = -ThreeRowOpen
 				}
 			} else {
-				if value.owner != board.BLACK_PLAYER {
+				if value.owner == board.WHITE_PLAYER {
 					threat[key].rate = ThreeRowClose
 				} else {
 					threat[key].rate = -ThreeRowClose
@@ -54,27 +54,31 @@ func EvaluationRate(threat []Threat, amountPointMinPlayer int8, amountPointMaxPl
 			}
 		} else if value.size == 2 {
 			if value.status == OPEN_THREAT {
-				if value.owner != board.BLACK_PLAYER {
+				if value.owner == board.WHITE_PLAYER {
 					threat[key].rate = TwoRowOpen
 				} else {
 					threat[key].rate = -TwoRowOpen
 				}
 			} else {
-				if value.owner == board.WHITE_PLAYER {
+				if value.owner == board.BLACK_PLAYER {
 					if amountPointMinPlayer == 8 {
-						threat[key].rate = -TwoRowCloseWIN
-					} else if amountPointMinPlayer == 6 {
-						threat[key].rate = -TwoRowCloseSix
-					} else {
-						threat[key].rate = -TwoRowClose
-					}
-				} else if value.owner == board.BLACK_PLAYER {
-					if amountPointMaxPlayer == 8 {
 						threat[key].rate = TwoRowCloseWIN
-					} else if amountPointMaxPlayer == 6 {
+					} else if amountPointMinPlayer == 6 {
 						threat[key].rate = TwoRowCloseSix
+					} else if amountPointMinPlayer == 4{
+						threat[key].rate = TwoRowClose + TwoRowClose
 					} else {
 						threat[key].rate = TwoRowClose
+					}
+				} else {
+					if amountPointMaxPlayer == 8 {
+						threat[key].rate = -TwoRowCloseWIN
+					} else if amountPointMaxPlayer == 6 {
+						threat[key].rate = -TwoRowCloseSix
+					} else if amountPointMaxPlayer == 4 {
+						threat[key].rate = -TwoRowClose -TwoRowClose
+					} else {
+						threat[key].rate = -TwoRowClose
 					}
 				}
 			}

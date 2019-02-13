@@ -16,7 +16,7 @@ const (
 	MAX_Y_7X7_BOARD int = 12
 )
 
-func SearchDoubleThreat(b board.Board, threat []Threat, len int) []Threat {
+func SearchDoubleThreat(b *board.Board, threat []Threat, len int) []Threat {
 	for y, row := range b {
 		for x := range row {
 			if (b.GetCell(board.Coords{x, y}) != 0) {
@@ -85,7 +85,7 @@ func SearchDoubleThreat(b board.Board, threat []Threat, len int) []Threat {
 	return threat
 }
 
-func SearchDoubleThreatMid(b board.Board, threat []Threat, size int) []Threat {
+func SearchDoubleThreatMid(b *board.Board, threat []Threat, size int) []Threat {
 	for y, row := range b {
 		for x := range row {
 			if (b.GetCell(board.Coords{x, y}) != 0) {
@@ -156,13 +156,22 @@ func SearchDoubleThreatMid(b board.Board, threat []Threat, size int) []Threat {
 func FindDoubleThreeThreat(b board.Board, player int8, cord board.Coords) bool {
 	b.SetCell(cord, player)
 	var threat []Threat
-	threat = SearchDoubleThreat(b, threat, 3)
-	threat = SearchDoubleThreatMid(b, threat, 3)
+	threat = SearchDoubleThreat(&b, threat, 3)
+	threat = SearchDoubleThreatMid(&b, threat, 3)
 	amountPlayer := 0
+	flag := 0
 	for _, value := range threat {
 		if value.owner == player {
 			amountPlayer++
+			for _, position := range value.positions {
+				if position.X == cord.X && position.Y == cord.Y {
+					flag++
+				}
+			}
 		}
+	}
+	if flag == 0 {
+		return false
 	}
 	if amountPlayer == 2 {
 		i := 0
