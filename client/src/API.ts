@@ -9,7 +9,10 @@ export function sendBoard(board: IBoard) {
   });
 }
 
-export function makeMove(state: ICommonGameState, coords: ICoords): Promise<ICommonGameState> {
+export function makeMove(
+  state: ICommonGameState,
+  coords: ICoords
+): Promise<ICommonGameState> {
   const cell = state.board[coords.y][coords.x];
   if (cell) return Promise.reject("cell is occupied");
   return fetch(BASE_URL + "/make-move", {
@@ -18,7 +21,7 @@ export function makeMove(state: ICommonGameState, coords: ICoords): Promise<ICom
       state,
       coords
     })
-  }).then(res => res.json());
+  }).then(res => (res.status == 200 ? res.json() : Promise.reject(res.json())));
 }
 
 export function suggestMoves(state: ICommonGameState): Promise<ISuggestion[]> {
