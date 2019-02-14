@@ -1051,7 +1051,7 @@ var IsTerminateValidTestCases = map[string]struct {
 		},
 		expected: 1,
 	},
-	"simple ##7": {
+	"simple ###7": {
 		Board: board.Board{
 			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,},
 			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,},

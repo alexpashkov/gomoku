@@ -485,7 +485,7 @@ var validTestCasesOpen = map[string]struct {
 		},
 		len: 4,
 		Expected: []Threat{
-			{owner: board.WHITE_PLAYER, positions: []board.Coords{  {12, 4}, {12, 5}, {12, 6}, {12, 7}}, corner: nil, size: 3, status: OPEN_THREAT},
+			{owner: board.BLACK_PLAYERg, positions: []board.Coords{  {12, 4}, {12, 5}, {12, 6}, {12, 7}}, corner: nil, size: 4, status: OPEN_THREAT},
 		},
 	},
 
