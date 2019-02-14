@@ -2,7 +2,6 @@ package heuristic
 
 import (
 	"gomoku/board"
-	"fmt"
 )
 
 func SearchThreatComplexFourRowOpen(b board.Board, threat []Threat) []Threat {
@@ -73,7 +72,6 @@ func SearchThreatComplexFourRowOpen(b board.Board, threat []Threat) []Threat {
 					}
 					i++
 				}
-				fmt.Println(amountRightZ, ",", flagRightZ, " ", positionsRightZ, " ")
 				if amountX == 4 && flagX == 1 {
 					threat = append(threat, Threat{owner: current, positions: positionsX, size: int8(4), status: OPEN_THREAT})
 				}

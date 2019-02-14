@@ -99,6 +99,7 @@ func Evaluation(brd board.Board, amountPointMinPlayer int8, amountPointMaxPlayer
 		i--
 	}
 	threat = SearchThreatComplexFourRowOpen(brd, threat)
+	threat = SearchThreatComplexFourRowClose(brd, threat)
 	threat = EvaluationRate(threat, amountPointMinPlayer, amountPointMaxPlayer)
 	for _, value := range threat {
 		power = power + value.rate
