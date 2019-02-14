@@ -64,9 +64,9 @@ func EvaluationRate(threat []Threat, amountPointMinPlayer int8, amountPointMaxPl
 				if value.owner == board.BLACK_PLAYER {
 					if amountPointMaxPlayer >= 8 {
 						threat[key].rate = TwoRowCloseWIN
-					} else if amountPointMinPlayer == 6 {
+					} else if amountPointMaxPlayer == 6 {
 						threat[key].rate = TwoRowCloseSix
-					} else if amountPointMinPlayer == 4{
+					} else if amountPointMaxPlayer == 4{
 						threat[key].rate = TwoRowCloseFour
 					} else {
 						threat[key].rate = TwoRowClose
@@ -74,9 +74,9 @@ func EvaluationRate(threat []Threat, amountPointMinPlayer int8, amountPointMaxPl
 				} else {
 					if amountPointMinPlayer >= 8 {
 						threat[key].rate = -TwoRowCloseWIN
-					} else if amountPointMaxPlayer == 6 {
+					} else if amountPointMinPlayer == 6 {
 						threat[key].rate = -TwoRowCloseSix
-					} else if amountPointMaxPlayer == 4 {
+					} else if amountPointMinPlayer == 4 {
 						threat[key].rate = -TwoRowCloseFour
 					} else {
 						threat[key].rate = -TwoRowClose
