@@ -11,6 +11,10 @@ func searchYTwo(b board.Board, x int, y int, player int8, len int, i int, flag i
 			(b.GetCell(board.Coords{x, y + i}) == player || (amount != 4 && b.GetCell(board.Coords{x, y + i}) == 0 && flag == 0))) {
 			return true
 		}
+	} else if y == 0 && b.GetCell(board.Coords{x, y + len}) == 0 && (b.GetCell(board.Coords{x, y + i}) == player|| (amount != 4 && b.GetCell(board.Coords{x, y + i}) == 0 && flag == 0)) {
+		return true
+	} else if y-1 >= 0 && b.GetCell(board.Coords{x, y - 1}) == 0 && y+i < HEIGHT && (b.GetCell(board.Coords{x, y + i}) == player|| (amount != 4 && b.GetCell(board.Coords{x, y + i}) == 0 && flag == 0)) {
+		return true
 	}
 	return false
 }
@@ -22,6 +26,10 @@ func searchXTwo(b board.Board, x int, y int, player int8, len int, i int, flag i
 			(b.GetCell(board.Coords{x + i, y}) == player || (amount != 4 && b.GetCell(board.Coords{x + i, y}) == 0 && flag == 0)) {
 			return true
 		}
+	}  else if x == 0 && b.GetCell(board.Coords{x + len, y}) == 0 && (b.GetCell(board.Coords{x + i, y}) == player || (amount != 4 && b.GetCell(board.Coords{x + i, y}) == 0 && flag == 0)) {
+		return true
+	} else if x-1 >= 0 && b.GetCell(board.Coords{x - 1, y}) == 0 && x+i < HEIGHT && (b.GetCell(board.Coords{x + i, y}) == player || (amount != 4 && b.GetCell(board.Coords{x + i, y}) == 0 && flag == 0)) {
+		return true
 	}
 	return false
 }
@@ -34,6 +42,13 @@ func searchRightZTwo(b board.Board, x int, y int, player int8, len int, i int, f
 			(b.GetCell(board.Coords{x - 1, y - 1}) != 0 && b.GetCell(board.Coords{x + len, y + len}) == 0 && b.GetCell(board.Coords{x - 1, y - 1}) != player)) &&
 			(b.GetCell(board.Coords{x + i, y + i}) == player || (amount != 4 && b.GetCell(board.Coords{x + i, y + i}) == 0 && flag == 0)))) {
 		return true
+	}else if (x == 0 || y == 0) && (x+len < HEIGHT && y+len < HEIGHT) && b.GetCell(board.Coords{x + len, y + len}) == 0 && (b.GetCell(board.Coords{x + i, y + i}) == player || (amount != 4 && b.GetCell(board.Coords{x + i, y + i}) == 0 && flag == 0))   {
+		return true
+	} else if (x-1 >= 0 && y-1 >= 0 && b.GetCell(board.Coords{x - 1, y - 1}) == 0) && (x+i < HEIGHT && y+i < HEIGHT && (b.GetCell(board.Coords{x + i, y + i}) == player || (amount != 4 && b.GetCell(board.Coords{x + i, y + i}) == 0 && flag == 0))) {
+		if y+len < HEIGHT && x+len < HEIGHT && (b.GetCell(board.Coords{x+len, y+len}) == 0 || b.GetCell(board.Coords{x+len, y+len}) == player){
+			return false
+		}
+		return true
 	}
 	return false
 }
@@ -43,6 +58,13 @@ func searchLeftZTwo(b board.Board, x int, y int, player int8, len int, i int, fl
 		((b.GetCell(board.Coords{x + 1, y - 1}) == 0 && b.GetCell(board.Coords{x - len, y + len}) != 0 && b.GetCell(board.Coords{x - len, y + len}) != player) ||
 			(b.GetCell(board.Coords{x + 1, y - 1}) != 0 && b.GetCell(board.Coords{x - len, y + len}) == 0 && b.GetCell(board.Coords{x + 1, y - 1}) != player)) &&
 		(b.GetCell(board.Coords{x - i, y + i}) == player || (amount != 4 && b.GetCell(board.Coords{x - i, y + i}) == 0 && flag == 0)) {
+		return true
+	} else if (x == HEIGHT-1 || y == 0) && (x-i >= 0 && y+len < HEIGHT && x-len >= 0) && b.GetCell(board.Coords{x - len, y + len}) == 0 && (b.GetCell(board.Coords{x - i, y + i}) == player || (amount != 4 && b.GetCell(board.Coords{x - i, y + i}) == 0 && flag == 0)) {
+		return true
+	} else if x+1 < HEIGHT && y-1 >= 0 && b.GetCell(board.Coords{x + 1, y - 1}) == 0 && y+i < HEIGHT && x-i >= 0 && (b.GetCell(board.Coords{x - i, y + i}) == player || (amount != 4 && b.GetCell(board.Coords{x - i, y + i}) == 0 && flag == 0)){
+		if y+len < HEIGHT && x-len >= 0 && (b.GetCell(board.Coords{x-len, y+len}) == 0 || b.GetCell(board.Coords{x-len, y+len}) == player) {
+			return false
+		}
 		return true
 	}
 	return false

@@ -50,7 +50,6 @@ func searchRightZ(b board.Board, x int, y int, player int8, len int, i int) bool
 		}
 		return true
 	}
-
 	return false
 }
 
