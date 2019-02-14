@@ -29,7 +29,7 @@ func SearchThreatComplexFourRowOpen(b board.Board, threat []Threat) []Threat {
 						if (y-1 >= 0 && y+len < 19 &&
 							(b.GetCell(board.Coords{x - 1, y - 1}) == 0) &&
 							(b.GetCell(board.Coords{x + len, y + len}) == 0) &&
-							(b.GetCell(board.Coords{x + i, y + i}) == current || (i != 5 && b.GetCell(board.Coords{x + i, y + i}) == 0 && flagRightZ == 0))) {
+							(b.GetCell(board.Coords{x + i, y + i}) == current || (amountRightZ != 4 && b.GetCell(board.Coords{x + i, y + i}) == 0 && flagRightZ == 0))) {
 							if b.GetCell(board.Coords{x + i, y + i}) == 0 {
 								flagRightZ++
 							} else {
@@ -39,7 +39,7 @@ func SearchThreatComplexFourRowOpen(b board.Board, threat []Threat) []Threat {
 						}
 						if ((b.GetCell(board.Coords{x - 1, y}) == 0) &&
 							(b.GetCell(board.Coords{x + len, y}) == 0) &&
-							(b.GetCell(board.Coords{x + i, y}) == current || (i != 5 && b.GetCell(board.Coords{x + i, y}) == 0 && flagX == 0))) {
+							(b.GetCell(board.Coords{x + i, y}) == current || (amountX != 4 && b.GetCell(board.Coords{x + i, y}) == 0 && flagX == 0))) {
 							if b.GetCell(board.Coords{x + i, y}) == 0 {
 								flagX++
 							} else {
@@ -51,7 +51,7 @@ func SearchThreatComplexFourRowOpen(b board.Board, threat []Threat) []Threat {
 					if y-1 >= 0 && y+len < 19 {
 						if ((b.GetCell(board.Coords{x, y - 1}) == 0) &&
 							(b.GetCell(board.Coords{x, y + len}) == 0) &&
-							(b.GetCell(board.Coords{x, y + i}) == current || (i != 5 && b.GetCell(board.Coords{x, y + i}) == 0 && flagY == 0))) {
+							(b.GetCell(board.Coords{x, y + i}) == current || (amountY != 4 && b.GetCell(board.Coords{x, y + i}) == 0 && flagY == 0))) {
 							if b.GetCell(board.Coords{x, y + i}) == 0 {
 								flagY++
 							} else {
@@ -62,7 +62,7 @@ func SearchThreatComplexFourRowOpen(b board.Board, threat []Threat) []Threat {
 						if (x+1 < 19 && x-len >= 0 &&
 							(b.GetCell(board.Coords{x + 1, y - 1}) == 0) &&
 							(b.GetCell(board.Coords{x - len, y + len}) == 0) &&
-							(b.GetCell(board.Coords{x - i, y + i}) == current || (i != 5 && b.GetCell(board.Coords{x - i, y + i}) == 0 && flagLeftZ == 0))) {
+							(b.GetCell(board.Coords{x - i, y + i}) == current || (amountLeftZ != 4 && b.GetCell(board.Coords{x - i, y + i}) == 0 && flagLeftZ == 0))) {
 							if b.GetCell(board.Coords{x - i, y + i}) == 0 {
 								flagLeftZ++
 							} else {
@@ -89,7 +89,5 @@ func SearchThreatComplexFourRowOpen(b board.Board, threat []Threat) []Threat {
 			}
 		}
 	}
-	fmt.Println("end")
-	fmt.Println(threat)
 	return threat
 }
