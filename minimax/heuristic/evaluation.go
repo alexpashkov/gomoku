@@ -10,8 +10,8 @@ const (
 	FourRowOpen     = 100000000000 // # # # #
 	FourRowClose    = 100000000    // * # # # #
 	ThreeRowOpen   = 1000000      // # # #
-	ThreeRowClose  = 10000         // * # # #
-	TwoRowClose    = 1000          // * # #
+	ThreeRowClose  = 10000        // * # # #
+	TwoRowClose    = 1000         // * # #
 	TwoRowOpen     = 10       // # #
 	TwoRowCloseSix = ThreeRowClose * 2
 	TwoRowCloseFour = TwoRowClose + TwoRowClose
@@ -98,6 +98,7 @@ func Evaluation(brd board.Board, amountPointMinPlayer int8, amountPointMaxPlayer
 		threat = SearchThreatRowOpen(brd, threat, i)
 		i--
 	}
+	threat = SearchThreatComplexFourRowOpen(brd, threat)
 	threat = EvaluationRate(threat, amountPointMinPlayer, amountPointMaxPlayer)
 	for _, value := range threat {
 		power = power + value.rate
