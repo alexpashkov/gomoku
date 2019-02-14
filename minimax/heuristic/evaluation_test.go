@@ -446,7 +446,7 @@ var EvaluationTestCase = map[string]struct {
 		},
 		amountPointMinPlayer: 6,
 		amountPointMaxPlayer: 0,
-		expected: 0,
+		expected: -TwoRowCloseSix,
 	},
 	"complex evaluation #4": {
 		Board: board.Board{
