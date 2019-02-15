@@ -25,7 +25,7 @@ func Board(_ http.ResponseWriter, req *http.Request) {
 	} else {
 		threat := []heuristic.Threat{}
 		fmt.Println("START")
-		fmt.Println(heuristic.SearchThreatComplexFourRowClose(brd, threat))
+		//fmt.Println(heuristic.SearchThreatComplexFourRowClose(brd, threat))
 		//fmt.Println(heuristic.SearchThreatRowOpen(brd, threat, 5))
 		//fmt.Println(game.GetCaptures(brd, board.Coords{2,7}))
 		//fmt.Println(heuristic.IsTerminate(brd, 0, 0))
