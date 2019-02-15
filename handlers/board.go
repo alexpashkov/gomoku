@@ -1,13 +1,12 @@
 package handlers
 
 import (
-	"net/http"
-	"io/ioutil"
-	"log"
-	"gomoku/board"
 	"encoding/json"
 	"fmt"
-	"gomoku/minimax/heuristic"
+	"gomoku/board"
+	"io/ioutil"
+	"log"
+	"net/http"
 )
 
 func Board(_ http.ResponseWriter, req *http.Request) {
@@ -23,7 +22,7 @@ func Board(_ http.ResponseWriter, req *http.Request) {
 	if err != nil {
 		fmt.Println("Invalid board sent")
 	} else {
-		threat := []heuristic.Threat{}
+		//threat := []heuristic.Threat{}
 		fmt.Println("START")
 		//fmt.Println(heuristic.SearchThreatComplexFourRowClose(brd, threat))
 		//fmt.Println(heuristic.SearchThreatRowOpen(brd, threat, 5))

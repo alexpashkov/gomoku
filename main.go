@@ -2,12 +2,12 @@ package main
 
 import (
 	"github.com/rs/cors"
+	"gomoku/handlers"
 	"log"
 	"net/http"
-	"gomoku/handlers"
 )
 
-const PORT = ":5555"
+const PORT = "0.0.0.0:5555"
 
 func main() {
 	mux := http.NewServeMux()

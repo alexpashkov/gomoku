@@ -33,7 +33,7 @@ func (s State) Move(coords board.Coords) (State, error) {
 		} else {
 			s.WhiteScore += int8(len(caputedCells))
 		}
-	} else if heuristic.FindDoubleThreeThreat(s.Board, s.Player, coords) == true { // ya eby
+	} else if heuristic.FindDoubleThreeThreat(s.Board, s.Player, coords) {
 		return s, errors.New("double three threat")
 	}
 	s.Winner = heuristic.IsTerminate(s.Board, s.BlackScore, s.WhiteScore)
