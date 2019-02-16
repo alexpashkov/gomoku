@@ -14,8 +14,23 @@ func Min(a, b int) int {
 	return b
 }
 
+func MinInt64(a, b int64) int64 {
+	if a <= b {
+		return a
+	}
+	return b
+}
+
+func MaxInt64(a, b int64) int64 {
+	if a >= b {
+		return a
+	}
+	return b
+}
+
 func Minimax(state game.State, maxWidth, depth int,
-	heuristic func(b board.Board, blackScore, whiteScore int8) int64) Moves {
+	heuristic func(b board.Board, blackScore, whiteScore int8) int64,
+	alpha, beta int64) Moves {
 	if depth == 0 {
 		return Moves{
 			{
@@ -52,9 +67,16 @@ func Minimax(state game.State, maxWidth, depth int,
 	moves = moves[:Min(maxWidth, moves.Len())]
 	// take best moves and proceed with them, discard the rest
 	for _, move := range moves {
-		opponentMoves := Minimax(move.State, maxWidth, depth-1, heuristic)
-		if len(opponentMoves) != 0 {
-			move.Evaluation = opponentMoves[0].Evaluation
+		opponentMoves := Minimax(move.State, maxWidth, depth-1, heuristic, alpha, beta)
+		move.Evaluation = opponentMoves[0].Evaluation
+		switch move.State.Player {
+		case MIN_PLAYER:
+			beta = MinInt64(move.Evaluation, beta)
+		case MAX_PLAYER:
+			alpha = MaxInt64(move.Evaluation, alpha)
+		}
+		if beta < alpha {
+			break
 		}
 	}
 	sort.Sort(moves)
