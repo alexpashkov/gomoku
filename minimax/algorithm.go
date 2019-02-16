@@ -42,26 +42,42 @@ func Minimax(state game.State, maxWidth, depth int,
 	// get all cells adjacent to occupied cells
 	cellsAdjacentToOccupied := CellsAdjacentToOccupied(state.Board, 1)
 	moves := make(Moves, 0, len(cellsAdjacentToOccupied))
-
+	movesCh := make(chan *Move)
+	winsCh := make(chan *Move)
 	for _, coords := range cellsAdjacentToOccupied {
-		state, err := state.Move(coords)
-		if err != nil {
-			continue
-		}
-		move := &Move{
-			Coords: coords,
-			State:  state,
-		}
-		if state.Winner != 0 {
-			if state.Winner == board.BLACK_PLAYER {
-				move.Evaluation = math.MinInt64
-			} else {
-				move.Evaluation = math.MaxInt64
+		coords := coords // needed to use in the goroutine
+		go func() {
+			state, err := state.Move(coords)
+			if err != nil {
+				movesCh <- nil
+				return
 			}
-			return []*Move{move}
+			move := &Move{
+				Coords: coords,
+				State:  state,
+			}
+			if state.Winner != 0 {
+				if state.Winner == board.BLACK_PLAYER {
+					move.Evaluation = math.MinInt64
+				} else {
+					move.Evaluation = math.MaxInt64
+				}
+				winsCh <- move
+				return
+			}
+			move.Evaluation = heuristic(state.Board, state.BlackScore, state.WhiteScore)
+			movesCh <- move
+		}()
+	}
+	for range cellsAdjacentToOccupied {
+		select {
+		case move := <-winsCh:
+			return Moves{move}
+		case move := <-movesCh:
+			if move != nil {
+				moves = append(moves, move)
+			}
 		}
-		move.Evaluation = heuristic(state.Board, state.BlackScore, state.WhiteScore)
-		moves = append(moves, move)
 	}
 	sort.Sort(moves)
 	moves = moves[:Min(maxWidth, moves.Len())]
