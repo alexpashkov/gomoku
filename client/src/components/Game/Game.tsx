@@ -15,7 +15,6 @@ import GameStyles from "./Game.module.css";
 import * as API from "../../API";
 
 export interface IGameProps {
-  id: string;
   type: GameType;
   aiPlayer?: IPlayer;
 }
