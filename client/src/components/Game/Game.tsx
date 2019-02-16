@@ -36,9 +36,7 @@ function mergeBoardWithSuggestions(
 ): IBoard {
   if (!suggestions.length) return board;
   const merged = board.map(row => row.slice()) as IBoard;
-  suggestions.forEach(
-    ({ x, y, evaluation }) => (merged[y][x] = 3 + evaluation)
-  );
+  suggestions.forEach(({ x, y }, i) => (merged[y][x] = 3 + i));
   return merged;
 }
 
