@@ -13,6 +13,8 @@ import {
 import assocPath from "lodash/fp/assocPath";
 import GameStyles from "./Game.module.css";
 import * as API from "../../API";
+import pick from "lodash/fp/pick";
+import HistoryControls from "./HIstoryControls";
 
 export interface IGameProps {
   type: GameType;
@@ -20,6 +22,8 @@ export interface IGameProps {
 }
 
 interface IGameState extends ICommonGameState {
+  history: ICommonGameState[];
+  historyIndex: number;
   suggestions: ISuggestion[];
   aiIsThinking: boolean;
   aiResponseTime: number;
@@ -32,18 +36,20 @@ function mergeBoardWithSuggestions(
   if (!suggestions.length) return board;
   const merged = board.map(row => row.slice()) as IBoard;
   suggestions.forEach(
-    ({ x, y, evaluation }, i) => (merged[y][x] = 3 + evaluation)
+    ({ x, y, evaluation }) => (merged[y][x] = 3 + evaluation)
   );
   return merged;
 }
 
-const INITIAL_STATE = {
+const INITIAL_STATE: IGameState = {
   player: IPlayer.Black,
   board: Board.init(),
   blackScore: 0,
   whiteScore: 0,
   winner: 0,
   suggestions: [],
+  history: [],
+  historyIndex: 0,
   aiIsThinking: false,
   aiResponseTime: 0
 };
@@ -114,10 +120,21 @@ export default class Game extends React.Component<IGameProps, IGameState> {
 
   setGameState = (state: ICommonGameState) =>
     !this.state.winner &&
-    this.setState(state, () => {
-      if (state.player == this.props.aiPlayer) this.aiMove();
-      else this.showSuggestions();
-    });
+    this.setState(
+      oldState => ({
+        history: oldState.history.concat(
+          pick(
+            ["board", "player", "blackScore", "whiteScore", "winner"],
+            oldState
+          )
+        ),
+        ...state
+      }),
+      () => {
+        if (state.player == this.props.aiPlayer) this.aiMove();
+        else this.showSuggestions();
+      }
+    );
 
   handleCellClick = (coords: ICoords) => {
     const { type, aiPlayer } = this.props;
@@ -165,6 +182,7 @@ export default class Game extends React.Component<IGameProps, IGameState> {
                 AI Response Time: {aiResponseTime}ms
               </div>
             )}
+            <HistoryControls/>
           </div>
           <Board onClick={this.handleCellClick}>
             {mergeBoardWithSuggestions(board, suggestions)}
