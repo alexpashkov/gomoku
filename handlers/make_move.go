@@ -23,7 +23,7 @@ func MakeMove(res http.ResponseWriter, req *http.Request) {
 	}
 	newState, err := body.State.Move(*body.Coords)
 	if err != nil {
-		sendError(res, fmt.Errorf("cannot make move: %v", err), http.StatusBadRequest)
+		sendError(res, fmt.Errorf("cannot make move: %v", err), http.StatusForbidden)
 		return
 	}
 	marshaledState, err := json.Marshal(newState)
