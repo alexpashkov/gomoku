@@ -68,7 +68,7 @@ export default class Game extends React.Component<IGameProps, IGameState> {
 
   humanMove = (coords: ICoords) => {
     !this.state.winner &&
-    API.makeMove(this.state, coords).then(this.setGameState, console.error);
+      API.makeMove(this.state, coords).then(this.setGameState, console.error);
   };
 
   aiFetch = () => {
@@ -168,18 +168,12 @@ export default class Game extends React.Component<IGameProps, IGameState> {
                 AI Response Time: {aiResponseTime}ms
               </div>
             )}
-            {type === GameType.debug && (
-              <div>
-                <button onClick={this.sendBoardToServer}>Send To Server</button>
-                <button onClick={this.aiMove}>AI Move</button>
-              </div>
-            )}
           </div>
           <Board onClick={this.handleCellClick}>
             {mergeBoardWithSuggestions(board, suggestions)}
           </Board>
         </div>
-        <WinnerModal winner={winner} onRestart={this.resetGame}/>
+        <WinnerModal winner={winner} onRestart={this.resetGame} />
       </div>
     );
   }

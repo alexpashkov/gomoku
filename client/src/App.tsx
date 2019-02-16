@@ -19,7 +19,10 @@ class App extends Component {
   }: RouteComponentProps<{
     type: GameType;
   }>) => (
-    <Game type={type} aiPlayer={+queryString.parse(search.replace("?", ""))}/>
+    <Game
+      type={type}
+      aiPlayer={+queryString.parse(search.replace("?", "")).aiPlayer}
+    />
   );
 
   render() {
