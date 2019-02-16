@@ -15,7 +15,7 @@ import {
 import omit from "lodash/fp/omit";
 import GameStyles from "./Game.module.css";
 import * as API from "../../API";
-import HistoryControls from "./HIstoryControls";
+import HistoryControls from "./HistoryControls";
 
 export interface IGameProps {
   type: GameType;
