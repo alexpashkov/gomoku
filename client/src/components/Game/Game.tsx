@@ -25,10 +25,6 @@ interface IGameState extends ICommonGameState {
   aiResponseTime: number;
 }
 
-function getNextPlayer(p: IPlayer) {
-  return p == IPlayer.Black ? IPlayer.White : IPlayer.Black;
-}
-
 function mergeBoardWithSuggestions(
   board: IBoard,
   suggestions: ISuggestion[]
@@ -120,6 +116,7 @@ export default class Game extends React.Component<IGameProps, IGameState> {
     !this.state.winner &&
     this.setState(state, () => {
       if (state.player == this.props.aiPlayer) this.aiMove();
+      else this.showSuggestions();
     });
 
   handleCellClick = (coords: ICoords) => {
