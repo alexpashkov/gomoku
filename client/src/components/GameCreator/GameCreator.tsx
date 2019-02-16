@@ -14,8 +14,6 @@ const GameCreator: React.FunctionComponent<{}> = function() {
       <Link to={`/game/${GameType.vsComputer}?aiPlayer=${IPlayer.Black}`}>
         Play Computer as White
       </Link>
-      <br />
-      <Link to={`/game/${GameType.debug}`}>Debug Mode</Link>
     </React.Fragment>
   );
 };

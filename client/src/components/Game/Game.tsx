@@ -6,14 +6,15 @@ import {
   GameType,
   IBoard,
   ICommonGameState,
+  ICommonGameStateWithBoard,
   ICoords,
   IPlayer,
   ISuggestion
 } from "../../types";
-import assocPath from "lodash/fp/assocPath";
+
+import omit from "lodash/fp/omit";
 import GameStyles from "./Game.module.css";
 import * as API from "../../API";
-import pick from "lodash/fp/pick";
 import HistoryControls from "./HIstoryControls";
 
 export interface IGameProps {
@@ -22,8 +23,8 @@ export interface IGameProps {
 }
 
 interface IGameState extends ICommonGameState {
-  history: ICommonGameState[];
-  historyIndex: number;
+  boardHistory: IBoard[];
+  boardHistoryIndex: number;
   suggestions: ISuggestion[];
   aiIsThinking: boolean;
   aiResponseTime: number;
@@ -43,13 +44,12 @@ function mergeBoardWithSuggestions(
 
 const INITIAL_STATE: IGameState = {
   player: IPlayer.Black,
-  board: Board.init(),
   blackScore: 0,
   whiteScore: 0,
   winner: 0,
   suggestions: [],
-  history: [],
-  historyIndex: 0,
+  boardHistory: [Board.init()],
+  boardHistoryIndex: 0,
   aiIsThinking: false,
   aiResponseTime: 0
 };
@@ -64,13 +64,25 @@ export default class Game extends React.Component<IGameProps, IGameState> {
 
   componentWillMount = this.resetGame;
 
-  setPlayer = (player: IPlayer) => {
-    this.props.type === GameType.debug && this.setState({ player });
+  getCurrentBoard = () => {
+    const { boardHistory } = this.state;
+    return boardHistory[boardHistory.length - 1];
+  };
+
+  currentBoardIsDisplayed = (): boolean => {
+    const { boardHistory, boardHistoryIndex } = this.state;
+    return boardHistoryIndex >= boardHistory.length - 1;
   };
 
   humanMove = (coords: ICoords) => {
     !this.state.winner &&
-      API.makeMove(this.state, coords).then(this.setGameState, console.error);
+    API.makeMove(
+      {
+        ...this.state,
+        board: this.getCurrentBoard()
+      },
+      coords
+    ).then(this.setGameState, console.error);
   };
 
   aiFetch = () => {
@@ -78,7 +90,10 @@ export default class Game extends React.Component<IGameProps, IGameState> {
       aiIsThinking: true
     });
     const now = Date.now();
-    return API.suggestMoves(this.state).then(moves => {
+    return API.suggestMoves({
+      ...this.state,
+      board: this.getCurrentBoard()
+    }).then(moves => {
       this.setState({
         aiIsThinking: false,
         aiResponseTime: Date.now() - now
@@ -105,38 +120,26 @@ export default class Game extends React.Component<IGameProps, IGameState> {
     });
   };
 
-  toggleMove = (coords: ICoords) => {
-    const { player, board } = this.state;
-    const cell = board[coords.y][coords.x];
-
-    return this.setState({
-      board: assocPath(
-        [coords.y, coords.x],
-        cell === player ? 0 : player,
-        board
-      )
-    });
-  };
-
-  setGameState = (state: ICommonGameState) =>
-    !this.state.winner &&
+  setGameState = (state: ICommonGameStateWithBoard) => {
+    const { winner, boardHistory, boardHistoryIndex } = this.state;
+    if (winner) return;
     this.setState(
-      oldState => ({
-        history: oldState.history.concat(
-          pick(
-            ["board", "player", "blackScore", "whiteScore", "winner"],
-            oldState
-          )
-        ),
-        ...state
-      }),
+      {
+        boardHistory: [...boardHistory, state.board as IBoard],
+        boardHistoryIndex: this.currentBoardIsDisplayed()
+          ? boardHistoryIndex + 1
+          : boardHistoryIndex,
+        ...omit(["board"], state)
+      },
       () => {
         if (state.player == this.props.aiPlayer) this.aiMove();
         else this.showSuggestions();
       }
     );
+  };
 
   handleCellClick = (coords: ICoords) => {
+    if (!this.currentBoardIsDisplayed()) return;
     const { type, aiPlayer } = this.props;
     const { player, aiIsThinking } = this.state;
 
@@ -148,22 +151,19 @@ export default class Game extends React.Component<IGameProps, IGameState> {
       (type === GameType.vsComputer && player !== aiPlayer)
     ) {
       this.humanMove(coords);
-    } else if (type === GameType.debug) {
-      this.toggleMove(coords);
     }
   };
-
-  sendBoardToServer = () => API.sendBoard(this.state.board);
 
   render() {
     const { type } = this.props;
     const {
-      board,
       player,
       blackScore,
       whiteScore,
       winner,
       suggestions,
+      boardHistory,
+      boardHistoryIndex,
       aiResponseTime
     } = this.state;
     return (
@@ -174,18 +174,26 @@ export default class Game extends React.Component<IGameProps, IGameState> {
               player={player}
               blackScore={blackScore}
               whiteScore={whiteScore}
-              onClick={this.setPlayer}
-              allowPlayerSelection={type == GameType.debug}
             />
             {type === GameType.vsComputer && !!aiResponseTime && (
               <div className={GameStyles.responseTime}>
                 AI Response Time: {aiResponseTime}ms
               </div>
             )}
-            <HistoryControls/>
+            <HistoryControls
+              col={boardHistory}
+              i={boardHistoryIndex}
+              onChange={i => {
+                this.setState({
+                  boardHistoryIndex: i
+                });
+              }}
+            />
           </div>
           <Board onClick={this.handleCellClick}>
-            {mergeBoardWithSuggestions(board, suggestions)}
+            {this.currentBoardIsDisplayed()
+              ? mergeBoardWithSuggestions(this.getCurrentBoard(), suggestions)
+              : boardHistory[boardHistoryIndex]}
           </Board>
         </div>
         <WinnerModal winner={winner} onRestart={this.resetGame} />

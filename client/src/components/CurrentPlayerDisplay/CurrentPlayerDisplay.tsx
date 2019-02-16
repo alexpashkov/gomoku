@@ -7,44 +7,29 @@ interface ICurrentPlayerDisplayProps {
   player: IPlayer;
   blackScore: number;
   whiteScore: number;
-  onClick(p: IPlayer): void;
-  allowPlayerSelection: boolean;
 }
 
-const CurrentPlayerDisplay: React.FunctionComponent<
-  ICurrentPlayerDisplayProps> = function CurrentPlayerDisplay({
-                                                                player,
-                                                                blackScore,
-                                                                whiteScore,
-                                                                onClick,
-                                                                allowPlayerSelection
-                                                              }) {
-  return (
-    <div>
-      <button
-        onClick={() => player !== IPlayer.Black && onClick(IPlayer.Black)}
-        className={c(
-          CurrentPlayerDisplayStyles.btn,
-          CurrentPlayerDisplayStyles.btn__black,
-          player === IPlayer.Black && CurrentPlayerDisplayStyles.btn__selected
-        )}
-        disabled={!allowPlayerSelection}
-      >
-        {blackScore}
-      </button>
-      <button
-        onClick={() => player !== IPlayer.White && onClick(IPlayer.White)}
-        className={c(
-          CurrentPlayerDisplayStyles.btn,
-          CurrentPlayerDisplayStyles.btn__white,
-          player === IPlayer.White && CurrentPlayerDisplayStyles.btn__selected
-        )}
-        disabled={!allowPlayerSelection}
-      >
-        {whiteScore}
-      </button>
+const CurrentPlayerDisplay: React.FunctionComponent<ICurrentPlayerDisplayProps> = ({ player, blackScore, whiteScore }) => (
+  <div>
+    <div
+      className={c(
+        CurrentPlayerDisplayStyles.btn,
+        CurrentPlayerDisplayStyles.btn__black,
+        player === IPlayer.Black && CurrentPlayerDisplayStyles.btn__selected
+      )}
+    >
+      {blackScore}
     </div>
-  );
-};
+    <div
+      className={c(
+        CurrentPlayerDisplayStyles.btn,
+        CurrentPlayerDisplayStyles.btn__white,
+        player === IPlayer.White && CurrentPlayerDisplayStyles.btn__selected
+      )}
+    >
+      {whiteScore}
+    </div>
+  </div>
+);
 
 export default CurrentPlayerDisplay;

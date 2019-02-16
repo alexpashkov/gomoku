@@ -3,12 +3,11 @@ import React from "react";
 interface IHistoryControlsProps {
   col: any[];
   i: number;
-
   onChange(i: number): void;
 }
 
 function forwardDisabled(i: number, col: any[]) {
-  return i == col.length - 1;
+  return i >= col.length - 1;
 }
 
 const HistoryControls: React.FunctionComponent<IHistoryControlsProps> = ({
@@ -20,10 +19,10 @@ const HistoryControls: React.FunctionComponent<IHistoryControlsProps> = ({
     <button disabled={!i} onClick={() => onChange(0)}>
       {"<<"}
     </button>
-    <button disabled={!i} onClick={() => onChange(--i)}>
+    <button disabled={!i} onClick={() => onChange(i - 1)}>
       {"<"}
     </button>
-    <button disabled={forwardDisabled(i, col)} onClick={() => onChange(i++)}>
+    <button disabled={forwardDisabled(i, col)} onClick={() => onChange(i + 1)}>
       {">"}
     </button>
     <button

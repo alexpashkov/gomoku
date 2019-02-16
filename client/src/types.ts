@@ -1,7 +1,6 @@
 export enum GameType {
   vsFriend = "vsFriend",
-  vsComputer = "vsComputer",
-  debug = "debug"
+  vsComputer = "vsComputer"
 }
 
 export enum IPlayer {
@@ -11,10 +10,13 @@ export enum IPlayer {
 
 export interface ICommonGameState {
   player: IPlayer;
-  board: IBoard;
   blackScore: number;
   whiteScore: number;
-  winner: IPlayer | 0
+  winner: IPlayer | 0;
+}
+
+export interface ICommonGameStateWithBoard extends ICommonGameState {
+  board: IBoard;
 }
 
 export type IBoardCell = number;
@@ -69,8 +71,8 @@ export interface ICoords {
 }
 
 export interface ISuggestion extends ICoords {
-  state: ICommonGameState
-  evaluation: number
+  state: ICommonGameStateWithBoard;
+  evaluation: number;
 }
 
 export type ICellClickHandler = (coords: ICoords) => void;
