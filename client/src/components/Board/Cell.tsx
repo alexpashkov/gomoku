@@ -1,4 +1,5 @@
 import * as React from "react";
+import cn from "classnames";
 import { IBoardCell, ICellClickHandler, IPlayer } from "../../types";
 import BoardStyles from "./Board.module.css";
 
@@ -21,7 +22,10 @@ class Cell extends React.PureComponent<ICellProps> {
     const { children: cell, x, y, onClick } = this.props;
     return (
       <div className={BoardStyles.cell} onClick={() => onClick({ x, y })}>
-        <div title={cell.toString()} className={`${BoardStyles.stone} ${stoneClassName(cell)}`}/>
+        <div
+          title={cell.toString()}
+          className={cn(BoardStyles.stone, cell && stoneClassName(cell))}
+        />
       </div>
     );
   }
