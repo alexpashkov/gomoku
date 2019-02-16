@@ -3,7 +3,6 @@ package minimax
 import (
 	"gomoku/board"
 	"gomoku/game"
-	"log"
 	"math"
 	"sort"
 )
@@ -32,7 +31,6 @@ func Minimax(state game.State, maxWidth, depth int,
 	for _, coords := range cellsAdjacentToOccupied {
 		state, err := state.Move(coords)
 		if err != nil {
-			log.Printf("%v", err)
 			continue
 		}
 		move := &Move{
