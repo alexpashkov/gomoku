@@ -21,11 +21,8 @@ var difficulties = [...]struct {
 func SuggestMoves(res http.ResponseWriter, req *http.Request) {
 	state := game.State{}
 	difficultyIndex, err := strconv.Atoi(req.URL.Query().Get("difficulty"))
-	if err != nil || difficultyIndex < 0 || difficultyIndex >= len(difficulties) {
-		res.WriteHeader(http.StatusBadRequest)
-		return
-	}
-	if json.NewDecoder(req.Body).Decode(&state) != nil || state.Winner != 0 {
+	if err != nil || difficultyIndex < 0 || difficultyIndex >= len(difficulties) ||
+	json.NewDecoder(req.Body).Decode(&state) != nil || state.Winner != 0 {
 		res.WriteHeader(http.StatusBadRequest)
 		return
 	}
