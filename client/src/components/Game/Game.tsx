@@ -176,6 +176,8 @@ export default class Game extends React.Component<IGameProps, IGameState> {
             {type === GameType.vsComputer && !!aiResponseTime && (
               <div className={GameStyles.responseTime}>{aiResponseTime}ms</div>
             )}
+            <button className={GameStyles.settingsBtn}>
+            </button>
           </div>
           <Board onClick={this.handleCellClick}>
             {this.currentBoardIsDisplayed()
