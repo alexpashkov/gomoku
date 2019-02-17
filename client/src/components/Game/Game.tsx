@@ -16,6 +16,7 @@ import omit from "lodash/fp/omit";
 import GameStyles from "./Game.module.css";
 import * as API from "../../API";
 import HistoryControls from "./HistoryControls";
+import Dropdown from "../Dropdown/Dropdown";
 
 export interface IGameProps {
   type: GameType;
@@ -28,6 +29,8 @@ interface IGameState extends ICommonGameState {
   suggestions: ISuggestion[];
   aiIsThinking: boolean;
   aiResponseTime: number;
+  difficulty: number;
+  suggestMoves: boolean;
 }
 
 function mergeBoardWithSuggestions(
@@ -49,7 +52,9 @@ const INITIAL_STATE: IGameState = {
   boardHistory: [Board.init()],
   boardHistoryIndex: 0,
   aiIsThinking: false,
-  aiResponseTime: 0
+  aiResponseTime: 0,
+  difficulty: 0,
+  suggestMoves: true
 };
 
 export default class Game extends React.Component<IGameProps, IGameState> {
@@ -119,7 +124,12 @@ export default class Game extends React.Component<IGameProps, IGameState> {
   };
 
   setGameState = (state: ICommonGameStateWithBoard) => {
-    const { winner, boardHistory, boardHistoryIndex } = this.state;
+    const {
+      winner,
+      boardHistory,
+      boardHistoryIndex,
+      suggestMoves
+    } = this.state;
     if (winner) return;
     this.setState(
       {
@@ -131,7 +141,7 @@ export default class Game extends React.Component<IGameProps, IGameState> {
       },
       () => {
         if (state.player == this.props.aiPlayer) this.aiMove();
-        else this.showSuggestions();
+        else if (suggestMoves) this.showSuggestions();
       }
     );
   };
@@ -152,6 +162,17 @@ export default class Game extends React.Component<IGameProps, IGameState> {
     }
   };
 
+  setDifficulty = ({
+    currentTarget: { value }
+  }: React.SyntheticEvent<HTMLInputElement>) =>
+    this.setState({ difficulty: +value });
+
+  toggleSuggestMoves = () =>
+    this.setState(({ suggestMoves }) => ({
+      suggestions: [],
+      suggestMoves: !suggestMoves
+    }));
+
   render() {
     const { type } = this.props;
     const {
@@ -162,7 +183,9 @@ export default class Game extends React.Component<IGameProps, IGameState> {
       suggestions,
       boardHistory,
       boardHistoryIndex,
-      aiResponseTime
+      aiResponseTime,
+      difficulty,
+      suggestMoves
     } = this.state;
     return (
       <div className={GameStyles.container}>
@@ -176,8 +199,33 @@ export default class Game extends React.Component<IGameProps, IGameState> {
             {type === GameType.vsComputer && !!aiResponseTime && (
               <div className={GameStyles.responseTime}>{aiResponseTime}ms</div>
             )}
-            <button className={GameStyles.settingsBtn}>
-            </button>
+            <Dropdown
+              renderButton={(isOpen, toggle) => (
+                <button onClick={toggle} className={GameStyles.settingsBtn} />
+              )}
+              renderContent={() => (
+                <div className={GameStyles.dropdown}>
+                  <label>Difficulty</label>
+                  <input
+                    onChange={this.setDifficulty}
+                    type="range"
+                    value={difficulty}
+                    min={0}
+                    max={2}
+                    step={1}
+                  />
+                  <label>Suggest moves</label>
+                  <input
+                    onChange={this.toggleSuggestMoves}
+                    type="range"
+                    value={+suggestMoves}
+                    min={0}
+                    max={1}
+                    step={1}
+                  />
+                </div>
+              )}
+            />
           </div>
           <Board onClick={this.handleCellClick}>
             {this.currentBoardIsDisplayed()
