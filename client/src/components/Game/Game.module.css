@@ -14,11 +14,11 @@
 
 .infoPanel {
   display: flex;
-  flex-direction: column;
+  align-items: center;
 }
 
 .responseTime {
-  margin-left: 10px;
+  margin-left: auto;
 }
 
 .winnerModal {

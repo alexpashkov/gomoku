@@ -174,9 +174,7 @@ export default class Game extends React.Component<IGameProps, IGameState> {
               whiteScore={whiteScore}
             />
             {type === GameType.vsComputer && !!aiResponseTime && (
-              <div className={GameStyles.responseTime}>
-                AI Response Time: {aiResponseTime}ms
-              </div>
+              <div className={GameStyles.responseTime}>{aiResponseTime}ms</div>
             )}
           </div>
           <Board onClick={this.handleCellClick}>
