@@ -74,13 +74,13 @@ export default class Game extends React.Component<IGameProps, IGameState> {
 
   humanMove = (coords: ICoords) => {
     !this.state.winner &&
-    API.makeMove(
-      {
-        ...this.state,
-        board: this.getCurrentBoard()
-      },
-      coords
-    ).then(this.setGameState, console.error);
+      API.makeMove(
+        {
+          ...this.state,
+          board: this.getCurrentBoard()
+        },
+        coords
+      ).then(this.setGameState, console.error);
   };
 
   aiFetch = () => {
@@ -179,8 +179,8 @@ export default class Game extends React.Component<IGameProps, IGameState> {
               </div>
             )}
             <HistoryControls
-              col={boardHistory}
               i={boardHistoryIndex}
+              max={boardHistory.length - 1}
               onChange={i => {
                 this.setState({
                   boardHistoryIndex: i
