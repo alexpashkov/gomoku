@@ -1,4 +1,5 @@
 import React from "react";
+import GameStyles from "./Game.module.css";
 
 interface IHistoryControlsProps {
   i: number;
@@ -11,7 +12,7 @@ const HistoryControls: React.FunctionComponent<IHistoryControlsProps> = ({
   max,
   onChange
 }) => (
-  <div>
+  <div className={GameStyles.historyControls}>
     <button disabled={!i} onClick={() => onChange(0)}>
       {"<<"}
     </button>

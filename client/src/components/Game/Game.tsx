@@ -178,21 +178,21 @@ export default class Game extends React.Component<IGameProps, IGameState> {
                 AI Response Time: {aiResponseTime}ms
               </div>
             )}
-            <HistoryControls
-              i={boardHistoryIndex}
-              max={boardHistory.length - 1}
-              onChange={i => {
-                this.setState({
-                  boardHistoryIndex: i
-                });
-              }}
-            />
           </div>
           <Board onClick={this.handleCellClick}>
             {this.currentBoardIsDisplayed()
               ? mergeBoardWithSuggestions(this.getCurrentBoard(), suggestions)
               : boardHistory[boardHistoryIndex]}
           </Board>
+          <HistoryControls
+            i={boardHistoryIndex}
+            max={boardHistory.length - 1}
+            onChange={i => {
+              this.setState({
+                boardHistoryIndex: i
+              });
+            }}
+          />
         </div>
         <WinnerModal winner={winner} onRestart={this.resetGame} />
       </div>
