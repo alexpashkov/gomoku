@@ -15,7 +15,7 @@ import {
 import omit from "lodash/fp/omit";
 import GameStyles from "./Game.module.css";
 import * as API from "../../API";
-import HistoryControls from "./HistoryControls";
+import Controls from "./Controls";
 import Dropdown from "../Dropdown/Dropdown";
 
 export interface IGameProps {
@@ -235,7 +235,7 @@ export default class Game extends React.Component<IGameProps, IGameState> {
               ? mergeBoardWithSuggestions(this.getCurrentBoard(), suggestions)
               : boardHistory[boardHistoryIndex]}
           </Board>
-          <HistoryControls
+          <Controls
             i={boardHistoryIndex}
             max={boardHistory.length - 1}
             onChange={i => {

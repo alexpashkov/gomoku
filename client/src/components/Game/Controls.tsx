@@ -1,15 +1,15 @@
 import React from "react";
 import c from "classnames";
 import GameStyles from "./Game.module.css";
-import HistoryControlsStyles from "./HistoryControls.module.css";
+import HistoryControlsStyles from "./Controls.module.css";
 
-interface IHistoryControlsProps {
+interface IControlsProps {
   i: number;
   max: number;
   onChange(i: number): void;
 }
 
-const HistoryControls: React.FunctionComponent<IHistoryControlsProps> = ({
+const Controls: React.FunctionComponent<IControlsProps> = ({
   i,
   max,
   onChange
@@ -44,4 +44,4 @@ const HistoryControls: React.FunctionComponent<IHistoryControlsProps> = ({
   </div>
 );
 
-export default HistoryControls;
+export default Controls;
