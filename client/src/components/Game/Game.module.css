@@ -8,7 +8,8 @@
 .centerWrapper {
   border: 2px dotted purple;
   padding: 10px;
-  /*display: flex;*/
+  width: 100%;
+  max-width: 700px;
 }
 
 .infoPanel {
