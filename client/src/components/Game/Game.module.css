@@ -22,7 +22,7 @@
 }
 
 .settingsBtn {
-  opacity: .3;
+    opacity: 0.3;
   display: block;
   background: none;
   padding: 0;
@@ -31,7 +31,7 @@
 }
 
 .settingsBtn:hover {
-  opacity: .4;
+    opacity: 0.4;
 }
 
 .settingsBtn:focus {
