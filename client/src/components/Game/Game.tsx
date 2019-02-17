@@ -93,10 +93,13 @@ export default class Game extends React.Component<IGameProps, IGameState> {
       aiIsThinking: true
     });
     const now = Date.now();
-    return API.suggestMoves({
-      ...this.state,
-      board: this.getCurrentBoard()
-    }).then(moves => {
+    return API.suggestMoves(
+      {
+        ...this.state,
+        board: this.getCurrentBoard()
+      },
+      this.state.difficulty
+    ).then(moves => {
       this.setState({
         aiIsThinking: false,
         aiResponseTime: Date.now() - now
