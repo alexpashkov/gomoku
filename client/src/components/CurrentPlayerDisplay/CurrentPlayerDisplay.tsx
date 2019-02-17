@@ -10,7 +10,7 @@ interface ICurrentPlayerDisplayProps {
 }
 
 const CurrentPlayerDisplay: React.FunctionComponent<ICurrentPlayerDisplayProps> = ({ player, blackScore, whiteScore }) => (
-  <div>
+  <div className={CurrentPlayerDisplayStyles.container}>
     <div
       className={c(
         CurrentPlayerDisplayStyles.btn,
