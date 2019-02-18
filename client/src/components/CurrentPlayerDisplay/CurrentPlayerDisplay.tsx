@@ -9,8 +9,10 @@ interface ICurrentPlayerDisplayProps {
   whiteScore: number;
 }
 
-const CurrentPlayerDisplay: React.FunctionComponent<ICurrentPlayerDisplayProps> = ({ player, blackScore, whiteScore }) => (
-  <div>
+const CurrentPlayerDisplay: React.FunctionComponent<
+  ICurrentPlayerDisplayProps
+> = ({ player, blackScore, whiteScore }) => (
+  <div className={CurrentPlayerDisplayStyles.container}>
     <div
       className={c(
         CurrentPlayerDisplayStyles.btn,

@@ -19,9 +19,10 @@ export function makeMove(
 }
 
 export function suggestMoves(
-  state: ICommonGameStateWithBoard
+  state: ICommonGameStateWithBoard,
+  difficulty: number
 ): Promise<ISuggestion[]> {
-  return fetch(BASE_URL + "/suggest-move", {
+  return fetch(`${BASE_URL}/suggest-moves?difficulty=${difficulty}`, {
     method: "POST",
     body: JSON.stringify(state)
   }).then(res => (res.status === 200 ? res.json() : Promise.reject()));

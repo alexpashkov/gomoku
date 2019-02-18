@@ -15,7 +15,8 @@ import {
 import omit from "lodash/fp/omit";
 import GameStyles from "./Game.module.css";
 import * as API from "../../API";
-import HistoryControls from "./HistoryControls";
+import Controls from "./Controls";
+import Dropdown from "../Dropdown/Dropdown";
 
 export interface IGameProps {
   type: GameType;
@@ -30,6 +31,8 @@ interface IGameState extends ICommonGameState {
   suggestions: ISuggestion[];
   aiIsThinking: boolean;
   aiResponseTime: number;
+  difficulty: number;
+  suggestMoves: boolean;
 }
 
 function mergeBoardWithSuggestions(
@@ -51,7 +54,9 @@ const INITIAL_STATE: IGameState = {
   boardHistory: [Board.init()],
   boardHistoryIndex: 0,
   aiIsThinking: false,
-  aiResponseTime: 0
+  aiResponseTime: 0,
+  difficulty: 0,
+  suggestMoves: true
 };
 
 export default class Game extends React.Component<IGameProps, IGameState> {
@@ -92,10 +97,13 @@ export default class Game extends React.Component<IGameProps, IGameState> {
       aiIsThinking: true
     });
     const now = Date.now();
-    return API.suggestMoves({
-      ...this.state,
-      board: this.getCurrentBoard()
-    }).then(moves => {
+    return API.suggestMoves(
+      {
+        ...this.state,
+        board: this.getCurrentBoard()
+      },
+      this.state.difficulty
+    ).then(moves => {
       this.setState({
         aiIsThinking: false,
         aiResponseTime: Date.now() - now
@@ -123,7 +131,12 @@ export default class Game extends React.Component<IGameProps, IGameState> {
   };
 
   setGameState = (state: ICommonGameStateWithBoard) => {
-    const { winner, boardHistory, boardHistoryIndex } = this.state;
+    const {
+      winner,
+      boardHistory,
+      boardHistoryIndex,
+      suggestMoves
+    } = this.state;
     if (winner) return;
     this.setState(
       {
@@ -135,7 +148,7 @@ export default class Game extends React.Component<IGameProps, IGameState> {
       },
       () => {
         if (state.player == this.props.aiPlayer) this.aiMove();
-        else this.showSuggestions();
+        else if (suggestMoves) this.showSuggestions();
       }
     );
   };
@@ -156,6 +169,17 @@ export default class Game extends React.Component<IGameProps, IGameState> {
     }
   };
 
+  setDifficulty = ({
+    currentTarget: { value }
+  }: React.SyntheticEvent<HTMLInputElement>) =>
+    this.setState({ difficulty: +value });
+
+  toggleSuggestMoves = () =>
+    this.setState(({ suggestMoves }) => ({
+      suggestions: [],
+      suggestMoves: !suggestMoves
+    }));
+
   render() {
     const { type, notifications } = this.props;
     const {
@@ -166,7 +190,9 @@ export default class Game extends React.Component<IGameProps, IGameState> {
       suggestions,
       boardHistory,
       boardHistoryIndex,
-      aiResponseTime
+      aiResponseTime,
+      difficulty,
+      suggestMoves
     } = this.state;
     return (
       <div className={GameStyles.container}>
@@ -178,18 +204,34 @@ export default class Game extends React.Component<IGameProps, IGameState> {
               whiteScore={whiteScore}
             />
             {type === GameType.vsComputer && !!aiResponseTime && (
-              <div className={GameStyles.responseTime}>
-                AI Response Time: {aiResponseTime}ms
-              </div>
+              <div className={GameStyles.responseTime}>{aiResponseTime}ms</div>
             )}
-            <HistoryControls
-              i={boardHistoryIndex}
-              max={boardHistory.length - 1}
-              onChange={i => {
-                this.setState({
-                  boardHistoryIndex: i
-                });
-              }}
+            <Dropdown
+              renderButton={(isOpen, toggle) => (
+                <button onClick={toggle} className={GameStyles.settingsBtn} />
+              )}
+              renderContent={() => (
+                <div className={GameStyles.dropdown}>
+                  <label>Difficulty</label>
+                  <input
+                    onChange={this.setDifficulty}
+                    type="range"
+                    value={difficulty}
+                    min={0}
+                    max={2}
+                    step={1}
+                  />
+                  <label>Suggest moves</label>
+                  <input
+                    onChange={this.toggleSuggestMoves}
+                    type="range"
+                    value={+suggestMoves}
+                    min={0}
+                    max={1}
+                    step={1}
+                  />
+                </div>
+              )}
             />
           </div>
           <Board onClick={this.handleCellClick}>
@@ -197,6 +239,15 @@ export default class Game extends React.Component<IGameProps, IGameState> {
               ? mergeBoardWithSuggestions(this.getCurrentBoard(), suggestions)
               : boardHistory[boardHistoryIndex]}
           </Board>
+          <Controls
+            i={boardHistoryIndex}
+            max={boardHistory.length - 1}
+            onChange={i => {
+              this.setState({
+                boardHistoryIndex: i
+              });
+            }}
+          />
           <div>
             {notifications.map((text, i) => (
               <div className={GameStyles.notification} key={i}>
