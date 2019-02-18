@@ -20,11 +20,8 @@ import HistoryControls from "./HistoryControls";
 export interface IGameProps {
   type: GameType;
   aiPlayer?: IPlayer;
-}
-
-interface INotification {
-  created: number;
-  text: string;
+  notify(x: string): void;
+  notifications: string[];
 }
 
 interface IGameState extends ICommonGameState {
@@ -33,7 +30,6 @@ interface IGameState extends ICommonGameState {
   suggestions: ISuggestion[];
   aiIsThinking: boolean;
   aiResponseTime: number;
-  notifications: INotification[];
 }
 
 function mergeBoardWithSuggestions(
@@ -55,15 +51,10 @@ const INITIAL_STATE: IGameState = {
   boardHistory: [Board.init()],
   boardHistoryIndex: 0,
   aiIsThinking: false,
-  aiResponseTime: 0,
-  notifications: []
+  aiResponseTime: 0
 };
 
 export default class Game extends React.Component<IGameProps, IGameState> {
-  static notificationsVacuumTimeout = 2e3;
-
-  private notificationsVacuumInterval = 0;
-
   resetGame = () =>
     this.setState(INITIAL_STATE, () => {
       const { type, aiPlayer } = this.props;
@@ -73,14 +64,6 @@ export default class Game extends React.Component<IGameProps, IGameState> {
 
   componentWillMount() {
     this.resetGame();
-    this.notificationsVacuumInterval = window.setInterval(
-      this.vacuumNotifications,
-      Game.notificationsVacuumTimeout
-    );
-  }
-
-  componentWillUnmount(): void {
-    window.clearInterval(this.notificationsVacuumInterval);
   }
 
   getCurrentBoard = () => {
@@ -101,18 +84,7 @@ export default class Game extends React.Component<IGameProps, IGameState> {
           board: this.getCurrentBoard()
         },
         coords
-      ).then(this.setGameState, (err: string) => {
-        console.error(err);
-        this.setState(({ notifications }) => ({
-          notifications: [
-            {
-              text: err,
-              created: Date.now()
-            },
-            ...notifications
-          ]
-        }));
-      });
+      ).then(this.setGameState, this.props.notify);
   };
 
   aiFetch = () => {
@@ -184,19 +156,8 @@ export default class Game extends React.Component<IGameProps, IGameState> {
     }
   };
 
-  vacuumNotifications = () => {
-    const { notifications } = this.state;
-    const i = notifications.findIndex(
-      ({ created }) => created < Date.now() - Game.notificationsVacuumTimeout
-    );
-    if (i != -1)
-      this.setState({
-        notifications: notifications.slice(0, i) // drop notifications older then
-      });
-  };
-
   render() {
-    const { type } = this.props;
+    const { type, notifications } = this.props;
     const {
       player,
       blackScore,
@@ -205,8 +166,7 @@ export default class Game extends React.Component<IGameProps, IGameState> {
       suggestions,
       boardHistory,
       boardHistoryIndex,
-      aiResponseTime,
-      notifications
+      aiResponseTime
     } = this.state;
     return (
       <div className={GameStyles.container}>
@@ -238,7 +198,7 @@ export default class Game extends React.Component<IGameProps, IGameState> {
               : boardHistory[boardHistoryIndex]}
           </Board>
           <div>
-            {notifications.map(({ text }, i) => (
+            {notifications.map((text, i) => (
               <div className={GameStyles.notification} key={i}>
                 {text}
               </div>

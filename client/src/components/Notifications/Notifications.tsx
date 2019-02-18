@@ -1,6 +1,6 @@
 import React from "react";
 
-interface INotificaitonsProps<T> {
+interface INotificationsProps<T> {
   timeout: number;
   children: (notifications: T[], notify: (x: T) => void) => React.ReactNode;
 }
@@ -10,9 +10,34 @@ interface INotificationsState<T> {
 }
 
 class Notifications<T> extends React.Component<
-  INotificaitonsProps<T>,
+  INotificationsProps<T>,
   INotificationsState<T>
 > {
+  vacuumInterval = 0;
+
+  state: INotificationsState<T> = {
+    notifications: []
+  };
+
+  componentDidMount(): void {
+    this.vacuumInterval = window.setInterval(this.vacuumNotifications, 200);
+  }
+
+  componentWillUnmount(): void {
+    this.vacuumInterval && clearInterval(this.vacuumInterval);
+  }
+
+  vacuumNotifications = () => {
+    const { notifications } = this.state;
+    const i = notifications.findIndex(
+      ({ created }) => created < Date.now() - this.props.timeout
+    );
+    if (i != -1)
+      this.setState({
+        notifications: notifications.slice(0, i) // drop notifications older then now - timeout
+      });
+  };
+
   notify = (notification: T) =>
     this.setState(({ notifications }) => ({
       notifications: [
