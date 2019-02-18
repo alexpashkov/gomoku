@@ -38,7 +38,7 @@ class Notifications<T> extends React.Component<
       });
   };
 
-  notify = (notification: T) =>
+  notify = (notification: T) => {
     this.setState(({ notifications }) => ({
       notifications: [
         {
@@ -48,6 +48,7 @@ class Notifications<T> extends React.Component<
         ...notifications
       ]
     }));
+  }
 
   render() {
     return this.props.children(

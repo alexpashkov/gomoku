@@ -14,7 +14,9 @@ export function makeMove(
       state,
       coords
     })
-  }).then(res => (res.status == 200 ? res.json() : Promise.reject(res.json())));
+  }).then(res =>
+    res.status === 200 ? res.json() : Promise.reject("invalid move")
+  );
 }
 
 export function suggestMoves(
