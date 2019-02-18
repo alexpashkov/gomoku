@@ -1,6 +1,6 @@
 import React from "react";
-import DropdownStyles from "./Dropdown.module.css";
 import withClickOutside from "react-click-outside";
+import DropdownStyles from "./Dropdown.module.css";
 
 interface IDropdownProps {
   renderButton(isOpen: boolean, toggle: () => void): React.ReactNode;

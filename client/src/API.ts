@@ -8,14 +8,13 @@ export function makeMove(
 ): Promise<ICommonGameStateWithBoard> {
   const cell = state.board[coords.y][coords.x];
   if (cell) return Promise.reject("cell is occupied");
-  return Promise.reject("test");
-  // fetch(BASE_URL + "/make-move", {
-  //   method: "POST",
-  //   body: JSON.stringify({
-  //     state,
-  //     coords
-  //   })
-  // }).then(res => (res.status == 200 ? res.json() : Promise.reject(res.json())));
+  return fetch(BASE_URL + "/make-move", {
+    method: "POST",
+    body: JSON.stringify({
+      state,
+      coords
+    })
+  }).then(res => (res.status == 200 ? res.json() : Promise.reject(res.json())));
 }
 
 export function suggestMoves(
