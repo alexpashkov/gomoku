@@ -1,12 +1,12 @@
 package handlers
 
 import (
-	"net/http"
-	"gomoku/game"
 	"encoding/json"
-	"gomoku/board"
 	"errors"
 	"fmt"
+	"gomoku/board"
+	"gomoku/game"
+	"net/http"
 )
 
 func MakeMove(res http.ResponseWriter, req *http.Request) {
@@ -16,6 +16,7 @@ func MakeMove(res http.ResponseWriter, req *http.Request) {
 	}{}
 	if err := json.NewDecoder(req.Body).Decode(&body); err != nil {
 		sendError(res, fmt.Errorf("invalid body: %v", err), http.StatusBadRequest)
+		return
 	}
 	if body.State == nil || body.Coords == nil {
 		sendError(res, errors.New("state and coords are required"), http.StatusBadRequest)
