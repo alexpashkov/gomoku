@@ -1,3 +1,4 @@
+import axios from "axios";
 import { ICommonGameStateWithBoard, ICoords, ISuggestion } from "./types";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
@@ -8,23 +9,19 @@ export function makeMove(
 ): Promise<ICommonGameStateWithBoard> {
   const cell = state.board[coords.y][coords.x];
   if (cell) return Promise.reject("cell is occupied");
-  return fetch(BASE_URL + "/make-move", {
-    method: "POST",
-    body: JSON.stringify({
+  return axios
+    .post(BASE_URL + "/make-move", {
       state,
       coords
     })
-  }).then(res =>
-    res.status === 200 ? res.json() : Promise.reject("invalid move")
-  );
+    .then(({ data }) => data, ({ response }) => Promise.reject(response.data));
 }
 
 export function suggestMoves(
   state: ICommonGameStateWithBoard,
   difficulty: number
 ): Promise<ISuggestion[]> {
-  return fetch(`${BASE_URL}/suggest-moves?difficulty=${difficulty}`, {
-    method: "POST",
-    body: JSON.stringify(state)
-  }).then(res => (res.status === 200 ? res.json() : Promise.reject()));
+  return axios
+    .post(`${BASE_URL}/suggest-moves?difficulty=${difficulty}`, state)
+    .then(({ data }) => data, ({ response }) => Promise.reject(response.data));
 }
