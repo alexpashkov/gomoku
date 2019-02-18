@@ -69,24 +69,17 @@
   background-color: rgba(250, 250, 252, 0.8);
 }
 
-.notification {
-  background-color: pink;
-  margin: 5px 0;
-  padding: 5px;
-  border-radius: 5px;
-}
-
-@keyframes fade {
-  /*0% {*/
-    /*opacity: 1;*/
-    /*display: block;*/
-  /*}*/
-  /*100% {*/
-    /*opacity: 0;*/
-    /*display: none;*/
-  /*}*/
-}
-
 .historyControls {
   margin-top: auto;
 }
+
+.notification {
+  background-color: #ff6161;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2);
+  color: white;
+  margin: 5px 0;
+  padding: 5px;
+  border-radius: 5px;
+  text-transform: capitalize;
+}
+
