@@ -32,5 +32,6 @@ func MakeMove(res http.ResponseWriter, req *http.Request) {
 		res.WriteHeader(http.StatusInternalServerError)
 		return
 	}
+	res.Header().Set("Content-Type", "application/json")
 	res.Write(marshaledState)
 }
