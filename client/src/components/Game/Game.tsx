@@ -1,7 +1,7 @@
 import React from "react";
 import Board from "../Board/Board";
 import CurrentPlayer from "../CurrentPlayerDisplay";
-import WinnerModal from "./WinnerModal";
+import Modal from "../Modal/Modal";
 import {
   GameType,
   IBoard,
@@ -33,6 +33,7 @@ interface IGameState extends ICommonGameState {
   aiResponseTime: number;
   difficulty: number;
   suggestMoves: boolean;
+  showWinnerModal: boolean;
 }
 
 function mergeBoardWithSuggestions(
@@ -56,7 +57,8 @@ const INITIAL_STATE: IGameState = {
   aiIsThinking: false,
   aiResponseTime: 0,
   difficulty: 0,
-  suggestMoves: true
+  suggestMoves: true,
+  showWinnerModal: false
 };
 
 export default class Game extends React.Component<IGameProps, IGameState> {
@@ -144,7 +146,8 @@ export default class Game extends React.Component<IGameProps, IGameState> {
         boardHistoryIndex: this.currentBoardIsDisplayed()
           ? boardHistoryIndex + 1
           : boardHistoryIndex,
-        ...omit(["board"], state)
+        ...omit(["board"], state),
+        showWinnerModal: state.winner > 0
       },
       () => {
         if (state.player == this.props.aiPlayer) this.aiMove();
@@ -192,7 +195,8 @@ export default class Game extends React.Component<IGameProps, IGameState> {
       boardHistoryIndex,
       aiResponseTime,
       difficulty,
-      suggestMoves
+      suggestMoves,
+      showWinnerModal
     } = this.state;
     return (
       <div className={GameStyles.container}>
@@ -255,8 +259,15 @@ export default class Game extends React.Component<IGameProps, IGameState> {
               </div>
             ))}
           </div>
+          {showWinnerModal && (
+            <Modal onClose={() => this.setState({ showWinnerModal: false })}>
+              <>
+                <h2>{winner === 1 ? "Black" : "White"} won!</h2>
+                <button onClick={this.resetGame}>Restart</button>
+              </>
+            </Modal>
+          )}
         </div>
-        <WinnerModal winner={winner} onRestart={this.resetGame} />
       </div>
     );
   }
